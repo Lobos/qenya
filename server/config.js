@@ -15,3 +15,11 @@ exports.MONGO = {
 exports.KOABODY = {
   maxFields: 20
 }
+
+exports.I18N = {
+  locales: ['zh-cn'],
+  //defaultLocale: 'zh-cn',
+  extension: ".json",
+  directory: "./server/locales",
+	cookieName: "lang"
+}

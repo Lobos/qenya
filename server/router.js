@@ -8,6 +8,7 @@ module.exports = function (app) {
   app.use(staticServe(__dirname.replace(/server$/, '') + 'static'))
 
   app.use(_.get('/roles/', roleController.list))
-  app.use(_.post('/role/', roleController.add))
+  app.use(_.post('/role/', roleController.insert))
   app.use(_.put('/role/:id', roleController.update))
+  app.use(_.del('/role/:id', roleController.remove))
 }

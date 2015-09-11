@@ -1,41 +1,73 @@
 'use strict'
 
-const Render = require('../render')
 const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
+const Role = require('../models/role')
+
 const COLL_ROLE = 'roles'
 
 exports.list = function *() {
   let roles = yield this.collection(COLL_ROLE).find({}).toArray()
-  this.body = Render.success(roles)
+  this.Render.success(roles)
 }
 
-exports.add = function *() {
+exports.insert = function *() {
+  let err = Role.check(this.request.body, this.i18n)
+  if (err) {
+    this.Render.fail(err)
+    return
+  }
+
   let role = Object.assign({}, this.request.body, {
     //create_by: '',
     create_at: Date.now(),
     update_at: Date.now()
   })
 
-  let err = yield this.collection(COLL_ROLE).insert(role)
-  console.log(err)
-  this.body = Render.success()
+  let doc = yield this.collection(COLL_ROLE).insert(role)
+
+  if (doc.result.ok) {
+    this.Render.success(doc.result.ops)
+  } else {
+    this.Render.fail(this.i18n.__('mongo.insert_error'))
+  }
 }
 
 exports.update = function *(id) {
-  //let coll = this.collection(COLL_ROLE)
-  //let role = yield coll.findOne({ _id: ObjectId(id) })
+  let err = Role.check(this.request.body, this.i18n)
+  if (err) {
+    this.Render.fail(err)
+    return
+  }
+
   let role = Object.assign({}, this.request.body, {
     //update_by: '',
     update_at: Date.now()
   })
 
-  let err = yield this.collection(COLL_ROLE).update(
+  let doc = yield this.collection(COLL_ROLE).update(
     { _id: ObjectId(id) },
     { $set: role }
   )
 
-  console.log(err)
+  if (doc.result.ok) {
+    this.Render.success(doc.result.nModified)
+  } else {
+    this.Render.fail(this.i18n.__('mongo.update_error'))
+  }
+}
 
-  this.body = Render.success()
+exports.remove = function *(id) {
+  if (!id) {
+    this.Render.fail('')
+    return
+  }
+
+  let doc = yield this.collection(COLL_ROLE).remove({ _id: ObjectId(id) })
+
+  if (doc.result.ok) {
+    this.Render.success(doc.result.n)
+  } else {
+    this.Render.fail(this.i18n.__('mongo.remove_error'))
+  }
 }
