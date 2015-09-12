@@ -2,12 +2,12 @@
 
 const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
-const Role = require('../models/role')
+const Role = require('../schema/role')
 
-const COLL_ROLE = 'roles'
+const ROLES = 'roles'
 
 exports.list = function *() {
-  let roles = yield this.collection(COLL_ROLE).find({}).toArray()
+  let roles = yield this.collection(ROLES).find({}).toArray()
   this.Render.success(roles)
 }
 
@@ -24,7 +24,7 @@ exports.insert = function *() {
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(COLL_ROLE).insert(role)
+  let doc = yield this.collection(ROLES).insert(role)
 
   if (doc.result.ok) {
     this.Render.success(doc.result.ops)
@@ -34,18 +34,14 @@ exports.insert = function *() {
 }
 
 exports.update = function *(id) {
-  let err = Role.check(this.request.body, this.i18n)
-  if (err) {
-    this.Render.fail(err)
-    return
-  }
+  let role = Role.sift(this.request.body)
 
-  let role = Object.assign({}, this.request.body, {
+  role = Object.assign({}, role, {
     //update_by: '',
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(COLL_ROLE).update(
+  let doc = yield this.collection(ROLES).update(
     { _id: ObjectId(id) },
     { $set: role }
   )
@@ -63,7 +59,7 @@ exports.remove = function *(id) {
     return
   }
 
-  let doc = yield this.collection(COLL_ROLE).remove({ _id: ObjectId(id) })
+  let doc = yield this.collection(ROLES).remove({ _id: ObjectId(id) })
 
   if (doc.result.ok) {
     this.Render.success(doc.result.n)

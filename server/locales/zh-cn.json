@@ -2,6 +2,7 @@
   "mongo.insert_error": "数据添加失败",
   "mongo.remove_error": "数据删除失败",
   "mongo.update_error": "数据更新失败",
+  "http.notfound": "请求的资源不存在",
   "schema.body_error": "提交的数据有异常",
   "schema.key_illegal": "非法字段 %s",
   "schema.over_length": "字段 %s 超出最大长度限制",

@@ -5,8 +5,10 @@ module.exports = function *(next) {
     success: (data, msg) => {
       this.body = {
         status: 1,
-        msg: msg || null,
         data: data
+      }
+      if (msg) {
+        this.body.msg = msg
       }
     },
 
@@ -14,6 +16,13 @@ module.exports = function *(next) {
       this.body = {
         status: 0,
         msg: err
+      }
+    },
+
+    notfound: () => {
+      this.body = {
+        status: 0,
+        msg: this.i18n.__('http.notfound')
       }
     }
   }
