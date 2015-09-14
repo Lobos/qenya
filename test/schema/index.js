@@ -16,63 +16,82 @@ describe('test/schema/index.js', function () {
     nickname: { type: 'string', length: 20, required: true },
     age: { type: 'integer', defaultValue: 0 },
     score: { type: 'float' },
+    text: { length: 10 },
     roles: { type: ['integer'], defaultValue: [] }
   })
 
   it('should check', function () {
-    let body = { email: 'a@b.com' }
-    let err = schema.check(body, i18n)
+    let entity = { email: 'a@b.com' }
+    let err = schema.check(entity, i18n)
     err.should.be.eql(i18n.__('schema.required', 'nickname'))
 
-    body.nickname = 'abc'
-    err = schema.check(body, i18n)
-    body.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 0, roles: [] })
+    entity.nickname = 'abc'
+    err = schema.check(entity, i18n)
+    entity.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 0, roles: [] })
     expect(err).to.be.null
 
-    body.age = '18'
-    err = schema.check(body, i18n)
-    body.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [] })
+    entity.age = '18'
+    err = schema.check(entity, i18n)
+    entity.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [] })
     expect(err).to.be.null
 
-    body.roles = [0, '1', null]
-    err = schema.check(body, i18n)
+    entity.roles = [0, '1', null]
+    err = schema.check(entity, i18n)
     err.should.be.eql(i18n.__('schema.type_error', 'roles'))
 
-    body.roles = [0, '1']
-    err = schema.check(body, i18n)
-    body.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [0, 1] })
+    entity.roles = [0, '1']
+    err = schema.check(entity, i18n)
+    entity.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [0, 1] })
     expect(err).to.be.null
 
-    body.score = '123.45'
-    err = schema.check(body, i18n)
-    body.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [0, 1], score: 123.45 })
+    entity.score = '123.45'
+    err = schema.check(entity, i18n)
+    entity.should.be.eql({ email: 'a@b.com', nickname: 'abc', age: 18, roles: [0, 1], score: 123.45 })
     expect(err).to.be.null
 
-    body.notexist = '123'
-    err = schema.check(body, i18n)
+    entity.notexist = '123'
+    err = schema.check(entity, i18n)
     err.should.be.eql(i18n.__('schema.key_illegal', 'notexist'))
+
+    delete entity.notexist
+    entity.text = '12345678901'
+    err = schema.check(entity, i18n)
+    err.should.be.eql(i18n.__('schema.over_length', 'text'))
   })
 
   it('should sift', function () {
-    let body = { email: 'a@b.com' }
+    let entity = { email: 'a@b.com' }
 
-    body = schema.sift(body)
-    body.should.be.eql({})
+    // once should skip
+    entity = schema.sift(entity)
+    entity.should.be.eql({})
 
-    body.age = '18'
-    body = schema.sift(body)
-    body.should.be.eql({ age: 18 })
+    entity.age = '18'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18 })
     
-    body.roles = [0, '1']
-    body = schema.sift(body)
-    body.should.be.eql({ age: 18, roles: [0, 1] })
+    entity.roles = [0, '1', null]
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, roles: [0, 1] })
 
-    body.score = '123.45'
-    body = schema.sift(body)
-    body.should.be.eql({ age: 18, roles: [0, 1], score: 123.45 })
+    entity.score = '123.45'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, roles: [0, 1], score: 123.45 })
 
-    body.notexist = '123'
-    body = schema.sift(body)
-    body.should.be.eql({ age: 18, roles: [0, 1], score: 123.45 })
+    entity.notexist = '123'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, roles: [0, 1], score: 123.45 })
+
+    entity.nickname = 'abc'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, nickname: 'abc', roles: [0, 1], score: 123.45 })
+
+    entity.notexist = '123'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, nickname: 'abc', roles: [0, 1], score: 123.45 })
+
+    entity.text = '123456789012345'
+    entity = schema.sift(entity)
+    entity.should.be.eql({ age: 18, nickname: 'abc', roles: [0, 1], score: 123.45, text: '1234567890' })
   })
 })

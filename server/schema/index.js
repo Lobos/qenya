@@ -28,17 +28,19 @@ function convertDBRef (schema, val) {
     return val
   }
 
-  let result
+  let result = { err: null }
   if (Array.isArray(val)) {
-    result = []
+    result.val = []
     val.forEach((id) => {
       let r = toDBRef(schema, id)
       if (r) {
-        result.push(r)
+        result.val.push(r)
+      } else {
+        result.err = true
       }
     })
   } else {
-    result = toDBRef(schema, val)
+    result.val = toDBRef(schema, val)
   }
 
   return result
@@ -50,7 +52,10 @@ class Schema {
     this.props = props || {}
   }
 
-  // 检查数据
+  // 数据检查
+  // 多余字段、必填字段会返回错误
+  // 自动转换数据类型
+  // 数据转换失败返回类型错误
   check (data, i18n) {
     if (!data || typeof data !== 'object') {
       return i18n.__('schema.body_error')
@@ -91,22 +96,18 @@ class Schema {
       }
 
       if (ptype && val) {
-        if (ptype instanceof Schema) {
-          val = convertDBRef(ptype, val)
-        } else {
-          if (!isArray) {
-            val = [val]
-          }
-          try {
+        try {
+          if (ptype instanceof Schema) {
+            let cvt = convertDBRef(ptype, val)
+            val = cvt.val
+            if (cvt.err) {
+              err = i18n.__('schema.type_error', k)
+            }
+          } else {
+            if (!isArray) {
+              val = [val]
+            }
             switch (ptype) {
-              case 'string':
-                val = val.map(v => {
-                  if (typeof v !== 'string') {
-                    v = v.toString(v)
-                  }
-                  return v
-                })
-              break
               case 'integer':
                 val = val.map(v => {
                   v = parseInt(v)
@@ -125,18 +126,28 @@ class Schema {
                   return v
                 })
               break
+              case 'string':
+              default:
+                val = val.map(v => {
+                  if (typeof v !== 'string') {
+                    v = v.toString(v)
+                  }
+                  return v
+                })
+              break
             }
 
-            if (err) {
-              return err
+            if (!isArray) {
+              val = val[0]
             }
-          } catch (e) {
-            debug(e)
-            return i18n.__('schema.type_error', k)
+          } 
+
+          if (err) {
+            return err
           }
-          if (!isArray) {
-            val = val[0]
-          }
+        } catch (e) {
+          debug(e)
+          err = i18n.__('schema.type_error', k)
         }
       }
 
@@ -152,7 +163,10 @@ class Schema {
     return null
   }
 
-  // 过滤掉非法数据
+  // 过滤非法数据，用于数据更新
+  // 多余字段会丢弃
+  // 自动转换数据类型
+  // 数据类型转换失败会丢弃
   sift (data) {
     let entity = {}
     if (data._id) {
@@ -192,29 +206,28 @@ class Schema {
             val = [val]
           }
 
+          let newVal = []
           try {
             switch (ptype) {
               case 'integer':
-                val = val.map(v => {
+                val.forEach(v => {
                   v = parseInt(v)
-                  if (isNaN(v)) {
-                    v = 0
+                  if (!isNaN(v)) {
+                    newVal.push(v)
                   }
-                  return v
                 })
               break
               case 'float':
-                val = val.map(v => {
+                val.forEach(v => {
                   v = parseFloat(v)
-                  if (isNaN(v)) {
-                    v = 0
+                  if (!isNaN(v)) {
+                    newVal.push(v)
                   }
-                  return v
                 })
               break
               case 'string':
               default:
-                val = val.map(v => {
+                newVal = val.map(v => {
                   if (typeof v !== 'string') {
                     v = v.toString(v)
                   }
@@ -227,9 +240,7 @@ class Schema {
             continue
           }
 
-          if (!isArray) {
-            val = val[0]
-          }
+          val = isArray ? newVal : newVal[0]
         }
       }
 
