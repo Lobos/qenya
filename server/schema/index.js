@@ -6,7 +6,8 @@
 // - 数据类型自动转换
 
 class Schema {
-  constructor (props) {
+  constructor (name, props) {
+    this.name = name
     this.props = props || {}
   }
 

@@ -4,16 +4,14 @@ const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
 const User = require('../schema/user')
 
-const USERS = 'users'
-
-// need page
+// need pagination
 exports.page = function *() {
-  let users = yield this.collection(USERS).find({}).toArray()
+  let users = yield this.collection(User.name).find({}).toArray()
   this.Render.success(users)
 }
 
 exports.findOne = function *(id) {
-  let user = yield this.collection(USERS).findOne({ _id: ObjectId(id) })
+  let user = yield this.collection(User.name).findOne({ _id: ObjectId(id) })
   if (user) {
     this.Render.success(user)
   } else {
@@ -34,7 +32,7 @@ exports.insert = function *() {
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(USERS).insert(user)
+  let doc = yield this.collection(User.name).insert(user)
 
   if (doc.result.ok) {
     this.Render.success(doc.result.ops)
@@ -51,7 +49,7 @@ exports.update = function *(id) {
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(USERS).update(
+  let doc = yield this.collection(User.name).update(
     { _id: ObjectId(id) },
     { $set: user }
   )

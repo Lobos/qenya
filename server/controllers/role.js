@@ -4,11 +4,9 @@ const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
 const Role = require('../schema/role')
 
-const ROLES = 'roles'
-
 exports.list = function *() {
-  let roles = yield this.collection(ROLES).find({}).toArray()
-  this.Render.success(roles)
+  let entites = yield this.collection(Role.name).find({}).toArray()
+  this.Render.success(entites)
 }
 
 exports.insert = function *() {
@@ -24,7 +22,7 @@ exports.insert = function *() {
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(ROLES).insert(role)
+  let doc = yield this.collection(Role.name).insert(role)
 
   if (doc.result.ok) {
     this.Render.success(doc.result.ops)
@@ -41,7 +39,7 @@ exports.update = function *(id) {
     update_at: Date.now()
   })
 
-  let doc = yield this.collection(ROLES).update(
+  let doc = yield this.collection(Role.name).update(
     { _id: ObjectId(id) },
     { $set: role }
   )
@@ -59,7 +57,7 @@ exports.remove = function *(id) {
     return
   }
 
-  let doc = yield this.collection(ROLES).remove({ _id: ObjectId(id) })
+  let doc = yield this.collection(Role.name).remove({ _id: ObjectId(id) })
 
   if (doc.result.ok) {
     this.Render.success(doc.result.n)
