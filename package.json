@@ -5,7 +5,7 @@
   "description": "a web application base on koa and react",
   "main": "",
   "scripts": {
-    "test": "./node_modules/.bin/_mocha --compilers js:babel/register",
+    "test": "./node_modules/.bin/_mocha",
     "eslint": "./node_modules/.bin/eslint ./server"
   },
   "keywords": [
@@ -43,7 +43,9 @@
   "devDependencies": {
     "babel": "^5.8.23",
     "babel-eslint": "^4.1.1",
+    "chai": "^3.2.0",
     "eslint": "^1.3.1",
-    "eslint-plugin-react": "^3.3.2"
+    "eslint-plugin-react": "^3.3.2",
+    "mocha": "^2.3.2"
   }
 }

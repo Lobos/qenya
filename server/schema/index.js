@@ -5,6 +5,45 @@
 // - 引用类型支持
 // - 数据类型自动转换
 
+const debug = require('debug')('schema')
+const mongodb = require('mongodb')
+const ObjectId = mongodb.ObjectId
+const DBRef = mongodb.DBRef
+
+function toDBRef (schema, id) {
+  if (!(schema instanceof Schema)) {
+    return null
+  }
+
+  try {
+    return DBRef(schema.name, ObjectId(id))
+  } catch (e) {
+    debug(e)
+    return null
+  }
+}
+
+function convertDBRef (schema, val) {
+  if (!val || val.length === 0) {
+    return val
+  }
+
+  let result
+  if (Array.isArray(val)) {
+    result = []
+    val.forEach((id) => {
+      let r = toDBRef(schema, id)
+      if (r) {
+        result.push(r)
+      }
+    })
+  } else {
+    result = toDBRef(schema, val)
+  }
+
+  return result
+}
+
 class Schema {
   constructor (name, props) {
     this.name = name
@@ -28,36 +67,85 @@ class Schema {
 
     for (k of keys) {
       let prop = this.props[k],
+          ptype = prop.type,
+          isArray = false,
+          err = null,
           val = data[k]
 
-      if (val === undefined && prop.defaultValue) {
-        data[k] = val = prop.defaultValue
+      if (Array.isArray(ptype)) {
+        ptype = ptype[0]
+        isArray = true
+
+        // convert array value
+        if (typeof val === 'string') {
+          val = val.split(prop.sep || ',')
+        }
+      }
+
+      if (val === undefined && prop.defaultValue !== undefined) {
+        val = prop.defaultValue
       }
 
       if (prop.required && (val === undefined || val === null || val === '')) {
         return i18n.__('schema.required', k)
       }
 
-      if (prop.type && val) {
-        let passed = true
-        switch (prop.type) {
-          case 'string':
-            passed = typeof val === 'string'
-          break
-          case 'number':
-            passed = typeof val === 'number'
-          break
-          case 'array':
-            passed = Array.isArray(val)
-          break
-        }
-        if (!passed) {
-          return i18n.__('schema.type_error', k)
+      if (ptype && val) {
+        if (ptype instanceof Schema) {
+          val = convertDBRef(ptype, val)
+        } else {
+          if (!isArray) {
+            val = [val]
+          }
+          try {
+            switch (ptype) {
+              case 'string':
+                val = val.map(v => {
+                  if (typeof v !== 'string') {
+                    v = v.toString(v)
+                  }
+                  return v
+                })
+              break
+              case 'integer':
+                val = val.map(v => {
+                  v = parseInt(v)
+                  if (isNaN(v)) {
+                    err = i18n.__('schema.type_error', k)
+                  }
+                  return v
+                })
+              break
+              case 'float':
+                val = val.map(v => {
+                  v = parseFloat(v)
+                  if (isNaN(v)) {
+                    err = i18n.__('schema.type_error', k)
+                  }
+                  return v
+                })
+              break
+            }
+
+            if (err) {
+              return err
+            }
+          } catch (e) {
+            debug(e)
+            return i18n.__('schema.type_error', k)
+          }
+          if (!isArray) {
+            val = val[0]
+          }
         }
       }
 
       if (prop.length && val && val.length && val.length > prop.length) {
         return i18n.__('schema.over_length', k)
+      }
+
+      if (val !== undefined) {
+        data[k] = val
       }
     }
 
@@ -73,6 +161,8 @@ class Schema {
 
     for (let k of Object.keys(this.props)) {
       let prop = this.props[k],
+          ptype = prop.type,
+          isArray = false,
           val = data[k]
 
       // 忽略只读和空值
@@ -80,23 +170,66 @@ class Schema {
         continue
       }
 
-      if (prop.type && val) {
-        let passed = true
-        switch (prop.type) {
-          case 'string':
-            passed = typeof val === 'string'
-          break
-          case 'number':
-            passed = typeof val === 'number'
-          break
-          case 'array':
-            passed = Array.isArray(val)
-          break
-        }
+      if (Array.isArray(ptype)) {
+        ptype = ptype[0]
+        isArray = true
 
-        // 忽略不正确的值
-        if (!passed) {
-          continue
+        // convert array value
+        if (typeof val === 'string') {
+          val = val.split(prop.sep || ',')
+        }
+      }
+
+      if (val === undefined && prop.defaultValue) {
+        val = prop.defaultValue
+      }
+
+      if (ptype && val) {
+        if (ptype instanceof Schema) {
+          val = convertDBRef(ptype, val)
+        } else {
+          if (!isArray) {
+            val = [val]
+          }
+
+          try {
+            switch (ptype) {
+              case 'integer':
+                val = val.map(v => {
+                  v = parseInt(v)
+                  if (isNaN(v)) {
+                    v = 0
+                  }
+                  return v
+                })
+              break
+              case 'float':
+                val = val.map(v => {
+                  v = parseFloat(v)
+                  if (isNaN(v)) {
+                    v = 0
+                  }
+                  return v
+                })
+              break
+              case 'string':
+              default:
+                val = val.map(v => {
+                  if (typeof v !== 'string') {
+                    v = v.toString(v)
+                  }
+                  return v
+                })
+              break
+            }
+          } catch (e) {
+            debug(e)
+            continue
+          }
+
+          if (!isArray) {
+            val = val[0]
+          }
         }
       }
 
