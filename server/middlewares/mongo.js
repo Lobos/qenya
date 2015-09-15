@@ -64,6 +64,10 @@ function mongo(options) {
       return this.mongo.db(db).collection(coll)
     }
 
+    this.db = function () {
+      return this.mongo.db(db)
+    }
+
     try {
       yield* next
     } catch (e) {

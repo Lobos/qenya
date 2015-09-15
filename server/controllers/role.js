@@ -9,6 +9,17 @@ exports.list = function *() {
   this.Render.success(entites)
 }
 
+exports.findOne = function *(id) {
+  let entity = yield this.collection(Role.name).findOne({ _id: ObjectId(id) })
+  if (entity) {
+    let ids = entity.accesses.map(ref => ref.oid)
+    entity.accesses = yield this.collection('accesses').find({ _id: { $in: ids } }).toArray()
+    this.Render.success(entity)
+  } else {
+    this.Render.notfound()
+  }
+}
+
 exports.insert = function *() {
   let err = Role.check(this.request.body, this.i18n)
   if (err) {

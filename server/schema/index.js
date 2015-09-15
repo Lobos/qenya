@@ -16,7 +16,7 @@ function toDBRef (schema, id) {
   }
 
   try {
-    return DBRef(schema.name, ObjectId(id))
+    return new DBRef(schema.name, ObjectId(id))
   } catch (e) {
     debug(e)
     return null
@@ -109,17 +109,9 @@ class Schema {
             }
             switch (ptype) {
               case 'integer':
-                val = val.map(v => {
-                  v = parseInt(v)
-                  if (isNaN(v)) {
-                    err = i18n.__('schema.type_error', k)
-                  }
-                  return v
-                })
-              break
               case 'float':
                 val = val.map(v => {
-                  v = parseFloat(v)
+                  v = ptype === 'integer' ? parseInt(v) : parseFloat(v)
                   if (isNaN(v)) {
                     err = i18n.__('schema.type_error', k)
                   }
@@ -210,16 +202,9 @@ class Schema {
           try {
             switch (ptype) {
               case 'integer':
-                val.forEach(v => {
-                  v = parseInt(v)
-                  if (!isNaN(v)) {
-                    newVal.push(v)
-                  }
-                })
-              break
               case 'float':
                 val.forEach(v => {
-                  v = parseFloat(v)
+                  v = ptype === 'integer' ? parseInt(v) : parseFloat(v)
                   if (!isNaN(v)) {
                     newVal.push(v)
                   }

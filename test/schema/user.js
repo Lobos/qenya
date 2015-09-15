@@ -12,7 +12,6 @@ const chai = require('chai')
 const expect = chai.expect
 chai.should()
 
-
 describe('test/schema/index.js', function () {
   it('should check', function () {
     let entity = { email: 'a@b.com', nickname: 'nick' }
