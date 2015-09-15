@@ -1,27 +1,24 @@
 'use strict'
 
-const _ = require('koa-route')
-const staticServe = require('koa-static')
+const router = require('koa-router')()
 const roleController = require('./controllers/role')
 const userController = require('./controllers/user')
 const accessController = require('./controllers/access')
+const auth = require('./middlewares/auth')
 
-module.exports = function (app) {
-  app.use(staticServe(__dirname.replace(/server$/, '') + 'static'))
+module.exports = router
 
-  app.use(_.get('/roles/', roleController.list))
-  app.use(_.get('/role/:id', roleController.findOne))
-  app.use(_.post('/role/', roleController.insert))
-  app.use(_.put('/role/:id', roleController.update))
-  app.use(_.del('/role/:id', roleController.remove))
+router.get('/roles', auth('/roles'), roleController.list)
+router.get('/role/:id', roleController.findOne)
+router.post('/role', roleController.insert)
+router.put('/role/:id', roleController.update)
+router.del('/role/:id', roleController.remove)
 
-  app.use(_.get('/users/', userController.page))
-  app.use(_.get('/user/:id', userController.findOne))
-  app.use(_.post('/user/', userController.insert))
+router.get('/users', userController.page)
+router.get('/user/:id', userController.findOne)
+router.post('/user', userController.insert)
 
-  app.use(_.get('/accesses/', accessController.list))
-  app.use(_.post('/access/', accessController.insert))
-  app.use(_.put('/access/:id', accessController.update))
-  app.use(_.del('/access/:id', accessController.remove))
-  
-}
+router.get('/accesses', accessController.list)
+router.post('/access', accessController.insert)
+router.put('/access/:id', accessController.update)
+router.del('/access/:id', accessController.remove)

@@ -2,12 +2,13 @@
 
 const koa = require('koa')
 const koaBody = require('koa-body')
+const staticServe = require('koa-static')
 const config = require('./config')
 const router = require('./router')
 const mongo = require('./middlewares/mongo')
-const auth = require('./middlewares/auth')
 const i18n = require('./middlewares/i18n')
 const render = require('./middlewares/render')
+const redis = require('./middlewares/redis')
 
 let app = koa()
 
@@ -24,13 +25,14 @@ app.use(i18n(config.I18N))
 // mongo
 app.use(mongo(config.MONGO))
 
-app.use(koaBody(config.KOABODY))
-// authorization
-app.use(auth)
+app.use(redis())
 
+app.use(koaBody(config.KOABODY))
+
+app.use(staticServe(__dirname.replace(/server$/, '') + 'static'))
 app.use(render)
 
 // routers
-router(app)
+app.use(router.routes())
 
 app.listen(5000)
