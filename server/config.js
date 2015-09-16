@@ -23,3 +23,5 @@ exports.I18N = {
   directory: "./server/locales",
 	cookieName: "lang"
 }
+
+exports.REDIS = {}

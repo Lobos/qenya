@@ -8,7 +8,6 @@ const router = require('./router')
 const mongo = require('./middlewares/mongo')
 const i18n = require('./middlewares/i18n')
 const render = require('./middlewares/render')
-const redis = require('./middlewares/redis')
 
 let app = koa()
 
@@ -25,11 +24,10 @@ app.use(i18n(config.I18N))
 // mongo
 app.use(mongo(config.MONGO))
 
-app.use(redis())
-
 app.use(koaBody(config.KOABODY))
 
 app.use(staticServe(__dirname.replace(/server$/, '') + 'static'))
+
 app.use(render)
 
 // routers
