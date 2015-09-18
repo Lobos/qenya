@@ -14,9 +14,11 @@ router.post('/role', roleController.insert)
 router.put('/role/:id', roleController.update)
 router.del('/role/:id', roleController.remove)
 
+router.post('/user/login', userController.login)
 router.get('/users', userController.page)
 router.get('/user/:id', userController.findOne)
 router.post('/user', userController.insert)
+router.put('/user/:id', userController.update)
 
 router.get('/accesses', accessController.list)
 router.post('/access', accessController.insert)

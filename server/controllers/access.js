@@ -32,7 +32,7 @@ exports.insert = function *() {
   }
 }
 
-exports.update = function *(id) {
+exports.update = function *() {
   let entity = Access.sift(this.request.body)
 
   entity = Object.assign({}, entity, {
@@ -41,7 +41,7 @@ exports.update = function *(id) {
   })
 
   let doc = yield this.collection(Access.name).update(
-    { _id: ObjectId(id) },
+    { _id: ObjectId(this.params.id) },
     { $set: entity }
   )
 
@@ -52,13 +52,13 @@ exports.update = function *(id) {
   }
 }
 
-exports.remove = function *(id) {
+exports.remove = function *() {
   if (!id) {
     this.Render.fail('')
     return
   }
 
-  let doc = yield this.collection(Access.name).remove({ _id: ObjectId(id) })
+  let doc = yield this.collection(Access.name).remove({ _id: ObjectId(this.params.id) })
 
   if (doc.result.ok) {
     this.Render.success(doc.result.n)

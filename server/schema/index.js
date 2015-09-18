@@ -7,6 +7,7 @@
 
 const debug = require('debug')('schema')
 const mongodb = require('mongodb')
+const md5 = require('md5')
 const ObjectId = mongodb.ObjectId
 const DBRef = mongodb.DBRef
 
@@ -118,6 +119,8 @@ class Schema {
                   return v
                 })
               break
+              case 'password':
+                val = val.map(v => md5(v))
               case 'string':
               default:
                 val = val.map(v => {
@@ -192,7 +195,11 @@ class Schema {
 
       if (ptype && val) {
         if (ptype instanceof Schema) {
-          val = convertDBRef(ptype, val)
+          let cvt = convertDBRef(ptype, val)
+          val = cvt.val
+          if (cvt.err) {
+            err = i18n.__('schema.type_error', k)
+          }
         } else {
           if (!isArray) {
             val = [val]
@@ -210,6 +217,8 @@ class Schema {
                   }
                 })
               break
+              case 'password':
+                val = val.map(v => md5(v))
               case 'string':
               default:
                 newVal = val.map(v => {

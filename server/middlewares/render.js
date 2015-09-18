@@ -19,10 +19,10 @@ module.exports = function *(next) {
       }
     },
 
-    notfound: () => {
+    notFound: () => {
       this.body = {
         status: 0,
-        msg: this.i18n.__('http.notfound')
+        msg: this.i18n.__('http.not_found')
       }
     },
 
@@ -30,6 +30,14 @@ module.exports = function *(next) {
       this.body = {
         status: 0,
         msg: this.i18n.__('http.no_auth')
+      }
+      this.response.status = 401
+    },
+
+    expired: () => {
+      this.body = {
+        status: 0,
+        msg: this.i18n.__('login.expired')
       }
       this.response.status = 401
     }

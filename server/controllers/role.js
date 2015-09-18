@@ -9,14 +9,14 @@ exports.list = function *() {
   this.Render.success(entites)
 }
 
-exports.findOne = function *(id) {
-  let entity = yield this.collection(Role.name).findOne({ _id: ObjectId(id) })
+exports.findOne = function *() {
+  let entity = yield this.collection(Role.name).findOne({ _id: ObjectId(this.params.id) })
   if (entity) {
     let ids = entity.accesses.map(ref => ref.oid)
     entity.accesses = yield this.collection('accesses').find({ _id: { $in: ids } }).toArray()
     this.Render.success(entity)
   } else {
-    this.Render.notfound()
+    this.Render.notFound()
   }
 }
 
@@ -42,7 +42,7 @@ exports.insert = function *() {
   }
 }
 
-exports.update = function *(id) {
+exports.update = function *() {
   let role = Role.sift(this.request.body)
 
   role = Object.assign({}, role, {
@@ -51,7 +51,7 @@ exports.update = function *(id) {
   })
 
   let doc = yield this.collection(Role.name).update(
-    { _id: ObjectId(id) },
+    { _id: ObjectId(this.params.id) },
     { $set: role }
   )
 
@@ -62,13 +62,13 @@ exports.update = function *(id) {
   }
 }
 
-exports.remove = function *(id) {
+exports.remove = function *() {
   if (!id) {
     this.Render.fail('')
     return
   }
 
-  let doc = yield this.collection(Role.name).remove({ _id: ObjectId(id) })
+  let doc = yield this.collection(Role.name).remove({ _id: ObjectId(this.params.id) })
 
   if (doc.result.ok) {
     this.Render.success(doc.result.n)

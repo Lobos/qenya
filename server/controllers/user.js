@@ -1,8 +1,11 @@
 'use strict'
 
+const md5 = require('md5')
 const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
 const User = require('../schema/user')
+const userUtils = require('../utils/user')
+const redis = require('../utils/redis').getClient()
 
 // need pagination
 exports.page = function *() {
@@ -10,12 +13,12 @@ exports.page = function *() {
   this.Render.success(users)
 }
 
-exports.findOne = function *(id) {
-  let user = yield this.collection(User.name).findOne({ _id: ObjectId(id) })
+exports.findOne = function *() {
+  let user = yield this.collection(User.name).findOne({ _id: ObjectId(this.params.id) })
   if (user) {
     this.Render.success(user)
   } else {
-    this.Render.notfound()
+    this.Render.notFound()
   }
 }
 
@@ -41,7 +44,7 @@ exports.insert = function *() {
   }
 }
 
-exports.update = function *(id) {
+exports.update = function *() {
   let user = User.sift(this.request.body)
 
   user = Object.assign({}, user, {
@@ -50,7 +53,7 @@ exports.update = function *(id) {
   })
 
   let doc = yield this.collection(User.name).update(
-    { _id: ObjectId(id) },
+    { _id: ObjectId(this.params.id) },
     { $set: user }
   )
 
@@ -62,6 +65,24 @@ exports.update = function *(id) {
 }
 
 exports.login = function *() {
+  let email = this.request.body.email,
+      password = md5(this.request.body.password)
+  let user = yield this.collection(User.name).findOne({ email: email, password: password })
+  if (!user) {
+    return this.Render.fail(this.i18n.__('login.input_error'))
+  }
+
+  if (user.token) {
+    redis.del(user.token)
+  }
+
+  user.token = userUtils.createToken()
+  yield this.collection(User.name).update({ _id: user._id }, user)
+
+  user.all_accesses = yield userUtils.getAllAccesses(user, this)
+  redis.set(user.token, user)
+
+  this.body = user
 }
 
 exports.logout = function *() {
