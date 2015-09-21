@@ -3,6 +3,7 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { setAdminStatus, loadAdminInfo } from '../actions/admin'
+import { Form, FormControl, Button } from 'rctui'
 
 class Master extends Component {
   static displayName = 'Pages/Master'
@@ -33,7 +34,12 @@ class Master extends Component {
           <div className={styles.login.wrap}>
             <div className={styles.login.overlay} />
             <div className={styles.login.inner}>
-              <h3>Login</h3>
+              <h3>登录</h3>
+              <Form layout="stacked">
+                <FormControl label="email" width={24} name="email" required="true" type="email" />
+                <FormControl label="password" width={24} name="password" required="true" type="password" />
+                <Button type="submit" status="primary">登录</Button>
+              </Form>
             </div>
           </div>
         }
@@ -43,7 +49,6 @@ class Master extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.styles)
   return {
     admin: state.admin,
     styles: state.styles

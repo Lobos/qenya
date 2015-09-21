@@ -1,13 +1,12 @@
 'use strict'
 
-let THEME = 'default'
-
 const themes = {
-  'default': {
-    login: require('./default/login.less')
+  'pure': {
+    global: require('./pure/global.less'),
+    login: require('./pure/login.less')
   }
 }
 
-export function getStyles() {
-  return themes[THEME]
+export function getStyles(theme = 'pure') {
+  return themes[theme]
 }
