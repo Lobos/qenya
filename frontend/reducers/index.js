@@ -2,9 +2,11 @@
 
 import { combineReducers } from 'redux'
 import admin from './admin'
+import styles from './theme'
 
 const rootReducer = combineReducers({
-  admin
+  admin,
+  styles
 })
 
 export default rootReducer

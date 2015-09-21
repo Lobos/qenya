@@ -1,0 +1,26 @@
+.frontend-themes-default-login---wrap---2_-6J {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+.frontend-themes-default-login---overlay---1DvPh {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.frontend-themes-default-login---inner---3xwKZ {
+  position: absolute;
+  background-color: #fff;
+  width: 400px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  margin: -150px 0 0 -200px;
+  border-radius: 5px;
+}

@@ -30,6 +30,6 @@ export function loadAdminInfo() {
     }
 
     dispatch(setAdminStatus(1))
-    Qwest.get('/admin/user', res => dispatch(receiveInfo(res)))
+    Qwest.get('/admin/info', res => dispatch(receiveInfo(res)))
   }
 }

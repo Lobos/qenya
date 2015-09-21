@@ -11,7 +11,8 @@ class Master extends Component {
     admin: PropTypes.object,
     children: PropTypes.any,
     loadAdminInfo: PropTypes.func,
-    setAdminStatus: PropTypes.func
+    setAdminStatus: PropTypes.func,
+    styles: PropTypes.object
   }
 
   componentWillMount () {
@@ -20,7 +21,7 @@ class Master extends Component {
   }
 
   render () {
-    const { status } = this.props.admin
+    const { styles, admin: { status } } = this.props
     return (
       <div>
         <header>
@@ -29,7 +30,12 @@ class Master extends Component {
         <div className="main">{this.props.children}</div>
 
         { status === 0 &&
-          <div>login</div>
+          <div className={styles.login.wrap}>
+            <div className={styles.login.overlay} />
+            <div className={styles.login.inner}>
+              <h3>Login</h3>
+            </div>
+          </div>
         }
       </div>
     )
@@ -37,8 +43,10 @@ class Master extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.styles)
   return {
-    admin: state.admin
+    admin: state.admin,
+    styles: state.styles
   }
 }
 

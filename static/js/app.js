@@ -168,20 +168,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _historyLibCreateHashHistory2 = _interopRequireDefault(_historyLibCreateHashHistory);
 
+	var _themes = __webpack_require__(165);
+
 	var _store = __webpack_require__(152);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _pagesMaster = __webpack_require__(158);
+	var _pagesMaster = __webpack_require__(164);
 
 	var _pagesMaster2 = _interopRequireDefault(_pagesMaster);
 
-	var _pagesHome = __webpack_require__(159);
+	var _pagesHome = __webpack_require__(170);
 
 	var _pagesHome2 = _interopRequireDefault(_pagesHome);
 
 	var history = (0, _historyLibCreateHashHistory2['default'])({ queryKey: false });
-	var store = (0, _store2['default'])();
+	var store = (0, _store2['default'])({ styles: (0, _themes.getStyles)() });
 
 	var Routes = React.createElement(
 	  _reactRedux.Provider,
@@ -6532,8 +6534,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _admin2 = _interopRequireDefault(_admin);
 
+	var _theme = __webpack_require__(174);
+
+	var _theme2 = _interopRequireDefault(_theme);
+
 	var rootReducer = (0, _redux.combineReducers)({
-	  admin: _admin2['default']
+	  admin: _admin2['default'],
+	  styles: _theme2['default']
 	});
 
 	exports['default'] = rootReducer;
@@ -6637,11 +6644,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _qwest = __webpack_require__(160);
+	var _qwest = __webpack_require__(158);
 
 	var _qwest2 = _interopRequireDefault(_qwest);
 
-	var _hydraAuthentication = __webpack_require__(165);
+	var _hydraAuthentication = __webpack_require__(163);
 
 	var _hydraAuthentication2 = _interopRequireDefault(_hydraAuthentication);
 
@@ -6676,7 +6683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    dispatch(setAdminStatus(1));
-	    _qwest2['default'].get('/admin/user', function (res) {
+	    _qwest2['default'].get('/admin/info', function (res) {
 	      return dispatch(receiveInfo(res));
 	    });
 	  };
@@ -6684,151 +6691,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 158 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(75);
-
-	var _reactRedux = __webpack_require__(120);
-
-	var _actionsAdmin = __webpack_require__(157);
-
-	var Master = (function (_Component) {
-	  _inherits(Master, _Component);
-
-	  function Master() {
-	    _classCallCheck(this, Master);
-
-	    _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).apply(this, arguments);
-	  }
-
-	  _createClass(Master, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.props.setAdminStatus(false);
-	      this.props.loadAdminInfo();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var status = this.props.admin.status;
-
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'header',
-	          null,
-	          React.createElement(
-	            'div',
-	            null,
-	            'Logo'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'main' },
-	          this.props.children
-	        ),
-	        status === 0 && React.createElement(
-	          'div',
-	          null,
-	          'login'
-	        )
-	      );
-	    }
-	  }], [{
-	    key: 'displayName',
-	    value: 'Pages/Master',
-	    enumerable: true
-	  }, {
-	    key: 'propTypes',
-	    value: {
-	      admin: _react.PropTypes.object,
-	      children: _react.PropTypes.any,
-	      loadAdminInfo: _react.PropTypes.func,
-	      setAdminStatus: _react.PropTypes.func
-	    },
-	    enumerable: true
-	  }]);
-
-	  return Master;
-	})(_react.Component);
-
-	function mapStateToProps(state) {
-	  return {
-	    admin: state.admin
-	  };
-	}
-
-	exports['default'] = (0, _reactRedux.connect)(mapStateToProps, { setAdminStatus: _actionsAdmin.setAdminStatus, loadAdminInfo: _actionsAdmin.loadAdminInfo })(Master);
-	module.exports = exports['default'];
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(75);
-
-	var Home = (function (_Component) {
-	  _inherits(Home, _Component);
-
-	  function Home() {
-	    _classCallCheck(this, Home);
-
-	    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).apply(this, arguments);
-	  }
-
-	  _createClass(Home, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Home'
-	      );
-	    }
-	  }], [{
-	    key: 'displayName',
-	    value: 'Pages/Home',
-	    enumerable: true
-	  }]);
-
-	  return Home;
-	})(_react.Component);
-
-	exports['default'] = Home;
-	module.exports = exports['default'];
-
-/***/ },
-/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, setImmediate, process) {"use strict";
@@ -6915,7 +6777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        sending = !1,
 	        delayed = !1,
 	        timeout_start,
-	        promise = __webpack_require__(163)(function (e) {
+	        promise = __webpack_require__(161)(function (e) {
 	      return (e["catch"] = function (t) {
 	        return e.then(null, t);
 	      }, e.complete = function (t) {
@@ -6960,7 +6822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      --requests, promise(!1, [xhr, null, new Error("Connection aborted")]);
 	    };switch ((options.async = "async" in options ? !!options.async : !0, options.cache = "cache" in options ? !!options.cache : !1, options.dataType = "dataType" in options ? options.dataType.toLowerCase() : "post", options.responseType = "responseType" in options ? options.responseType.toLowerCase() : "auto", options.user = options.user || "", options.password = options.password || "", options.withCredentials = !!options.withCredentials, options.timeout = "timeout" in options ? parseInt(options.timeout, 10) : 3e4, options.attempts = "attempts" in options ? parseInt(options.attempts, 10) : 1, i = url.match(/\/\/(.+?)\//), crossOrigin = i && (i[1] ? i[1] != location.host : !1), "ArrayBuffer" in win && data instanceof ArrayBuffer ? options.dataType = "arraybuffer" : "Blob" in win && data instanceof Blob ? options.dataType = "blob" : "Document" in win && data instanceof Document ? options.dataType = "document" : "FormData" in win && data instanceof FormData && (options.dataType = "formdata"), options.dataType)) {case "json":
 	        data = JSON.stringify(data);break;case "post":
-	        data = __webpack_require__(164)(data);}if (options.headers) {
+	        data = __webpack_require__(162)(data);}if (options.headers) {
 	      var format = function format(e, t, n) {
 	        return t + n.toUpperCase();
 	      };for (i in options.headers) headers[i.replace(/(^|-)([^-])/g, format)] = options.headers[i];
@@ -6981,10 +6843,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      defaultXdrResponseType = e.toLowerCase();
 	    } };
 	})());
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161)(module), __webpack_require__(162).setImmediate, __webpack_require__(80)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(159)(module), __webpack_require__(160).setImmediate, __webpack_require__(80)))
 
 /***/ },
-/* 161 */
+/* 159 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7001,7 +6863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 162 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {"use strict";
@@ -7082,10 +6944,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function (id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162).setImmediate, __webpack_require__(162).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160).setImmediate, __webpack_require__(160).clearImmediate))
 
 /***/ },
-/* 163 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, setImmediate, process) {/*
@@ -7194,10 +7056,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			return set;
 		};
 	})( false ? [window, 'pinkySwear'] : [module, 'exports']);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161)(module), __webpack_require__(162).setImmediate, __webpack_require__(80)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(159)(module), __webpack_require__(160).setImmediate, __webpack_require__(80)))
 
 /***/ },
-/* 164 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -7255,7 +7117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*global define */
 
 /***/ },
-/* 165 */
+/* 163 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7336,6 +7198,255 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports['default'] = { getToken: getToken, setToken: setToken, generateKey: generateKey };
 	module.exports = exports['default'];
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(75);
+
+	var _reactRedux = __webpack_require__(120);
+
+	var _actionsAdmin = __webpack_require__(157);
+
+	var Master = (function (_Component) {
+	  _inherits(Master, _Component);
+
+	  function Master() {
+	    _classCallCheck(this, Master);
+
+	    _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Master, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.setAdminStatus(false);
+	      this.props.loadAdminInfo();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var styles = _props.styles;
+	      var status = _props.admin.status;
+
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'header',
+	          null,
+	          React.createElement(
+	            'div',
+	            null,
+	            'Logo'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'main' },
+	          this.props.children
+	        ),
+	        status === 0 && React.createElement(
+	          'div',
+	          { className: styles.login.wrap },
+	          React.createElement('div', { className: styles.login.overlay }),
+	          React.createElement(
+	            'div',
+	            { className: styles.login.inner },
+	            React.createElement(
+	              'h3',
+	              null,
+	              'Login'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }], [{
+	    key: 'displayName',
+	    value: 'Pages/Master',
+	    enumerable: true
+	  }, {
+	    key: 'propTypes',
+	    value: {
+	      admin: _react.PropTypes.object,
+	      children: _react.PropTypes.any,
+	      loadAdminInfo: _react.PropTypes.func,
+	      setAdminStatus: _react.PropTypes.func,
+	      styles: _react.PropTypes.object
+	    },
+	    enumerable: true
+	  }]);
+
+	  return Master;
+	})(_react.Component);
+
+	function mapStateToProps(state) {
+	  console.log(state.styles);
+	  return {
+	    admin: state.admin,
+	    styles: state.styles
+	  };
+	}
+
+	exports['default'] = (0, _reactRedux.connect)(mapStateToProps, { setAdminStatus: _actionsAdmin.setAdminStatus, loadAdminInfo: _actionsAdmin.loadAdminInfo })(Master);
+	module.exports = exports['default'];
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.getStyles = getStyles;
+	var THEME = 'default';
+
+	var themes = {
+	  'default': {
+	    login: __webpack_require__(166)
+	  }
+	};
+
+	function getStyles() {
+	  return themes[THEME];
+	}
+
+/***/ },
+/* 166 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"wrap":"frontend-themes-default-login---wrap---2_-6J","overlay":"frontend-themes-default-login---overlay---1DvPh","inner":"frontend-themes-default-login---inner---3xwKZ"};
+
+/***/ },
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(75);
+
+	var Home = (function (_Component) {
+	  _inherits(Home, _Component);
+
+	  function Home() {
+	    _classCallCheck(this, Home);
+
+	    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Home, [{
+	    key: 'render',
+	    value: function render() {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Home'
+	      );
+	    }
+	  }], [{
+	    key: 'displayName',
+	    value: 'Pages/Home',
+	    enumerable: true
+	  }]);
+
+	  return Home;
+	})(_react.Component);
+
+	exports['default'] = Home;
+	module.exports = exports['default'];
+
+/***/ },
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = styles;
+
+	var _actionsTheme = __webpack_require__(175);
+
+	function styles(state, action) {
+	  if (state === undefined) state = {};
+
+	  switch (action.type) {
+	    case _actionsTheme.SET_THEME:
+	      return action.styles;
+
+	    default:
+	      return state;
+	  }
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.setTheme = setTheme;
+
+	var _themes = __webpack_require__(165);
+
+	var SET_THEME = 'SET_THEME';
+
+	exports.SET_THEME = SET_THEME;
+
+	function setTheme(theme) {
+	  var styles = (0, _themes.getStyles)(theme) || {};
+
+	  // load theme style file
+
+	  return {
+	    type: SET_THEME,
+	    styles: styles
+	  };
+	}
 
 /***/ }
 /******/ ])
