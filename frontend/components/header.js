@@ -1,6 +1,7 @@
 'use strict'
 
 import { Component, PropTypes } from 'react'
+import Config from '../config'
 
 export default class Header extends Component {
   static displayName = 'Header'
@@ -19,8 +20,9 @@ export default class Header extends Component {
 
     return (
       <header>
-        <div>Hydra Admin</div>
+        <div>{ Config.TITLE }</div>
         <div>
+          <img src={info.avatar} />
           { info.nickname }
         </div>
       </header>

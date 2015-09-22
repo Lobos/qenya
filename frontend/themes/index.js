@@ -3,6 +3,7 @@
 const themes = {
   'pure': {
     reset: require('./pure/reset.less'),
+    header: require('./pure/header.less'),
     login: require('./pure/login.less')
   }
 }

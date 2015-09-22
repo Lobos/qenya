@@ -26,6 +26,7 @@ exports.login = function *() {
   this.Render.success({
     _id: user._id,
     nickname: user.nickname,
+    avatar: userUtils.getAvatar(user.email),
     token: user.token,
     email: user.email
   })
@@ -36,6 +37,7 @@ exports.info = function *() {
   this.Render.success({
     _id: user._id,
     nickname: user.nickname,
+    avatar: userUtils.getAvatar(user.email),
     token: user.token,
     email: user.email
   })

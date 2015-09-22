@@ -3,7 +3,7 @@
 import objectAssign from 'object-assign'
 import { ADMIN_STATUS, RECEIVE_ADMIN_INFO } from '../actions/admin'
 
-export default function admin(state = {}, action) {
+export default function admin(state = { status: 0 }, action) {
   switch (action.type) {
     case ADMIN_STATUS:
       return objectAssign({}, state, {

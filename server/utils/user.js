@@ -1,6 +1,7 @@
 'use strict'
 
 const _ = require('lodash')
+const md5 = require('md5')
 const Role = require('../schema/role')
 const Access = require('../schema/access')
 
@@ -25,4 +26,8 @@ function rand() {
 
 exports.createToken = function () {
   return rand() + rand()
+}
+
+exports.getAvatar = function (email) {
+  return 'http://www.gravatar.com/avatar/' + md5(email)
 }
