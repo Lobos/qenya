@@ -1,18 +1,21 @@
 'use strict'
 
 import objectAssign from 'object-assign'
-import { ADMIN_STATUS, ADMIN_INFO } from '../actions/admin'
+import { ADMIN_STATUS, RECEIVE_ADMIN_INFO } from '../actions/admin'
 
 export default function admin(state = {}, action) {
   switch (action.type) {
     case ADMIN_STATUS:
       return objectAssign({}, state, {
-        status: action.status
+        status: action.status,
+        msg: action.msg
       })
 
-    case ADMIN_INFO:
+    case RECEIVE_ADMIN_INFO:
       return objectAssign({}, state, {
-        info: action.info
+        status: action.status,
+        info: action.info,
+        msg: action.msg
       })
 
     default:

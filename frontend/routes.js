@@ -6,12 +6,16 @@ import createHistory from 'history/lib/createHashHistory'
 
 import { getStyles } from './themes'
 import configureStore from './store'
+import { bindStore } from './utils/request'
 
 import Master from './pages/master'
 import Home from './pages/home'
 
 const history = createHistory({ queryKey: false })
 const store = configureStore({ styles: getStyles() })
+
+// bind request
+bindStore(store)
 
 const Routes = (
   <Provider store={store}>

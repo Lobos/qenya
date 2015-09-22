@@ -1,7 +1,6 @@
 'use strict'
 
 const _ = require('lodash')
-const User = require('../schema/user')
 const Role = require('../schema/role')
 const Access = require('../schema/access')
 

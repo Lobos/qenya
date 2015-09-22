@@ -36,7 +36,7 @@
     "debug": "^2.2.0",
     "generic-pool": "^2.2.0",
     "history": "^1.9.1",
-    "hydra-authentication": "^0.1.0",
+    "hydra-authentication": "^0.1.1",
     "i18n-2": "^0.4.6",
     "koa": "^1.0.0",
     "koa-body": "^1.2.1",

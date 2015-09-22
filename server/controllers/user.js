@@ -63,27 +63,3 @@ exports.update = function *() {
     this.Render.fail(this.i18n.__('mongo.update_error'))
   }
 }
-
-exports.login = function *() {
-  let email = this.request.body.email,
-      password = md5(this.request.body.password)
-  let user = yield this.collection(User.name).findOne({ email: email, password: password })
-  if (!user) {
-    return this.Render.fail(this.i18n.__('login.input_error'))
-  }
-
-  if (user.token) {
-    redis.del(user.token)
-  }
-
-  user.token = userUtils.createToken()
-  yield this.collection(User.name).update({ _id: user._id }, user)
-
-  user.all_accesses = yield userUtils.getAllAccesses(user, this)
-  redis.set(user.token, user)
-
-  this.body = user
-}
-
-exports.logout = function *() {
-}

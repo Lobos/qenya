@@ -2,8 +2,9 @@
 
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { setAdminStatus, loadAdminInfo } from '../actions/admin'
-import { Form, FormControl, Button } from 'rctui'
+import { setAdminStatus, loadAdminInfo, login } from '../actions/admin'
+import Login from '../components/login'
+import Header from '../components/header'
 
 class Master extends Component {
   static displayName = 'Pages/Master'
@@ -12,36 +13,24 @@ class Master extends Component {
     admin: PropTypes.object,
     children: PropTypes.any,
     loadAdminInfo: PropTypes.func,
+    login: PropTypes.func,
     setAdminStatus: PropTypes.func,
     styles: PropTypes.object
   }
 
   componentWillMount () {
-    this.props.setAdminStatus(false)
     this.props.loadAdminInfo()
   }
 
   render () {
-    const { styles, admin: { status } } = this.props
+    const { styles, login, admin: { info, status, msg } } = this.props
     return (
       <div>
-        <header>
-          <div>Logo</div>
-        </header>
-        <div className="main">{this.props.children}</div>
+        <Header info={info} styles={styles.header} />
 
-        { status === 0 &&
-          <div className={styles.login.wrap}>
-            <div className={styles.login.overlay} />
-            <div className={styles.login.inner}>
-              <h3>登录</h3>
-              <Form layout="stacked">
-                <FormControl label="email" width={24} name="email" required="true" type="email" />
-                <FormControl label="password" width={24} name="password" required="true" type="password" />
-                <Button type="submit" status="primary">登录</Button>
-              </Form>
-            </div>
-          </div>
+        { status >= 2 ?
+          <div className="main">{this.props.children}</div> :
+          <Login msg={msg} status={status} login={login} styles={styles.login} />
         }
       </div>
     )
@@ -57,5 +46,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { setAdminStatus, loadAdminInfo }
+  { setAdminStatus, loadAdminInfo, login }
 )(Master)

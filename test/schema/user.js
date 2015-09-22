@@ -12,9 +12,9 @@ const chai = require('chai')
 const expect = chai.expect
 chai.should()
 
-describe('test/schema/index.js', function () {
+describe('test/schema/user.js', function () {
   it('should check', function () {
-    let entity = { email: 'a@b.com', nickname: 'nick' }
+    let entity = { email: 'a@b.com', password: '123456', nickname: 'nick' }
     let err = User.check(entity, i18n)
     expect(err).to.be.null
 

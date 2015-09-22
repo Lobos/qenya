@@ -18,7 +18,7 @@ module.exports = function (path) {
       user = yield this.collection(User.name).findOne({ token: token })
       if (user) {
         user.all_accesses = yield userUtils.getAllAccesses(user, this)
-        redis.set(token, user)
+        redis.set(token, user, 'EX', 3600)
       }
     }
 
@@ -26,10 +26,11 @@ module.exports = function (path) {
       return this.Render.expired()
     }
 
-    if (user.all_accesses.indexOf(`${this.request.method}#${path}`) <= 0) {
+    if (path && user.all_accesses.indexOf(`${this.request.method}#${path}`) <= 0) {
       return this.Render.noAuth()
     }
 
+    this.admin = user
     yield next
   }
 }

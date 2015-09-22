@@ -198,7 +198,7 @@ class Schema {
           let cvt = convertDBRef(ptype, val)
           val = cvt.val
           if (cvt.err) {
-            err = i18n.__('schema.type_error', k)
+            //err = i18n.__('schema.type_error', k)
           }
         } else {
           if (!isArray) {

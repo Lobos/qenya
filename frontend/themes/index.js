@@ -2,7 +2,7 @@
 
 const themes = {
   'pure': {
-    global: require('./pure/global.less'),
+    reset: require('./pure/reset.less'),
     login: require('./pure/login.less')
   }
 }

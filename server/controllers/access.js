@@ -53,7 +53,7 @@ exports.update = function *() {
 }
 
 exports.remove = function *() {
-  if (!id) {
+  if (!this.params.id) {
     this.Render.fail('')
     return
   }
