@@ -1,0 +1,30 @@
+@import '../mixins/mixins.less';
+
+:local(.header) {
+  height: 50px;
+  border-bottom: solid 1px #ccc;
+}
+
+:local(.title) {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 50px;
+  padding-left: 20px;
+}
+
+:local(.info) {
+  position: absolute;
+  right: 20px;
+  top: 13px;
+
+  * {
+    vertical-align: middle;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+    border-radius: 50%;
+  }
+}

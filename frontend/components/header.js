@@ -16,12 +16,12 @@ export default class Header extends Component {
   }
 
   render () {
-    const { info } = this.props
+    const { info, styles } = this.props
 
     return (
-      <header>
-        <div>{ Config.TITLE }</div>
-        <div>
+      <header className={styles.header}>
+        <div className={styles.title}>{ Config.TITLE }</div>
+        <div className={styles.info}>
           <img src={info.avatar} />
           { info.nickname }
         </div>

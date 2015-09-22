@@ -1,3 +1,14 @@
+@import '../mixins/mixins.less';
+
+* {
+  .box-sizing(border-box);
+}
+*:before,
+*:after {
+  .box-sizing(border-box);
+}
+
 body {
   font-size: 14px;
+  background: url('./images/body-bg.png');
 }
