@@ -1,11 +1,28 @@
 @import '../mixins/mixins.less';
 
 :local(.header) {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: 100%;
   height: 50px;
-  border-bottom: solid 1px #ccc;
+  color: #fff;
+  background: #37444e;
+}
+
+:local(.navHandle) {
+  display: inline-block;
+  vertical-align: top;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  border-right: solid 1px #273038;
+  text-align: center;
 }
 
 :local(.title) {
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
   line-height: 50px;
@@ -14,16 +31,19 @@
 
 :local(.info) {
   position: absolute;
-  right: 20px;
-  top: 13px;
+  top: 0;
+  padding: 10px;
+  right: 10px;
+  height: 50px;
+  border-left: solid 1px #273038;
 
   * {
     vertical-align: middle;
   }
 
   img {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     margin-right: 6px;
     border-radius: 50%;
   }

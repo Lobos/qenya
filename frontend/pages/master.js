@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { setAdminStatus, loadAdminInfo, login } from '../actions/admin'
 import Login from '../components/login'
 import Header from '../components/header'
+import Navigation from '../components/navigation'
 
 class Master extends Component {
   static displayName = 'Pages/Master'
@@ -18,18 +19,28 @@ class Master extends Component {
     styles: PropTypes.object
   }
 
+  state = {
+    showSidebar: true
+  }
+
   componentWillMount () {
     this.props.loadAdminInfo()
+  }
+
+  toggleSidebar () {
+    let showSidebar = !this.state.showSidebar
+    this.setState({ showSidebar })
   }
 
   render () {
     const { styles, login, admin: { info, status, msg } } = this.props
     return (
       <div>
-        <Header info={info} styles={styles.header} />
+        <Header toggleSidebar={this.toggleSidebar.bind(this)} info={info} styles={styles.header} />
+        <Navigation styles={styles.navigation} />
 
         { status >= 2 ?
-          <div className="main">{this.props.children}</div> :
+          <div className={styles.main.container}>{this.props.children}</div> :
           <Login msg={msg} status={status} login={login} styles={styles.login} />
         }
       </div>

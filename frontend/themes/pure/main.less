@@ -1,0 +1,28 @@
+:local(.container) {
+  margin: 50px 0 0 200px;
+}
+
+:local(.breadcrumb) {
+  padding: 10px 20px;
+  list-style: none;
+
+  li {
+    font-size: 12px;
+    display: inline-block;
+    color: #aaa;
+
+    &:after {
+      content: '/';
+      padding: 0 5px 0 7px;
+      color: #ccc;
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+
+    a {
+      color: #2685ee;
+    }
+  }
+}

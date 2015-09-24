@@ -10,6 +10,7 @@ import { bindStore } from './utils/request'
 
 import Master from './pages/master'
 import Home from './pages/home'
+import User from './pages/user'
 
 const history = createHistory({ queryKey: false })
 const store = configureStore({ styles: getStyles() })
@@ -23,6 +24,7 @@ const Routes = (
       <Router history={history}>
         <Route path="/" indexRoute={{ component: Home }} component={Master}>
           <Route path="/home" component={Home} />
+          <Route path="/user" component={User} />
         </Route>
       </Router>
     } 
