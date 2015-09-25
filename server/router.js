@@ -5,6 +5,7 @@ const adminController = require('./controllers/admin')
 const roleController = require('./controllers/role')
 const userController = require('./controllers/user')
 const accessController = require('./controllers/access')
+const schemaController = require('./controllers/schema')
 const auth = require('./middlewares/auth')
 
 module.exports = router
@@ -27,3 +28,5 @@ router.get('/accesses', accessController.list)
 router.post('/access', accessController.insert)
 router.put('/access/:id', accessController.update)
 router.del('/access/:id', accessController.remove)
+
+router.get('/schema/code/:code', schemaController.getByCode)

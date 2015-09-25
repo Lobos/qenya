@@ -1,6 +1,7 @@
 'use strict'
 
 exports.DEFAULTDB = "hydra"
+exports.DEBUG = true
 
 exports.MONGO = {
   host: 'localhost',

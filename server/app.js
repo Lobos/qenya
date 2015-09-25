@@ -8,16 +8,12 @@ const router = require('./router')
 const mongo = require('./middlewares/mongo')
 const i18n = require('./middlewares/i18n')
 const render = require('./middlewares/render')
+const logger = require('./middlewares/logger')
 
 let app = koa()
 
 // logger
-app.use(function *(next){
-  var start = new Date
-  yield next
-  var ms = new Date - start
-  console.log('%s %s - %s', this.method, this.url, ms)
-})
+app.use(logger)
 
 app.use(i18n(config.I18N))
 

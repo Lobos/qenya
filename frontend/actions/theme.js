@@ -1,5 +1,3 @@
-'use strict'
-
 import { getStyles } from '../themes'
 
 export const SET_THEME = 'SET_THEME'

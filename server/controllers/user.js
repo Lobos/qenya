@@ -1,11 +1,8 @@
 'use strict'
 
-const md5 = require('md5')
 const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
 const User = require('../schema/user')
-const userUtils = require('../utils/user')
-const redis = require('../utils/redis').getClient()
 
 // need pagination
 exports.page = function *() {

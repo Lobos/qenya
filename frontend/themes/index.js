@@ -1,5 +1,3 @@
-'use strict'
-
 require('./pure/icon.less')
 
 const themes = {

@@ -1,5 +1,3 @@
-'use strict'
-
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { setAdminStatus, loadAdminInfo, login } from '../actions/admin'

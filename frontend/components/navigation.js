@@ -1,5 +1,3 @@
-'use strict'
-
 import { Component, PropTypes } from 'react'
 import { Icon } from 'rctui'
 

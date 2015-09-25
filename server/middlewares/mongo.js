@@ -1,6 +1,6 @@
-// from https://github.com/MangroveTech/koa-mongo
-
 'use strict'
+
+// from https://github.com/MangroveTech/koa-mongo
 
 var mongodb = require('mongodb')
 var debug = require('debug')('koa-mongo')

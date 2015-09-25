@@ -1,5 +1,3 @@
-'use strict'
-
 import { SET_THEME } from '../actions/theme'
 
 export default function styles(state = {}, action) {

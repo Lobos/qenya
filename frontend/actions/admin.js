@@ -1,5 +1,3 @@
-'use strict'
-
 import Request, { bindNoAuthAction } from '../utils/request'
 import Authentication from 'hydra-authentication'
 

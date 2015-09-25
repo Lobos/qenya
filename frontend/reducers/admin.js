@@ -1,5 +1,3 @@
-'use strict'
-
 import objectAssign from 'object-assign'
 import { ADMIN_STATUS, RECEIVE_ADMIN_INFO } from '../actions/admin'
 

@@ -1,8 +1,7 @@
-'use strict'
-
 import Qwest from 'qwest'
 import Authentication from 'hydra-authentication'
 import objectAssign from 'object-assign'
+import { Message } from 'rctui'
 
 function getOptions(options) {
   options = options || {}
@@ -26,6 +25,8 @@ methods.forEach(m => {
         // catch all noauth error
         if (xhr.status === 401 && setAdminStatus) {
           globalStore.dispatch(setAdminStatus(0, res.msg))
+        } else if (xhr.status === 404) {
+          Message.show('请求的地址不存在', 'error')
         }
       })
     }

@@ -1,5 +1,3 @@
-'use strict'
-
 import { Route, Router } from 'react-router'
 import { Provider } from 'react-redux'
 import createHistory from 'history/lib/createHashHistory'

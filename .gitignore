@@ -10,3 +10,4 @@ publish
 *.bat
 *.sh
 /components
+log
