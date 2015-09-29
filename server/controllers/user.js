@@ -5,8 +5,14 @@ const ObjectId = mongodb.ObjectId
 const User = require('../schema/user')
 
 // need pagination
-exports.page = function *() {
+exports.list = function *() {
   let users = yield this.collection(User.name).find({}).toArray()
+  users = users.map(function(u) {
+    return {
+      _id: u._id,
+      update_at: u.update_at
+    }
+  })
   this.Render.success(users)
 }
 

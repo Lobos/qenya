@@ -7,7 +7,8 @@ const themes = {
     login: require('./pure/login.less'),
     main: require('./pure/main.less'),
     navigation: require('./pure/navigation.less'),
-    content: require('./pure/content.less')
+    content: require('./pure/content.less'),
+    list: require('./pure/list.less')
   }
 }
 

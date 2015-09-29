@@ -2151,6 +2151,10 @@ a {
 .frontend-themes-pure-main---breadcrumb---11xeg li a {
   color: #2685ee;
 }
+.frontend-themes-pure-main---loading---v59cV {
+  padding: 100px;
+  text-align: center;
+}
 .frontend-themes-pure-navigation---nav---2AERR {
   position: fixed;
   overflow: auto;
@@ -2223,6 +2227,16 @@ a {
 .frontend-themes-pure-navigation---separator---AGxdR {
   padding: 5px 20px;
   color: #a2acb3;
+}
+.frontend-themes-pure-list---container---3mr1K {
+  padding: 20px;
+}
+.frontend-themes-pure-list---container---3mr1K table {
+  min-width: 100%;
+}
+.frontend-themes-pure-list---loading---3NOHK {
+  text-align: center;
+  padding: 150px 0 0;
 }
 .rct-button {
   /* Structure */

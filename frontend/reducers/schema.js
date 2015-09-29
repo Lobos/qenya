@@ -7,7 +7,6 @@ export default function schema(state = {
 }, action) {
   switch (action.type) {
     case SCHEMA_REQUEST:
-    case SCHEMA_FAILURE:
       return objectAssign({}, state, {
         isFetching: true
       })
@@ -16,6 +15,11 @@ export default function schema(state = {
       return objectAssign({}, state, {
         isFetching: false,
         schemas: { [action.code]: action.response }
+      })
+
+    case SCHEMA_FAILURE:
+      return objectAssign({}, state, {
+        isFetching: false
       })
 
     default:

@@ -1,9 +1,10 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { setAdminStatus, loadAdminInfo, login } from '../actions/admin'
+import { loadAdminInfo, login } from '../actions/admin'
 import Login from '../components/login'
 import Header from '../components/header'
 import Navigation from '../components/navigation'
+import Loading from '../components/loading'
 
 class Master extends Component {
   static displayName = 'Pages/Master'
@@ -13,7 +14,6 @@ class Master extends Component {
     children: PropTypes.any,
     loadAdminInfo: PropTypes.func,
     login: PropTypes.func,
-    setAdminStatus: PropTypes.func,
     styles: PropTypes.object
   }
 
@@ -32,12 +32,17 @@ class Master extends Component {
 
   render () {
     const { styles, login, admin: { info, status, msg } } = this.props
+
+    if (status === 2) {
+      return <Loading className={styles.main.loading} />
+    }
+
     return (
       <div>
         <Header toggleSidebar={this.toggleSidebar.bind(this)} info={info} styles={styles.header} />
         <Navigation styles={styles.navigation} />
 
-        { status >= 2 ?
+        { status === 3 ?
           <div className={styles.main.container}>{this.props.children}</div> :
           <Login msg={msg} status={status} login={login} styles={styles.login} />
         }
@@ -55,5 +60,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { setAdminStatus, loadAdminInfo, login }
+  { loadAdminInfo, login }
 )(Master)

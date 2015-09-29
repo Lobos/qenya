@@ -18,7 +18,7 @@ export const RECEIVE_ADMIN_INFO = 'RECEIVE_ADMIN_INFO'
 function receiveInfo(info, msg) {
   return {
     type: RECEIVE_ADMIN_INFO,
-    status: 2,
+    status: 3,
     msg,
     info
   }
@@ -32,7 +32,7 @@ export function loadAdminInfo() {
       return
     }
 
-    dispatch(setAdminStatus(1, '读取中...'))
+    dispatch(setAdminStatus(2, '读取中...'))
     Request.get('/admin/info')
       .then((xhr, res) => {
         dispatch(receiveInfo(res.data))

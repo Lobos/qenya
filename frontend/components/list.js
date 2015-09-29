@@ -1,12 +1,14 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'rctui'
+import Loading from '../components/loading'
 
-class TableExtend extends Component {
-  static displayName = 'TableExtend'
+class List extends Component {
+  static displayName = 'List'
 
   static propTypes = {
     data: PropTypes.array,
+    isFetching: PropTypes.bool,
     schema: PropTypes.object,
     styles: PropTypes.object
   }
@@ -16,7 +18,7 @@ class TableExtend extends Component {
   }
 
   render () {
-    const { data, schema } = this.props
+    const { data, isFetching, schema, styles } = this.props
     const headers = Object.keys(schema).map(k => {
       let prop = schema[k]
       return {
@@ -26,17 +28,22 @@ class TableExtend extends Component {
       }
     })
     return (
-      <Table headers={headers} data={data} />
+      <div className={styles.container}>
+        { isFetching ?
+          <Loading className={styles.loading} /> :
+          <Table headers={headers} data={data} />
+        }
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
   return {
-    styles: state.styles.table
+    styles: state.styles.list
   }
 }
 
 export default connect(
   mapStateToProps
-)(TableExtend)
+)(List)

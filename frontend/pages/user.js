@@ -1,13 +1,17 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loadSchema } from '../actions/schema'
+import { loadEntity } from '../actions/entity'
+import { loadList } from '../actions/list'
 import Breadcrumb from '../components/breadcrumb'
-import Table from '../components/table'
+import List from '../components/list'
 
 class User extends Component {
   static displayName = 'Pages/User'
 
   static propTypes = {
+    loadEntity: PropTypes.func,
+    loadList: PropTypes.func,
     loadSchema: PropTypes.func,
     schema: PropTypes.object,
     styles: PropTypes.object
@@ -15,6 +19,7 @@ class User extends Component {
 
   componentWillMount () {
     this.props.loadSchema('user')
+    this.props.loadList('user', '/user/list')
   }
 
   render () {
@@ -22,7 +27,7 @@ class User extends Component {
     return (
       <div>
         <Breadcrumb items={['账户权限', '用户']} />
-        <Table schema={schema.schemas['user'] || {}} />
+        <List schema={schema.schemas['user'] || {}} />
       </div>
     )
   }
@@ -37,5 +42,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { loadSchema }
+  { loadSchema, loadEntity, loadList }
 )(User)

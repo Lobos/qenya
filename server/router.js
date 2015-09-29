@@ -19,7 +19,7 @@ router.post('/role', roleController.insert)
 router.put('/role/:id', roleController.update)
 router.del('/role/:id', roleController.remove)
 
-router.get('/users', userController.page)
+router.get('/user/list', userController.list)
 router.get('/user/:id', userController.findOne)
 router.post('/user', userController.insert)
 router.put('/user/:id', userController.update)
