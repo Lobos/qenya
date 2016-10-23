@@ -11,3 +11,4 @@ publish
 *.sh
 /components
 log
+/data
