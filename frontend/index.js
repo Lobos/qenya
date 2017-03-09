@@ -1,7 +1,16 @@
 import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
 import Root from './components/Root'
-import configureStore from './store'
+import store from './store'
 
-const store = configureStore()
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component store={store} />
+    </AppContainer>,
+    document.querySelector('#root')
+  )
+}
 
-ReactDOM.render(<Root store={store} />, document.querySelector('#root'))
+render(Root)
+module.hot && module.hot.accept('./components/Root', () => render(Root))

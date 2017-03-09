@@ -2,10 +2,14 @@
 <html>
   <head>
     <title>Hydra</title>
+    <link rel="stylesheet" href="/static/css/fonts.css" />
   </head>
   <body>
     <div id='root'>
     </div>
+    <script>
+      window.globalData = {{JSON.stringify(globalData)}}
+    </script>
     <script src="/static/js/react-with-addons.js"></script>
     <script src="/static/js/react-dom.js"></script>
     <script src="/static/js/app.js"></script>

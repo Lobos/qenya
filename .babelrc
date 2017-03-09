@@ -1,7 +1,11 @@
 {
-  "presets": ["es2015", "react"],
+  "presets": [
+    ["es2015", { "modules": false }],
+    "react"
+  ],
   "plugins": [
     "react-hot-loader/babel",
+    "es6-promise",
     "transform-object-rest-spread",
     "transform-object-assign"
   ]

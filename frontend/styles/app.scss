@@ -2,14 +2,68 @@ html {
   font-size: 14px;
 }
 
+body {
+  background-color: #f2f2f2;
+}
+
 .header {
   height: 50px;
-  background-color: #f2f2f2;
+  background-color: #fff;
   border-bottom: 1px solid #e7e7e7;
+
+  .logo {
+    display: inline-block;
+    padding: 0 1rem;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .link {
+    display: inline-block;
+    padding-left: 1rem;
+  }
 }
 
 .main {
   max-width: 1200px;
-  padding: 1rem 2rem;
+  padding: 1.5rem;
   margin: auto;
+}
+
+.tab-content {
+  background-color: #fff;
+  padding: 2rem;
+  border: solid 1px #ddd;
+  border-top-width: 0;
+  min-height: 400px;
+}
+
+.tab-buttons {
+  margin-bottom: 1rem;
+
+  button {
+    margin-right: 10px;
+  }
+}
+
+.row-list {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-top: -1px;
+  cursor: move;
+
+  & > div {
+    padding: 0.75rem;
+  }
+
+  &.hide {
+    transform: scale(0);
+  }
+}
+
+.row-header {
+  font-weight: bold;
+  border-width: 0 0 2px 0;
 }

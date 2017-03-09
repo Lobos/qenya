@@ -1,0 +1,58 @@
+@font-face {font-family: 'hydra';
+    src: url('../fonts/hydra.eot'); /* IE9*/
+    src: url('../fonts/hydra.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/hydra.woff') format('woff'), /* chrome、firefox */
+    url('../fonts/hydra.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../fonts/hydra.svg#hydra') format('svg'); /* iOS 4.1- */
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "hydra" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home:before {
+  content: "\61";
+}
+.icon-plus:before {
+  content: "\62";
+}
+.icon-trash:before {
+  content: "\64";
+}
+.icon-save:before {
+  content: "\65";
+}
+.icon-times:before {
+  content: "\66";
+}
+.icon-help:before {
+  content: "\67";
+}
+.icon-info:before {
+  content: "\68";
+}
+.icon-menu:before {
+  content: "\69";
+}
+.icon-list:before {
+  content: "\6a";
+}
+.icon-edit:before {
+  content: "\6b";
+}
+.icon-check:before {
+  content: "\63";
+}
+.icon-search:before {
+  content: "\6c";
+}

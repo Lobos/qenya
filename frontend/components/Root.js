@@ -1,20 +1,18 @@
-import React, { PropTypes } from 'react'
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { PropTypes, PureComponent } from 'react'
+import { Router, hashHistory } from 'react-router'
 import { Provider } from 'react-redux'
+import routes from './routes'
 
-import App from './App'
-import Schemas from './Schemas'
-
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Schemas} />
-        <Route path="schemas" component={Schemas} />
-      </Route>
-    </Router>
-  </Provider>
-)
+class Root extends PureComponent {
+  render () {
+    const { store } = this.props
+    return (
+      <Provider store={store}>
+        <Router history={hashHistory} routes={routes} />
+      </Provider>
+    )
+  }
+}
 
 Root.propTypes = {
   store: PropTypes.object.isRequired

@@ -15,15 +15,14 @@ function wirteLog (type, args) {
     return
   }
 
-  const date = new Date()
+  const date = Date.now()
 
   args = slice.call(args)
   args.unshift(Datetime.format(date, 'yyyy-MM-dd hh:mm:ss'))
   const msg = args.join(' ')
 
   if (filePrint) {
-    let date = Datetime.format(date, 'yyyyMMdd')
-    fs.appendFile(`${config.logPath}/${type}-${date}.log`, msg + '\n')
+    fs.appendFile(`${config.logPath}/${type}-${Datetime.format(date, 'yyyyMMdd')}.log`, msg + '\n')
   }
 
   if (config.debug) {

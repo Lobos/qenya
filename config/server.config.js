@@ -24,7 +24,8 @@ const config = {
   },
 
   tingo: {
-    'path': './data'
+    'hydra': './data',
+    'data': './data/data'
   }
 }
 

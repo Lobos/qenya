@@ -1,8 +1,9 @@
 import coRequest from 'co-request'
+import send from 'koa-send'
 import createApp from './server/app'
 
 const router = require('koa-router')()
-router.get('/static/*', async function (ctx, next) {
+router.get('/static/**/*.js(on)?', async function (ctx, next) {
   let options = {
     uri: 'http://localhost:5001' + ctx.url,
     mothed: 'GET',
@@ -16,6 +17,10 @@ router.get('/static/*', async function (ctx, next) {
     ctx.set(key, response.headers[key])
   }
   ctx.body = response.body
+})
+
+router.get('/static/*', async function (ctx, next) {
+  await send(ctx, ctx.path)
 })
 
 // server ====================================

@@ -11,30 +11,50 @@ module.exports = {
   externals: {'react': 'React', 'react-dom': 'ReactDOM'},
   plugins: [],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel'
-      },
-      {
-        test: /\.(css|less)$/,
-        loader: 'style-loader!css-loader!postcss-loader!less-loader'
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules&localIdentName=[hash:base64:8]',
-          'postcss-loader',
-          'sass-loader'
+        use: [
+          {loader: 'style-loader'},
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]-[local]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function () {
+                return [
+                  precss,
+                  autoprefixer
+                ]
+              }
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
         ]
       },
-      { test: /\.(png|jpg|jpeg|gif)$/,
-        loader: 'url-loader?limit=10000&name=./images/[name].[ext]'
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: './images/[name].[ext]'
+            }
+          }
+        ]
       }
     ]
-  },
-  postcss: function () {
-    return [autoprefixer, precss]
   }
 }
