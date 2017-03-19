@@ -10,8 +10,7 @@ const dataType = [
   'enum',
   'integer',
   'number',
-  'text',
-  'username'
+  'text'
 ]
 
 class Field extends Component {

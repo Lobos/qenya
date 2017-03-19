@@ -1,5 +1,5 @@
 import { FIRST_NAME, LAST_NAME, LOREM } from './definitions'
-import { pickString, pickInteger, pickDate } from './pick'
+import { pickText, pickInteger, pickNumber, pickDate } from './pick'
 import { pickEnum } from './enum'
 
 export default async function (fields, db, getList) {
@@ -10,13 +10,16 @@ export default async function (fields, db, getList) {
       let res = ''
       switch (f.type) {
         case 'username':
-          res = pickString(LAST_NAME) + pickString(FIRST_NAME)
+          res = pickText(LAST_NAME) + pickText(FIRST_NAME)
           break
         case 'bool':
-          res = pickString([true, false])
+          res = pickText([true, false])
           break
         case 'integer':
           res = pickInteger(f.max, f.min)
+          break
+        case 'number':
+          res = pickNumber(f.max, f.min)
           break
         case 'enum':
           res = await pickEnum(f, db, getList)
@@ -26,7 +29,7 @@ export default async function (fields, db, getList) {
           res = pickDate(f)
           break
         default:
-          res = pickString(LOREM, f.max || 20, 1)
+          res = pickText(LOREM, f.max || 20, 1)
       }
       data[f.name] = res
     }

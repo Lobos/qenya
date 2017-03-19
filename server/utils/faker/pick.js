@@ -1,6 +1,6 @@
 import * as Datetime from '../datetime'
 
-export function pickString (items, max = 1, min) {
+export function pickText (items, max = 1, min) {
   let length = max
   if (min) {
     length = pickInteger(max, min)
@@ -14,8 +14,12 @@ export function pickString (items, max = 1, min) {
   return max === 1 ? buffer[0] : buffer.join('')
 }
 
-export function pickInteger (max = 65555, min = 0) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+export function pickNumber (max = 65555, min = 0) {
+  return Math.random() * (max - min + 1) + min
+}
+
+export function pickInteger () {
+  return Math.floor(pickNumber(...arguments))
 }
 
 export function pickDate (field) {

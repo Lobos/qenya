@@ -17,21 +17,21 @@ class Edit extends PureComponent {
 
   render () {
     return (
-      <Card style={{padding: 20}}>
-        <Form data={this.state.data}>
-          <FormControl label="路径" grid={7 / 8} tip="路径，可以使用通配符。例：/abc/:id/" required name="path" type="text" />
-          <FormControl grid={1 / 4} label="请求方法" defaultValue="get" required name="method" type="select" data={['get', 'post', 'put', 'delete']} />
-          <FormControl grid={1 / 4} label="操作" defaultValue="get" required name="op" type="select"
+      <Card>
+        <Card.Header>增加路由</Card.Header>
+        <Form buttons={{
+          primary: '提交',
+          cancel: '取消'
+          }} style={{padding: 20}} data={this.state.data}>
+          <FormControl label="路径" grid={3 / 5} tip="路径，可以使用通配符。例：/abc/:id/" required name="path" type="text" />
+          <FormControl grid={1 / 4} label="操作" defaultValue="get" required name="method" type="select"
             data={{
               get: '查询',
               post: '保存／更新',
               delete: '删除'
             }} />
-          <FormControl label="Query" grid={7 / 8} name="query" rows={3} type="json" />
-          <FormControl label="描述" grid={7 / 8} name="desc" rows={3} type="textarea" />
-          <FormControl label="Map" gird={7 / 8}>
-            map
-          </FormControl>
+          <FormControl label="跨域支持" grid={3 / 5} name="cros" rows={3} type="json" tip="一行一个域名，如果不支持跨域，留空" />
+          <FormControl label="描述" grid={3 / 5} name="desc" rows={3} type="textarea" />
         </Form>
       </Card>
     )
