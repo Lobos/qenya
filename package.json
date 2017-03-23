@@ -5,7 +5,7 @@
   "description": "a web application base on koa and react",
   "main": "",
   "scripts": {
-    "dev": "node dev.app.js & nodemon --watch server babel.app.js"
+    "dev": "node dev.app.js | nodemon --watch server babel.app.js"
   },
   "keywords": [
     "hydra"
@@ -28,6 +28,7 @@
     "co-request": "^1.0.0",
     "co-views": "^2.1.0",
     "curry": "~1.2.0",
+    "es6-promise": "^4.1.0",
     "faker": "^3.1.0",
     "i18n-2": "^0.6.3",
     "jquery-param": "^0.2.0",
