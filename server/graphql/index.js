@@ -2,10 +2,11 @@ import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLList,
+  GraphQLInt,
   GraphQLID
 } from 'graphql'
 import objectId from '../utils/objectId'
-import { getOne, getList } from '../models/data'
+import { getOne, getPageList } from '../models/data'
 import { getType } from './type'
 
 function getOneQuery (db, schema, graphType) {
@@ -24,9 +25,21 @@ function getOneQuery (db, schema, graphType) {
 
 function getListQuery (db, schema, graphType, query = {}) {
   return {
-    type: new GraphQLList(graphType),
-    resolve: () => {
-      return getList(db.collection(schema.code), query)
+    type: new GraphQLObjectType({
+      name: `${schema.code}List`,
+      fields: {
+        total: { type: GraphQLInt },
+        page: { type: GraphQLInt },
+        size: { type: GraphQLInt },
+        list: { type: new GraphQLList(graphType) }
+      }
+    }),
+    args: {
+      page: { type: GraphQLInt },
+      size: { type: GraphQLInt }
+    },
+    resolve: (root, {page = 1, size = 20}) => {
+      return getPageList(db.collection(schema.code), query, page, size)
     }
   }
 }
