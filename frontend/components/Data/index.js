@@ -83,7 +83,7 @@ class Data extends Component {
             增加数据
           </Button>
 
-          <Dropdown text="生成模拟数据">
+          <Dropdown style={{margin: '0 0.75rem'}} text="生成模拟数据">
             {[10, 50, 100].map(i => (
               <a key={i} href="javascript:;" onClick={this.handleMockCreate.bind(this, i)}>
                 {i}条数据
