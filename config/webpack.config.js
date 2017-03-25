@@ -8,7 +8,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/static/js/'
   },
-  externals: {'react': 'React', 'react-dom': 'ReactDOM'},
+  externals: {'react': 'React', 'react-dom': 'ReactDOM', 'graphiql': 'GraphiQL'},
   plugins: [],
   resolve: {
     alias: {

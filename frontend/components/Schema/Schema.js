@@ -2,6 +2,7 @@ import { PureComponent, PropTypes } from 'react'
 import { Breadcrumb, Nav } from 'rctui'
 import Fields from './Fields'
 import Data from './Data'
+import Graphql from './Graphql'
 
 import _styles from '../../styles/app.scss'
 
@@ -38,6 +39,7 @@ class Schema extends PureComponent {
         <div className={_styles['tab-content']}>
           { tab === 'fields' && <Fields schema={schema} /> }
           { tab === 'data' && <Data schema={schema} /> }
+          { tab === 'graphql' && <Graphql schema={schema} /> }
         </div>
       </div>
     )
