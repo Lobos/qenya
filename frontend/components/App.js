@@ -5,7 +5,7 @@ import config from 'rctui/config'
 
 config.iconfont = 'hydra'
 
-import _styles from '../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 export default function App (props) {
   return (

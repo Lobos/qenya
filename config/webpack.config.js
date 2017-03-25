@@ -10,6 +10,11 @@ module.exports = {
   },
   externals: {'react': 'React', 'react-dom': 'ReactDOM'},
   plugins: [],
+  resolve: {
+    alias: {
+      _: path.resolve(__dirname, '../frontend')
+    }
+  },
   module: {
     rules: [
       {

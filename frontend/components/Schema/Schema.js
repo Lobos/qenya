@@ -1,7 +1,7 @@
 import { PureComponent, PropTypes } from 'react'
 import { Breadcrumb, Nav } from 'rctui'
-import Fields from '../Fields'
-import Data from '../Data'
+import Fields from './Fields'
+import Data from './Data'
 
 import _styles from '../../styles/app.scss'
 
@@ -32,6 +32,7 @@ class Schema extends PureComponent {
         <Nav active={tab || 'fields'} onSelect={this.handleTabChange} type="tab">
           <Nav.Item id="fields">字段</Nav.Item>
           <Nav.Item id="data">数据</Nav.Item>
+          <Nav.Item id="graphql">Graphql</Nav.Item>
         </Nav>
 
         <div className={_styles['tab-content']}>

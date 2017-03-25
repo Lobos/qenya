@@ -1,6 +1,6 @@
 import { PureComponent, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { getList } from '../../actions/schemas'
+import { getList } from '_/actions/schemas'
 import { Card, Form, FormControl } from 'rctui'
 
 class Edit extends PureComponent {

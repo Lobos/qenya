@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Breadcrumb, Table, Button, Modal, Form, FormControl, Icon, Tooltip, Card } from 'rctui'
 import * as Datetime from 'rctui/utils/datetime'
-import { getList, saveCollection, removeCollection } from '../actions/schemas'
+import { getList, saveCollection, removeCollection } from '_/actions/schemas'
 import Refetch from 'refetch'
 
-import _styles from '../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 class Collection extends PureComponent {
   constructor (props) {

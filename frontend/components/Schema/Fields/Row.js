@@ -2,7 +2,7 @@ import { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { Grid, Tooltip, Icon } from 'rctui'
 
-import _styles from '../../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 class Row extends Component {
   constructor (props) {

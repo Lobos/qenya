@@ -1,4 +1,4 @@
-import { DATA_LIST } from '../actions/data'
+import { DATA_LIST } from '_/actions/data'
 
 export default function (state = {
   status: 0,
