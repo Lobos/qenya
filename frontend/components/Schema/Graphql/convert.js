@@ -1,13 +1,7 @@
 function convertFields (fields, pad) {
-  const rows = []
+  const rows = ['id']
   fields.forEach(f => {
-    if (f.sourceType === 'ref') {
-      rows.push(f.name + '{')
-      rows.push('  id')
-      rows.push('}')
-    } else {
-      rows.push(f.name)
-    }
+    rows.push(f.name)
   })
 
   return rows.join('\n' + pad)

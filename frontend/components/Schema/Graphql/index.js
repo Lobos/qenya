@@ -44,7 +44,7 @@ class Graphql extends PureComponent {
       <div>
         <ButtonGroup style={{marginBottom: 20}}>
           {['list', 'one', 'mutation'].map(s => (
-          <Button status={query === s ? 'primary' : undefined}
+          <Button key={s} status={query === s ? 'primary' : undefined}
             onClick={this.handleQueryChange.bind(this, s)}
           >{s}</Button>
           ))}

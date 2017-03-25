@@ -1,6 +1,6 @@
 import {
   GraphQLObjectType,
-  GraphQLList,
+  // GraphQLList,
   GraphQLString,
   GraphQLBoolean,
   GraphQLInt,
@@ -8,8 +8,10 @@ import {
 } from 'graphql'
 import objectId from '../utils/objectId'
 import { getOne, getList } from '../models/data'
+import RefType from './RefType'
+import { substitute } from '../utils/strings'
 
-const typeDict = {}
+let typeDict = {}
 
 function convertType (type) {
   switch (type) {
@@ -41,16 +43,34 @@ export function getType (schema, schemas, db) {
 
       if (f.mult) {
         fields[f.name] = {
-          type: new GraphQLList(getType(ref)),
-          resolve: d => {
+          // type: new GraphQLList(getType(ref)),
+          type: RefType,
+          args: {
+            fmt: { type: GraphQLString },
+            join: { type: GraphQLString }
+          },
+          resolve: (d, {fmt, join}) => {
             return getList(db.collection(ref.code), {_id: {$in: d[f.sourceRef]}})
+              .then(value => {
+                if (!fmt) return value
+                value = value.map(v => substitute(fmt, v))
+                if (join) value = value.join(join)
+                return value
+              })
           }
         }
       } else {
         fields[f.name] = {
-          type: getType(ref),
-          resolve: d => {
-            return getOne(db.collection(ref.code), {_id: objectId(d[f.sourceRef][0])})
+          type: RefType,
+          args: {
+            fmt: { type: GraphQLString }
+          },
+          resolve: (d, {fmt}) => {
+            return getOne(db.collection(ref.code), {_id: objectId(d[f.sourceRef])})
+              .then(value => {
+                if (!fmt) return value
+                return substitute(fmt, value)
+              })
           }
         }
       }
@@ -69,3 +89,6 @@ export function getType (schema, schemas, db) {
   return gt
 }
 
+export function clearType () {
+  typeDict = {}
+}
