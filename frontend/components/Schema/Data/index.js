@@ -1,11 +1,11 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Dropdown, Icon, Modal, Pagination } from 'rctui'
-import { getData, saveData, removeData, createMockData, removeAll } from '../../actions/data'
+import { getData, saveData, removeData, createMockData, removeAll } from '_/actions/data'
 import Table from './Table'
 import Edit from './Edit'
 
-import _styles from '../../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 class Data extends Component {
   constructor (props) {
@@ -83,7 +83,7 @@ class Data extends Component {
             增加数据
           </Button>
 
-          <Dropdown text="生成模拟数据">
+          <Dropdown style={{margin: '0 0.75rem'}} text="生成模拟数据">
             {[10, 50, 100].map(i => (
               <a key={i} href="javascript:;" onClick={this.handleMockCreate.bind(this, i)}>
                 {i}条数据

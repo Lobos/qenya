@@ -34,6 +34,11 @@ class DataTable extends Component {
       }
     })
 
+    columns.unshift({
+      header: 'ID',
+      name: '_id'
+    })
+
     columns.push({
       width: '4rem',
       content: d => (

@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Breadcrumb, Table, Button, Modal, Form, FormControl, Icon, Tooltip, Card } from 'rctui'
 import * as Datetime from 'rctui/utils/datetime'
-import { getList, saveCollection, removeCollection } from '../actions/schemas'
+import { getList, saveCollection, removeCollection } from '_/actions/schemas'
 import Refetch from 'refetch'
 
-import _styles from '../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 class Collection extends PureComponent {
   constructor (props) {
@@ -85,7 +85,9 @@ class Collection extends PureComponent {
 
           <Table data={this.props.data}
             columns={[
-              { name: 'code', sort: true, header: 'Code' },
+              { sort: true, header: 'Code', content: d => (
+                <Link to={`/schema/${d.code}`}>{d.code}</Link>
+              ) },
               { name: 'name', header: '名称' },
               { name: 'desc', header: '描述' },
               { name: 'update_at', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.update_at, 'yyyy-MM-dd hh:mm:ss') },

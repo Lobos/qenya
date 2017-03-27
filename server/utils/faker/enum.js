@@ -12,7 +12,7 @@ async function pickRef (field, db, getList) {
     }
     values = Array.from(new Set(values))
     if (field.sep) values = values.join(field.sep)
-    resolve(values)
+    resolve(field.mult ? values : values[0])
   })
 }
 
@@ -41,7 +41,7 @@ async function pickJson (field) {
     }
     values = Array.from(new Set(values))
     if (field.sep) values = values.join(field.sep)
-    resolve(values)
+    resolve(field.mult ? values : values[0])
   })
 }
 

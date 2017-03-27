@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import body from 'koa-bodyparser'
 import exception from '../middlewares/exception'
 import objectId from '../utils/objectId'
-import { getList, getOne, insert, update, remove } from '../models/data'
+import { getPageList, getOne, insert, update, remove } from '../models/data'
 import { getOne as getSchema } from '../models/schemas'
 import faker from '../utils/faker'
 
@@ -13,7 +13,7 @@ const DB = 'data'
 
 router.get('/data/:schema/:page/:size', async function (ctx, next) {
   const { schema, page = 1, size = 20 } = ctx.params
-  const data = await getList(
+  const data = await getPageList(
     ctx.db(DB).collection(schema),
     ctx.query,
     parseInt(page),
@@ -61,7 +61,7 @@ router.post('/data/:code/mockcreate/:count', async function (ctx, next) {
   let data = []
   count = parseInt(count)
   while (count--) {
-    data.push(await faker(schema.fields, ctx.db(DB), getList))
+    data.push(await faker(schema.fields, ctx.db(DB), getPageList))
   }
 
   insert(ctx.db(DB).collection(code), data)

@@ -1,4 +1,4 @@
-import { SCHEMA_LIST } from '../actions/schemas'
+import { SCHEMA_LIST } from '_/actions/schemas'
 
 export default function (state = {
   status: 0,

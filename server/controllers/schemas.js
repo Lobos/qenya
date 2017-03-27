@@ -3,6 +3,7 @@ import body from 'koa-bodyparser'
 import { getAll, getOne, insertSchema, updateSchema, removeSchema } from '../models/schemas'
 import objectId from '../utils/objectId'
 import exception from '../middlewares/exception'
+import { clearType } from '../graphql/type'
 
 const router = new Router()
 
@@ -30,9 +31,11 @@ router.post('/schema/fields', body(), async function (ctx, next) {
   let { _id, fields } = ctx.request.body
   let schema = await getOne(ctx.db(), { _id: objectId(_id) })
   schema.fields = fields
-  schema.update_at = Date.now()
+  schema.updateAt = Date.now()
   let data = await updateSchema(ctx.db(), schema)
   ctx.Render.success(data[0])
+
+  clearType()
 })
 
 router.post('/schema', body(), async function (ctx, next) {
@@ -40,17 +43,20 @@ router.post('/schema', body(), async function (ctx, next) {
   let method = data._id ? updateSchema : insertSchema
 
   if (!data._id) {
-    data.create_at = Date.now()
+    data.createAt = Date.now()
     data.fields = []
   } else {
     let old = await getOne(ctx.db(), { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
   }
 
-  data.update_at = Date.now()
+  data.updateAt = Date.now()
 
   data = await method(ctx.db(), data)
+
   ctx.Render.success(data[0])
+
+  clearType()
 })
 
 router.del('/schema', body(), async function (ctx, next) {

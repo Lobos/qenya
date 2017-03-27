@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Mask } from 'rctui'
-import { getList } from '../../actions/schemas'
+import { getList } from '_/actions/schemas'
 import Schema from './Schema'
 
 class Container extends Component {

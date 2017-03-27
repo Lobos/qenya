@@ -7,7 +7,7 @@ function getCount (col, query) {
   })
 }
 
-export function getList (col, query = {}, page, size, sort = {_id: -1}) {
+export function getPageList (col, query = {}, page, size, sort = {_id: -1}) {
   return new Promise(async function (resolve, reject) {
     const total = await getCount(col, query)
     col.find(query).sort(sort).skip((page - 1) * size).limit(size).toArray((err, list) => {
@@ -34,6 +34,12 @@ export function update (col, entity) {
       if (err) reject(err)
       else resolve([entity])
     })
+  })
+}
+
+export function getList (col, query) {
+  return new Promise(function () {
+    col.find(query).toArray(callback(...arguments))
   })
 }
 

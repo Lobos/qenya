@@ -2,11 +2,11 @@ import { PureComponent, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Icon, Modal, Grid } from 'rctui'
 import { shallowEqual } from 'rctui/utils/objects'
-import { saveFields } from '../../actions/schemas'
+import { saveFields } from '_/actions/schemas'
 import Field from './Field'
 import RowList from './RowList'
 
-import _styles from '../../styles/app.scss'
+import _styles from '_/styles/app.scss'
 
 class Fields extends PureComponent {
   constructor (props) {

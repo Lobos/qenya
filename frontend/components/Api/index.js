@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
 import { Button, Card, Table, Icon, Input, InputGroup, Message } from 'rctui'
-import { loading } from '../../utils/loading'
+import { loading } from '_/utils/loading'
 import Refetch from 'refetch'
 
 const Loading = loading({ position: 'initial', height: 200 })
