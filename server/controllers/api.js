@@ -21,17 +21,29 @@ router.get('/api/:id', async function (ctx, next) {
 router.post('/api', body(), async function (ctx, next) {
   let data = ctx.request.body
   let method = data._id ? updateApi : insertApi
+  const db = ctx.db()
 
   if (!data._id) {
-    data.create_at = Date.now()
+    data.createAt = Date.now()
   } else {
-    let old = await getOne(ctx.db(), { _id: objectId(data._id) })
+    let old = await getOne(db, { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
   }
 
-  data.update_at = Date.now()
+  const query = { path: data.path, method: data.method }
+  if (data._id) {
+    query._id = { $ne: objectId(data._id) }
+  }
+  const other = await getOne(db, query)
+  console.log(other, query)
+  if (other) {
+    ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already existed.`)
+    return
+  }
 
-  data = await method(ctx.db(), data)
+  data.updateAt = Date.now()
+
+  data = await method(db, data)
   ctx.Render.success(data[0])
 })
 

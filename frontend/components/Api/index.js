@@ -1,50 +1,44 @@
-import { Component, PropTypes } from 'react'
-import { Button, Card, Table, Icon, Input, InputGroup, Message } from 'rctui'
-import { loading } from '_/utils/loading'
-import Refetch from 'refetch'
+import { PureComponent, PropTypes } from 'react'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { fetch } from '_/utils/fetch'
+import { getList, removeApi } from '_/actions/apis'
+import { Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
 
-const Loading = loading({ position: 'initial', height: 200 })
-
-class Api extends Component {
+class Api extends PureComponent {
   constructor (props) {
     super(props)
-    this.state = {
-      data: Loading,
-      filter: ''
-    }
+
+    this.state = { filtre: '' }
 
     this.setFilter = this.setFilter.bind(this)
   }
 
-  componentWillMount () {
-    this._isUnmount = false
-    Refetch.get('/api').then(res => {
-      if (this._isUnmount) return
-      if (res.success) {
-        this.setState({ data: res.model })
-      } else {
-        Message.error(res.msg)
-      }
-    })
-  }
-
-  componentWillUnmount () {
-    this._isUnmount = false
+  componentDidMount () {
+    this.props.dispatch(getList())
   }
 
   handleEdit (id) {
     this.context.router.push('/api/' + id)
   }
 
+  handleRemove (d) {
+    const mid = Modal.confirm(`确定删除 ${d.path} 吗`, () => {
+      this.props.dispatch(removeApi(d._id))
+      Modal.close(mid)
+    }, '删除')
+  }
+
   getData () {
-    let { data, filter } = this.state
-    if (!filter || data === Loading) return data
+    const { data } = this.props
+    let { filter } = this.state
+    if (!filter || !Array.isArray(data)) return data
 
     return data.filter(d => d.path.indexOf(filter) >= 0)
   }
 
   setFilter (filter) {
-    this.setFilter({ filter })
+    this.setState({ filter })
   }
 
   render () {
@@ -66,11 +60,26 @@ class Api extends Component {
 
         <Table data={this.getData()}
           columns={[
-            { name: 'path', header: '路径' },
+            { name: 'path', header: '路径', sort: true },
             { name: 'method', header: '请求方法' },
-            { name: 'op', header: '操作' },
-            { content: d => 'ss' }
+            { name: 'desc', header: '说明' },
+            { width: '4rem', content: d => (
+              <span>
+                <Link to={`/api/${d._id}`}>
+                  <Tooltip position="top" tip="编辑">
+                    <Icon icon="edit" />
+                  </Tooltip>
+                </Link>
+                {' '}
+                <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
+                  <Tooltip position="top" tip="删除">
+                    <Icon icon="trash" />
+                  </Tooltip>
+                </a>
+              </span>
+            ) }
           ]}
+          pagination={{size: 20}}
         />
       </Card>
     )
@@ -78,6 +87,11 @@ class Api extends Component {
 }
 
 Api.propTypes = {
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.element
+  ]),
+  dispatch: PropTypes.func
 }
 
 Api.defaultProps = {}
@@ -86,4 +100,9 @@ Api.contextTypes = {
   router: PropTypes.object
 }
 
-export default Api
+const mapStateToProps = state => {
+  const { apis } = state
+  return { ...apis }
+}
+
+export default connect(mapStateToProps)(Api)

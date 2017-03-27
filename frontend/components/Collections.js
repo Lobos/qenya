@@ -113,7 +113,7 @@ class Collection extends PureComponent {
                 </span>
               )}
             ]}
-            pagination={{ size: 10 }}
+            pagination={{ size: 20 }}
           />
         </Card>
       </div>
