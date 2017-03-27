@@ -68,7 +68,11 @@ class Row extends Component {
         onDragOver={this.handleDragOver}
         data-index={index}
         className={_styles['row-list']}>
-        <Grid width={4 / 24}>{field.name}</Grid>
+        <Grid width={4 / 24}>
+          <a href="javascript:;" onClick={this.handleEdit}>
+            {field.name}
+          </a>
+        </Grid>
         <Grid width={4 / 24}>{field.label}</Grid>
         <Grid width={4 / 24}>{field.type}</Grid>
         <Grid style={{textAlign: 'center'}} width={1 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>

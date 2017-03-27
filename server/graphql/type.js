@@ -1,6 +1,6 @@
 import {
   GraphQLObjectType,
-  // GraphQLList,
+  GraphQLList,
   GraphQLString,
   GraphQLBoolean,
   GraphQLInt,
@@ -26,6 +26,69 @@ function convertType (type) {
   }
 }
 
+function getSingleJsonType (db, field, ref) {
+  return {
+    type: RefType,
+    args: {
+      fmt: {
+        type: GraphQLString,
+        description: 'Format string, like "{name}"'
+      }
+    },
+    resolve: (d, { fmt }) => {
+      return getOne(db.collection(ref.code), { _id: objectId(d[field.name]) })
+        .then(value => {
+          if (!fmt) return value
+          return substitute(fmt, value)
+        })
+    }
+  }
+}
+
+function getMultJsonType (db, field, ref) {
+  return {
+    type: RefType,
+    args: {
+      fmt: { type: GraphQLString },
+      join: { type: GraphQLString }
+    },
+    resolve: (d, { fmt, join }) => {
+      return getList(db.collection(ref.code), { _id: { $in: d[field.name] } })
+        .then(value => {
+          if (!fmt) return value
+          value = value.map(v => substitute(fmt, v))
+          if (join) value = value.join(join)
+          return value
+        })
+    }
+  }
+}
+
+function getSingleGraphqlType (db, field, ref) {
+  return {
+    type: getType(ref),
+    resolve: (d, { fmt }) => {
+      return getOne(db.collection(ref.code), { _id: objectId(d[field.name]) })
+    }
+  }
+}
+
+function getMultGraphqlType (db, field, ref) {
+  return {
+    type: new GraphQLList(getType(ref)),
+    resolve: (d, { fmt, join }) => {
+      return getList(db.collection(ref.code), { _id: { $in: d[field.name] } })
+    }
+  }
+}
+
+const typeFns = {
+  'mult-json': getMultJsonType,
+  'single-json': getSingleJsonType,
+  'mult-graphql': getMultGraphqlType,
+  'single-graphql': getSingleGraphqlType
+}
+
 export function getType (schema, schemas, db) {
   const name = schema.code
   if (typeDict[name]) return typeDict[name]
@@ -41,39 +104,8 @@ export function getType (schema, schemas, db) {
     if (f.sourceType === 'ref' && schemas) {
       const ref = schemas.find(s => s.code === f.sourceRef)
 
-      if (f.mult) {
-        fields[f.name] = {
-          // type: new GraphQLList(getType(ref)),
-          type: RefType,
-          args: {
-            fmt: { type: GraphQLString },
-            join: { type: GraphQLString }
-          },
-          resolve: (d, {fmt, join}) => {
-            return getList(db.collection(ref.code), {_id: {$in: d[f.sourceRef]}})
-              .then(value => {
-                if (!fmt) return value
-                value = value.map(v => substitute(fmt, v))
-                if (join) value = value.join(join)
-                return value
-              })
-          }
-        }
-      } else {
-        fields[f.name] = {
-          type: RefType,
-          args: {
-            fmt: { type: GraphQLString }
-          },
-          resolve: (d, {fmt}) => {
-            return getOne(db.collection(ref.code), {_id: objectId(d[f.sourceRef])})
-              .then(value => {
-                if (!fmt) return value
-                return substitute(fmt, value)
-              })
-          }
-        }
-      }
+      const fn = (f.mult ? 'mult' : 'single') + '-' + f.renderType
+      fields[f.name] = typeFns[fn](db, f, ref)
     } else {
       fields[f.name] = { type: convertType(f.type) }
     }

@@ -90,7 +90,7 @@ class Collection extends PureComponent {
               ) },
               { name: 'name', header: '名称' },
               { name: 'desc', header: '描述' },
-              { name: 'update_at', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.update_at, 'yyyy-MM-dd hh:mm:ss') },
+              { name: 'updateAt', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.update_at, 'yyyy-MM-dd hh:mm:ss') },
               { width: '6rem', content: d => (
                 <span>
                   <Link to={`/schema/${d.code}`}>

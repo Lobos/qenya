@@ -1,5 +1,5 @@
 import { PropTypes } from 'react'
-import { FormControl, Checkbox, Input } from 'rctui'
+import { FormControl, Checkbox, Input, RadioGroup } from 'rctui'
 
 function DataSource (props, context) {
   const { type, sourceType, mult } = context.formData
@@ -26,8 +26,8 @@ function DataSource (props, context) {
 
       <FormControl required defaultValue="1" type="radio-group" name="sourceType" data={[
         { id: 'json', text: '静态数据' },
-        { id: 'ref', text: '关联表' },
-        { id: 'url', text: '远程' }
+        { id: 'ref', text: '关联表' }
+        // { id: 'url', text: '远程' }
       ]} />
 
       {
@@ -37,7 +37,14 @@ function DataSource (props, context) {
 
       {
         sourceType === 'ref' &&
-        <FormControl key="sourceRef" grid={1 / 2} label="collection" name="sourceRef" required data={cols} type="select" />
+        <FormControl key="sourceRef" grid={1 / 2} label="Collection" name="sourceRef" required data={cols} type="select" />
+      }
+
+      {
+        sourceType === 'ref' &&
+        <FormControl label="数据类型">
+          <RadioGroup name="renderType" data={['json', 'graphql']} defaultValue="json" />
+        </FormControl>
       }
 
       {

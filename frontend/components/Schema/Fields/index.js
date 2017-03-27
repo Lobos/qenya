@@ -97,6 +97,11 @@ class Fields extends PureComponent {
           </Button>
 
           <Button disabled={notChange} onClick={this.handleReset}>重置</Button>
+
+          <span style={{marginLeft: 12}}>
+            <Icon style={{fontSize: '1.2rem', color: '#0275d8'}} icon="help" />
+            增加/修改字段后需要点击保存修改，点击重置按钮会将字段恢复到最后一次保存状态
+          </span>
         </div>
 
         <Grid className={`${_styles['row-list']} ${_styles['row-header']}`}>
