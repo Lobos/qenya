@@ -31,8 +31,8 @@ class Schema extends PureComponent {
         ]} />
 
         <Nav active={tab || 'fields'} onSelect={this.handleTabChange} type="tab">
-          <Nav.Item id="fields">字段</Nav.Item>
-          <Nav.Item id="data">数据</Nav.Item>
+          <Nav.Item id="fields">Fields</Nav.Item>
+          <Nav.Item id="data">Data</Nav.Item>
           <Nav.Item id="graphql">Graphql</Nav.Item>
         </Nav>
 

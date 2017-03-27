@@ -22,14 +22,14 @@ class Collection extends PureComponent {
   checkCode (value, formData, callback) {
     let reg = /^[a-z0-9_]+$/i
     if (!reg.test(value)) {
-      callback(new Error('code 只能由英文字符、数字、下划线组成'))
+      callback(new Error('Code must only contain alpha characters, underscores, and dashes'))
     } else if (value.length > 20) {
-      callback(new Error('code 不能超过20个字符'))
+      callback(new Error('Code can not exceed 20 characters'))
     } else {
       Refetch.post('/schema/exist', { _id: formData._id, code: value })
         .then(res => {
           if (res.success) callback(true)
-          else callback(new Error('code 已经存在'))
+          else callback(new Error('Code already exists.'))
         })
     }
   }
@@ -37,12 +37,12 @@ class Collection extends PureComponent {
   handleEdit (data) {
     this.mid = Modal.open({
       buttons: {
-        '提交': 'submit',
-        '取消': true
+        'Submit': 'submit',
+        'Cancel': true
       },
       padding: '2rem',
       width: '40rem',
-      header: `${data ? '编辑' : '新建'} Collection`,
+      header: 'Collection',
       content: (
         <Form labelWidth="5rem" data={data} initValidate onSubmit={this.handleSave}>
           <FormControl label="Code" required max={20}
@@ -50,8 +50,8 @@ class Collection extends PureComponent {
             trigger="blur"
             validator={{ async: this.checkCode }}
           />
-          <FormControl label="名称" required max={20} type="text" name="name" />
-          <FormControl label="描述" rows={5} max={100} type="textarea" name="desc" />
+          <FormControl label="Name" required max={20} type="text" name="name" />
+          <FormControl label="Description" rows={5} max={100} type="textarea" name="desc" />
         </Form>
       )
     })
@@ -79,7 +79,7 @@ class Collection extends PureComponent {
             <Button status="success"
               onClick={this.handleEdit.bind(this, undefined)}>
               <Icon icon="plus" />
-              新建Collection
+              New Collection
             </Button>
           </div>
 
@@ -88,25 +88,25 @@ class Collection extends PureComponent {
               { sort: true, header: 'Code', content: d => (
                 <Link to={`/schema/${d.code}`}>{d.code}</Link>
               ) },
-              { name: 'name', header: '名称' },
-              { name: 'desc', header: '描述' },
-              { name: 'updateAt', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.update_at, 'yyyy-MM-dd hh:mm:ss') },
+              { name: 'name', header: 'Name' },
+              { name: 'desc', header: 'Description' },
+              { name: 'updateAt', sort: true, width: '12rem', header: 'UpdateAt', content: d => Datetime.format(d.updateAt, 'yyyy-MM-dd hh:mm:ss') },
               { width: '6rem', content: d => (
                 <span>
                   <Link to={`/schema/${d.code}`}>
-                    <Tooltip position="top" tip="字段">
+                    <Tooltip position="top" tip="detail">
                       <Icon icon="list" />
                     </Tooltip>
                   </Link>
                   {' '}
                   <a href="javascript:;" onClick={this.handleEdit.bind(this, d)}>
-                    <Tooltip position="top" tip="编辑">
+                    <Tooltip position="top" tip="edit">
                       <Icon icon="edit" />
                     </Tooltip>
                   </a>
                   {' '}
                   <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
-                    <Tooltip position="top" tip="删除">
+                    <Tooltip position="top" tip="remove">
                       <Icon icon="trash" />
                     </Tooltip>
                   </a>

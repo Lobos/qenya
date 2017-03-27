@@ -1,9 +1,9 @@
 import { PureComponent, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { fetch } from '_/utils/fetch'
-import { getList, removeApi } from '_/actions/apis'
 import { Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
+import { getList, removeApi } from '_/actions/apis'
+import Text from '_/components/comm/Text'
 
 class Api extends PureComponent {
   constructor (props) {
@@ -23,10 +23,10 @@ class Api extends PureComponent {
   }
 
   handleRemove (d) {
-    const mid = Modal.confirm(`确定删除 ${d.path} 吗`, () => {
+    const mid = Modal.confirm(`Are you sure you want delete this api '${d.path}'?`, () => {
       this.props.dispatch(removeApi(d._id))
       Modal.close(mid)
-    }, '删除')
+    }, 'Confirm')
   }
 
   getData () {
@@ -54,25 +54,25 @@ class Api extends PureComponent {
 
           <Button style={{float: 'right'}} onClick={this.handleEdit.bind(this, 'new')} status="success">
             <Icon icon="plus" />
-            增加路由
+            New API
           </Button>
         </div>
 
         <Table data={this.getData()}
           columns={[
-            { name: 'path', header: '路径', sort: true },
-            { name: 'method', header: '请求方法' },
-            { name: 'desc', header: '说明' },
+            { name: 'path', header: 'Path', sort: true },
+            { name: 'method', header: 'Mothed' },
+            { header: 'Description', content: d => <Text>{d.desc}</Text> },
             { width: '4rem', content: d => (
               <span>
                 <Link to={`/api/${d._id}`}>
-                  <Tooltip position="top" tip="编辑">
+                  <Tooltip position="top" tip="Edit">
                     <Icon icon="edit" />
                   </Tooltip>
                 </Link>
                 {' '}
                 <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
-                  <Tooltip position="top" tip="删除">
+                  <Tooltip position="top" tip="Remove">
                     <Icon icon="trash" />
                   </Tooltip>
                 </a>

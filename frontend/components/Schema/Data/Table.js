@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
 import { Table, Tooltip, Icon } from 'rctui'
-import Text from './Text'
+import Text from '_/components/comm/Text'
 
 class DataTable extends Component {
   handleEdit (d) {

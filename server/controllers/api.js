@@ -37,7 +37,7 @@ router.post('/api', body(), async function (ctx, next) {
   const other = await getOne(db, query)
   console.log(other, query)
   if (other) {
-    ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already existed.`)
+    ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already exists.`)
     return
   }
 

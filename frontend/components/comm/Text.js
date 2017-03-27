@@ -22,3 +22,7 @@ Text.propTypes = {
   max: PropTypes.number,
   position: PropTypes.string
 }
+
+Text.defaultProps = {
+  position: 'top'
+}

@@ -31,19 +31,19 @@ class Edit extends PureComponent {
 
     return (
       <Card>
-        <Card.Header>增加路由</Card.Header>
+        <Card.Header>API</Card.Header>
         <Form fetch={fetch}
           onSubmit={this.handleSubmit}
           onCancel={this.handleBack}
           buttons={{
-          primary: '提交',
-          cancel: '取消'
+          primary: 'Submit',
+          cancel: 'Cancel'
           }} style={{padding: 20}}>
-          <FormControl label="路径" grid={3 / 5} tip="路径，可以使用通配符。例：/abc/:id/" required name="path" type="text" />
-          <FormControl grid={1 / 4} label="操作" defaultValue="get" required name="method" type="select"
+          <FormControl label="Path" grid={3 / 5} tip="url path without domain, like：/abc/:id/" required name="path" type="text" />
+          <FormControl grid={1 / 4} label="Method" defaultValue="get" required name="method" type="select"
             data={['get', 'post', 'put', 'delete']} />
-          <FormControl label="跨域支持" grid={3 / 5} name="cros" rows={3} type="textarea" tip="一行一个域名，如果不支持跨域，留空" />
-          <FormControl label="描述" grid={3 / 5} name="desc" rows={3} type="textarea" />
+          <FormControl label="Graphql Query" grid={3 / 5} type="textarea" name="query" required />
+          <FormControl label="Description" grid={3 / 5} name="desc" rows={3} type="textarea" />
         </Form>
       </Card>
     )

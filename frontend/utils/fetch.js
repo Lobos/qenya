@@ -5,7 +5,7 @@ export const fetch = Refetch.create({
     if (res.success) {
       return res.model
     } else {
-      throw new Error(res.msg || '服务端获取失败')
+      throw new Error(res.msg || 'Server data fetch failed.')
     }
   })
 })
