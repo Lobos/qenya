@@ -28,16 +28,16 @@ router.post('/api', body(), async function (ctx, next) {
   } else {
     let old = await getOne(db, { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
-  }
+}
 
   const query = { path: data.path, method: data.method }
   if (data._id) {
     query._id = { $ne: objectId(data._id) }
   }
   const other = await getOne(db, query)
-  console.log(other, query)
   if (other) {
-    ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already exists.`)
+    ctx.Render.fail(ctx.i18n.__('api.path_exist', data.path, data.method))
+    // ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already exists.`)
     return
   }
 

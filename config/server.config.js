@@ -5,7 +5,7 @@ const config = {
 
   i18n: {
     locales: ['zh-cn'],
-    // defaultLocale: 'zh-cn',
+    defaultLocale: 'zh-cn',
     extension: '.json',
     directory: './server/locales',
     cookieName: 'lang'
