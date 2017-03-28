@@ -1,6 +1,7 @@
 import {
   GraphQLObjectType,
   GraphQLSchema,
+  GraphQLString,
   GraphQLList,
   GraphQLInt,
   GraphQLID
@@ -23,7 +24,7 @@ function getOneQuery (db, schema, graphType) {
   }
 }
 
-function getListQuery (db, schema, graphType, query = {}) {
+function getListQuery (db, schema, graphType) {
   return {
     type: new GraphQLObjectType({
       name: `${schema.code}List`,
@@ -36,9 +37,11 @@ function getListQuery (db, schema, graphType, query = {}) {
     }),
     args: {
       page: { type: GraphQLInt },
-      size: { type: GraphQLInt }
+      size: { type: GraphQLInt },
+      query: { type: GraphQLString, desciprtion: 'mongodb query' }
     },
-    resolve: (root, {page = 1, size = 20}) => {
+    resolve: (root, {page = 1, size = 20, query = '{}'}) => {
+      query = JSON.parse(query)
       return getPageList(db.collection(schema.code), query, page, size)
     }
   }

@@ -31,8 +31,8 @@ class Edit extends PureComponent {
           onSubmit={this.handleSubmit}
           onCancel={this.props.history.goBack}
           buttons={{
-          primary: 'Submit',
-          cancel: 'Cancel'
+            primary: 'Submit',
+            cancel: 'Cancel'
           }} style={{padding: 20}}>
           <FormControl label="Path" grid={3 / 5} tip="url path without domain, like：/abc/:id/" required name="path" type="text" />
           <FormControl grid={1 / 4} label="Method" defaultValue="get" required name="method" type="select"

@@ -29,5 +29,9 @@ export default function createApp (options) {
 
   app.use(router.routes())
 
+  if (config.apiPort) {
+    require('./api').default.start()
+  }
+
   return app
 }

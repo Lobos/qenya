@@ -37,13 +37,15 @@ router.post('/api', body(), async function (ctx, next) {
   const other = await getOne(db, query)
   if (other) {
     ctx.Render.fail(ctx.i18n.__('api.path_exist', data.path, data.method))
-    // ctx.Render.fail(`path: '${data.path}' with method '${data.method}' already exists.`)
     return
   }
 
   data.updateAt = Date.now()
 
   data = await method(db, data)
+
+  require('../api').default.restart()
+
   ctx.Render.success(data[0])
 })
 
