@@ -7,20 +7,15 @@ class Edit extends PureComponent {
   constructor (props) {
     super(props)
 
-    this.handleBack = this.handleBack.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleBack () {
-    window.history.back()
-  }
-
   handleSubmit (data) {
-    this.props.dispatch(saveApi(data, this.handleBack))
+    this.props.dispatch(saveApi(data, this.props.history.goBack))
   }
 
   render () {
-    const { id } = this.props.params
+    const { id } = this.props.match.params
     let fetch
     if (id !== 'new') {
       fetch = {
@@ -34,7 +29,7 @@ class Edit extends PureComponent {
         <Card.Header>API</Card.Header>
         <Form fetch={fetch}
           onSubmit={this.handleSubmit}
-          onCancel={this.handleBack}
+          onCancel={this.props.history.goBack}
           buttons={{
           primary: 'Submit',
           cancel: 'Cancel'
@@ -52,7 +47,8 @@ class Edit extends PureComponent {
 
 Edit.propTypes = {
   dispatch: PropTypes.func,
-  params: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 }
 
 Edit.defaultProps = {}

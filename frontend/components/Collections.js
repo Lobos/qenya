@@ -1,6 +1,6 @@
 import { PureComponent, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Breadcrumb, Table, Button, Modal, Form, FormControl, Icon, Tooltip, Card } from 'rctui'
 import * as Datetime from 'rctui/utils/datetime'
 import { getList, saveCollection, removeCollection } from '_/actions/schemas'

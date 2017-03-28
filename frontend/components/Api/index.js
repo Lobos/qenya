@@ -1,5 +1,5 @@
 import { PureComponent, PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
 import { getList, removeApi } from '_/actions/apis'
@@ -16,10 +16,6 @@ class Api extends PureComponent {
 
   componentDidMount () {
     this.props.dispatch(getList())
-  }
-
-  handleEdit (id) {
-    this.context.router.push('/api/' + id)
   }
 
   handleRemove (d) {
@@ -42,6 +38,8 @@ class Api extends PureComponent {
   }
 
   render () {
+    const { history } = this.props
+
     return (
       <Card style={{padding: 20}}>
         <div>
@@ -52,7 +50,9 @@ class Api extends PureComponent {
             </InputGroup>
           </div>
 
-          <Button style={{float: 'right'}} onClick={this.handleEdit.bind(this, 'new')} status="success">
+          <Button style={{float: 'right'}}
+            status="success"
+            onClick={() => history.push('/api/new')}>
             <Icon icon="plus" />
             New API
           </Button>
@@ -91,14 +91,11 @@ Api.propTypes = {
     PropTypes.array,
     PropTypes.element
   ]),
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  history: PropTypes.object
 }
 
 Api.defaultProps = {}
-
-Api.contextTypes = {
-  router: PropTypes.object
-}
 
 const mapStateToProps = state => {
   const { apis } = state

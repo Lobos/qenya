@@ -3,7 +3,7 @@ const WebpackDevServer = require('webpack-dev-server')
 let config = require('../config/webpack.config')
 
 config = Object.assign({}, config, {
-  devtool: 'eval',
+  devtool: 'cheap-module-source-map',
   entry: {
     app: [
       'react-hot-loader/patch',
