@@ -33,9 +33,10 @@ router.post('/schema/fields', body(), async function (ctx, next) {
   schema.fields = fields
   schema.updateAt = Date.now()
   let data = await updateSchema(ctx.db(), schema)
-  ctx.Render.success(data[0])
 
   clearType()
+
+  ctx.Render.success(data[0])
 })
 
 router.post('/schema', body(), async function (ctx, next) {
@@ -49,14 +50,12 @@ router.post('/schema', body(), async function (ctx, next) {
     let old = await getOne(ctx.db(), { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
   }
-
   data.updateAt = Date.now()
-
   data = await method(ctx.db(), data)
 
-  ctx.Render.success(data[0])
-
   clearType()
+
+  ctx.Render.success(data[0])
 })
 
 router.del('/schema', body(), async function (ctx, next) {

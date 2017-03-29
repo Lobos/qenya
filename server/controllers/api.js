@@ -44,8 +44,6 @@ router.post('/api', body(), async function (ctx, next) {
 
   data = await method(db, data)
 
-  require('../api').default.restart()
-
   ctx.Render.success(data[0])
 })
 

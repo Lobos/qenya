@@ -5,6 +5,7 @@ import tingodb from 'tingodb'
 import { graphql } from 'graphql'
 import getSchema from './graphql'
 import { getAll } from './models/schemas'
+import template from 'es6-template-strings'
 
 const apiServer = new Koa()
 const router = new Router()
@@ -17,33 +18,45 @@ if (config.engine === 'tingodb') {
 
   const engine = tingodb({})
 
-  db = new engine.Db(config.tingo.hydra, {})
+  db = () => new engine.Db(config.tingo.hydra, {})
 }
 
-function start () {
-  db.collection('api').find({}).toArray((err, routes) => {
-    routes.forEach(r => {
-      router[r.method](r.path, async function (ctx, next) {
-        const schemas = await getAll(ctx.db())
-        ctx.body = await graphql(getSchema(ctx.db('data'), schemas), r.query)
+async function bindRouter () {
+  return new Promise((resolve, reject) => {
+    db().collection('api').find({}).toArray((err, routes) => {
+      if (err) reject(err)
+
+      routes.forEach(r => {
+        router[r.method](r.path, async function (ctx, next) {
+          const args = Object.assign({}, ctx.query, ctx.params)
+          const query = template(r.query, args)
+          const schemas = await getAll(ctx.db())
+          ctx.body = await graphql(getSchema(ctx.db('data'), schemas), query)
+        })
       })
-    })
 
-    apiServer.use(router.routes())
-
-    apiServer.listen(config.apiPort, function () {
-      console.log('api server start.')
+      resolve()
     })
   })
 }
 
-function restart () {
-  // not work
-  // apiServer.close()
-  start()
+async function start () {
+  await bindRouter()
+
+  apiServer.use(router.routes())
+
+  apiServer.listen(config.apiPort, function () {
+    console.log('api server start.')
+  })
+}
+
+async function reset () {
+  console.log(111111, 'reset')
+  router.stack = []
+  await bindRouter()
 }
 
 export default {
   start,
-  restart
+  reset
 }

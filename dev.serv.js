@@ -26,7 +26,9 @@ router.get('/static/*', async function (ctx, next) {
 // server ====================================
 const app = createApp({
   debug: true,
-  engine: 'tingodb'
+  engine: 'tingodb',
+  serverPort: 5001,
+  apiPort: 5002
 })
 
 app.use(router.routes())

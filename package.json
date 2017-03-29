@@ -29,6 +29,7 @@
     "co-views": "^2.1.0",
     "curry": "~1.2.0",
     "es6-promise": "^4.1.0",
+    "es6-template-strings": "^2.0.1",
     "faker": "^3.1.0",
     "graphiql": "^0.9.3",
     "graphql": "^0.9.1",

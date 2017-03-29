@@ -24,6 +24,10 @@ function fetchList (query) {
   }
 }
 
+export function resetApi () {
+  fetch.get('/resetapi').then(res => console.log(res))
+}
+
 export function getList () {
   return (dispatch, getState) => {
     const { data, status } = getState().apis
@@ -39,6 +43,8 @@ export function saveApi (body, onSuccess) {
   return (dispatch, getState) => {
     fetch.post('/api', body, { dataType: 'json' }).then(model => {
       onSuccess()
+
+      resetApi()
 
       // remove query
       delete model.query

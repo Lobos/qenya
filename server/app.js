@@ -6,6 +6,7 @@ import logger from './middlewares/logger'
 import render from './middlewares/render'
 import i18n from './middlewares/i18n'
 import router from './router'
+import api from './api'
 
 export default function createApp (options) {
   setConfig(options)
@@ -27,10 +28,15 @@ export default function createApp (options) {
     map: { html: 'swig' }
   }))
 
+  router.get('/resetapi', async (ctx, next) => {
+    await api.reset()
+    ctx.Render.success('')
+  })
+
   app.use(router.routes())
 
   if (config.apiPort) {
-    require('./api').default.start()
+    api.start()
   }
 
   return app
