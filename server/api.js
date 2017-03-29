@@ -6,6 +6,7 @@ import { graphql } from 'graphql'
 import getSchema from './graphql'
 import { getAll } from './models/schemas'
 import template from 'es6-template-strings'
+import swig from 'swig'
 
 const apiServer = new Koa()
 const router = new Router()
@@ -22,16 +23,31 @@ if (config.engine === 'tingodb') {
 }
 
 async function bindRouter () {
+  console.log(2222)
   return new Promise((resolve, reject) => {
     db().collection('api').find({}).toArray((err, routes) => {
       if (err) reject(err)
 
+      if (!routes) {
+        reject(new Error('routes not found.'))
+        return
+      }
+
       routes.forEach(r => {
         router[r.method](r.path, async function (ctx, next) {
           const args = Object.assign({}, ctx.query, ctx.params)
-          const query = template(r.query, args)
-          const schemas = await getAll(ctx.db())
-          ctx.body = await graphql(getSchema(ctx.db('data'), schemas), query)
+          try {
+            //const query = template(r.query, args)
+            const query = swig.render(r.query, { locals: args })
+
+            const schemas = await getAll(ctx.db())
+            ctx.body = await graphql(getSchema(ctx.db('data'), schemas), query)
+          } catch (e) {
+            ctx.body = {
+              success: false,
+              messsage: e.message
+            }
+          }
         })
       })
 
@@ -51,7 +67,6 @@ async function start () {
 }
 
 async function reset () {
-  console.log(111111, 'reset')
   router.stack = []
   await bindRouter()
 }
