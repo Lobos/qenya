@@ -18,7 +18,7 @@ class Graphql extends PureComponent {
   componentWillMount () {
     const { schema } = this.props
     Refetch.get(`/data/${schema.code}/getmock`).then(res => {
-      this.setState({ mock: JSON.stringify({ data: res.data }, null, 2) })
+      this.setState({ mock: JSON.stringify(res.data, null, 2) })
     })
   }
 
@@ -67,7 +67,7 @@ class Graphql extends PureComponent {
           ))}
         </ButtonGroup>
         <div style={{height: 600}}>
-          <GraphiQL fetcher={this.graphQLFetcher} query={queryStr} variables={variables} />
+          <GraphiQL key={query} fetcher={this.graphQLFetcher} query={queryStr} variables={variables} />
         </div>
       </div>
     )

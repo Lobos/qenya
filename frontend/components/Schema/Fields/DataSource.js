@@ -24,7 +24,7 @@ function DataSource (props, context) {
         }
       </FormControl>
 
-      <FormControl required defaultValue="1" type="radio-group" name="sourceType" data={[
+      <FormControl required label="数据源" type="radio-group" name="sourceType" data={[
         { id: 'json', text: '静态数据' },
         { id: 'ref', text: '关联表' }
         // { id: 'url', text: '远程' }
@@ -32,7 +32,8 @@ function DataSource (props, context) {
 
       {
         sourceType === 'json' &&
-        <FormControl key="sourceJson" label="数据选项" required type="json" name="sourceJson" rows={5} />
+        <FormControl key="sourceJson" label="数据选项" required type="json" name="sourceJson" rows={5}
+          tip={<span>json格式，<a target="_blank" href="http://lobos.github.io/react-ui/0.7/#/select">数据结构见这里</a></span>} />
       }
 
       {
@@ -52,9 +53,10 @@ function DataSource (props, context) {
         <FormControl key="sourceUrl" grid={1} required label="数据地址" type="text" name="sourceUrl" />
       }
 
-      <FormControl label="ValueTpl" grid={1} type="text" name="valueTpl" />
+      <FormControl readOnly={sourceType === 'ref'} value={sourceType === 'ref' ? '{_id}' : undefined}
+        label="ValueTpl" grid={1} type="text" name="valueTpl" />
 
-      <FormControl label="OptionTpl" grid={1} type="text" name="optionTpl" />
+      <FormControl label="OptionTpl" required={sourceType === 'ref'} grid={1} type="text" name="optionTpl" />
     </div>
   )
 }

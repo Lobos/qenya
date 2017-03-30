@@ -37,6 +37,17 @@ export function update (col, entity) {
   })
 }
 
+export async function insertOrUpdate (col, data) {
+  let method = data._id ? update : insert
+
+  if (data._id) {
+    let old = await getOne(col, { _id: objectId(data._id) })
+    data = Object.assign({}, old, data)
+  }
+
+  return method(col, data)
+}
+
 export function getList (col, query) {
   return new Promise(function () {
     col.find(query).toArray(callback(...arguments))

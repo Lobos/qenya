@@ -7,9 +7,10 @@ import {
   GraphQLID
 } from 'graphql'
 import objectId from '../utils/objectId'
-import { getOne, getPageList } from '../models/data'
+import { getOne, getPageList, insertOrUpdate, remove } from '../models/data'
 import getQueryType, { clearQueryType } from './queryType'
 import getInputType, { clearInputType } from './inputType'
+import { convertType } from './type'
 
 function getOneQuery (db, schema, graphType) {
   return {
@@ -64,20 +65,21 @@ function getQuery (db, schemas) {
   })
 }
 
-function getSaveQuery (db, schema, queryType, inputType) {
+function getSaveQuery (db, schema, queryType) {
+  const args = {
+    id: { type: GraphQLID }
+  }
+
+  schema.fields.forEach(f => {
+    args[f.name] = { type: convertType(f.type) }
+  })
+
   return {
     type: queryType,
-    args: {
-      id: {
-        type: GraphQLID
-      },
-      data: {
-        type: inputType
-      }
-    },
-    resolve: (root, {id, data}) => {
-      return data
-      // return getOne(db.collection(schema.code), {_id: objectId(id)})
+    args,
+    resolve: async (root, data) => {
+      const res = await insertOrUpdate(db.collection(schema.code), data)
+      return res[0]
     }
   }
 }
@@ -91,7 +93,7 @@ function getDeleteQuery (db, schema) {
       }
     },
     resolve: (root, {id}) => {
-      console.log(id)
+      return remove(db.collection(schema.code), { _id: objectId(id) })
     }
   }
 }

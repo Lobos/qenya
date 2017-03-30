@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import { Form, FormControl, Checkbox, Select, Icon, Popover } from 'rctui'
+import { Form, FormControl, Checkbox, Select } from 'rctui'
 import lengthLimit from './lengthLimit'
 import DataSource from './DataSource'
 
@@ -58,10 +58,6 @@ class Field extends Component {
 
         <FormControl label="类型">
           <Select name="type" required onChange={this.handleTypeChange} grid={1 / 2} data={[...dataType]} />
-          <Popover style={{marginLeft: 10}} trigger="hover">
-            <Icon style={{fontSize: '1.2rem', verticalAlign: 'middle', color: '#0275d8'}} icon="help" />
-            <div style={{width: '20rem', padding: '1rem'}}>Hydra使用了tingo/mongo这样的NoSQL数据库，所以这里的类型主要用途是方便数据录入和校验。</div>
-          </Popover>
         </FormControl>
 
         {lengthLimit(type)}

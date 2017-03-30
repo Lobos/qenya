@@ -24,7 +24,7 @@ class Data extends Component {
     this.props.dispatch(getData({
       schema: this.props.schema.code,
       page: 1
-    }))
+    }, true))
   }
 
   handlePageChange (page) {

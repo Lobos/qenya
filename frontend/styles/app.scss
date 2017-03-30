@@ -1,5 +1,5 @@
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
@@ -7,15 +7,15 @@ body {
 }
 
 .header {
-  height: 50px;
+  height: 3.6rem;
   background-color: #fff;
   border-bottom: 1px solid #e7e7e7;
 
   .logo {
     display: inline-block;
     padding: 0 1rem;
-    height: 50px;
-    line-height: 50px;
+    height: 3.6rem;
+    line-height: 3.6rem;
     font-weight: bold;
     font-size: 1.5rem;
   }
@@ -23,12 +23,14 @@ body {
   .link {
     display: inline-block;
     padding-left: 1rem;
+    vertical-align: top;
+    line-height: 3.6rem;
   }
 }
 
 .main {
   position: relative;
-  max-width: 1200px;
+  max-width: 1600px;
   padding: 1.5rem;
   margin: auto;
 }

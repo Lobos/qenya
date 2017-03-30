@@ -2,13 +2,26 @@ function convertFields (fields, pad) {
   const rows = ['id']
   fields.forEach(f => {
     if (f.sourceType === 'ref' && f.renderType === 'json') {
-      rows.push(`${f.name}(fmt: "${f.resultTpl}" join: "${f.sep}")`)
+      rows.push(`${f.name}(fmt: "${f.optionTpl}"${f.mult ? ('join: "' + f.sep + '"') : ''})`)
     } else {
       rows.push(f.name)
     }
   })
 
   return rows.join('\n' + pad)
+}
+
+function convertType (field) {
+  switch (field.type) {
+    case 'integer':
+      return 'Int'
+    case 'number':
+      return 'Float'
+    case 'bool':
+      return 'Boolean'
+    default:
+      return 'String'
+  }
 }
 
 export function queryList (schema) {
@@ -34,11 +47,19 @@ export function queryOne (schema) {
 }`)
 }
 
-export function querySave (schema) {
+export function querySave (schema, mock) {
   const name = schema.code.replace(/\b\w/g, l => l.toUpperCase())
+
+  const args = schema.fields.map(f => `$${f.name}: ${convertType(f)}`)
+  const values = schema.fields.map(f => `${f.name}: $${f.name}`)
+
   return (
-`mutation ($data: ${schema.code}Input) {
-  save${name} (data: $data) {
+`mutation (
+  ${args.join('\n  ')}
+) {
+  save${name} (
+    ${values.join('\n    ')}
+  ) {
     ${convertFields(schema.fields, '    ')}
   }
 }`)

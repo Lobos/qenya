@@ -35,7 +35,7 @@ class DataEdit extends Component {
       case 'ref':
         props.fetch = {
           url: `/data/${field.sourceRef}/1/999`,
-          then: (res) => res.model.list
+          then: (res) => res.data.list
         }
         break
       case 'url':

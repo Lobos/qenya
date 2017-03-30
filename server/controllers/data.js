@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import body from 'koa-bodyparser'
 import exception from '../middlewares/exception'
 import objectId from '../utils/objectId'
-import { getPageList, getOne, insert, update, remove } from '../models/data'
+import { getPageList, insert, insertOrUpdate, remove } from '../models/data'
 import { getOne as getSchema } from '../models/schemas'
 import faker from '../utils/faker'
 
@@ -26,14 +26,9 @@ router.post('/data/:schema', body(), async function (ctx, next) {
   let data = ctx.request.body
   const { schema } = ctx.params
   const col = ctx.db(DB).collection(schema)
-  let method = data._id ? update : insert
 
-  if (data._id) {
-    let old = await getOne(col, { _id: objectId(data._id) })
-    data = Object.assign({}, old, data)
-  }
+  data = await insertOrUpdate(col, data)
 
-  data = await method(col, data)
   ctx.Render.success(data[0])
 })
 
