@@ -3,7 +3,7 @@ import body from 'koa-bodyparser'
 import { getAll, getOne, insertSchema, updateSchema, removeSchema } from '../models/schemas'
 import objectId from '../utils/objectId'
 import exception from '../middlewares/exception'
-import { clearType } from '../graphql/type'
+import { clearType } from '../graphql'
 
 const router = new Router()
 

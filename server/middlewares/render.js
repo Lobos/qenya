@@ -2,8 +2,7 @@ export default async function (ctx, next) {
   ctx.Render = {
     success (data, msg) {
       ctx.body = {
-        success: true,
-        model: data
+        data
       }
       if (msg) {
         ctx.body.msg = msg
@@ -12,30 +11,26 @@ export default async function (ctx, next) {
 
     fail (err) {
       ctx.body = {
-        success: false,
-        msg: err
+        error: err
       }
     },
 
     notFound () {
       ctx.body = {
-        success: false,
-        msg: ctx.i18n.__('http.not_found')
+        error: ctx.i18n.__('http.not_found')
       }
     },
 
     noAuth () {
       ctx.body = {
-        success: false,
-        msg: ctx.i18n.__('http.no_auth')
+        error: ctx.i18n.__('http.no_auth')
       }
       ctx.response.status = 401
     },
 
     expired () {
       ctx.body = {
-        success: false,
-        msg: ctx.i18n.__('login.expired')
+        error: ctx.i18n.__('login.expired')
       }
       ctx.response.status = 401
     }

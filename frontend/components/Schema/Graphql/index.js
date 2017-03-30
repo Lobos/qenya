@@ -2,16 +2,24 @@ import React, { PureComponent, PropTypes } from 'react'
 import { Button, ButtonGroup } from 'rctui'
 import GraphiQL from 'graphiql'
 import Refetch from 'refetch'
-import { queryList, queryOne } from './convert'
+import { queryList, queryOne, queryDelete, querySave } from './convert'
 
 class Graphql extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      query: 'list'
+      query: 'list',
+      mock: ''
     }
 
     this.graphQLFetcher = this.graphQLFetcher.bind(this)
+  }
+
+  componentWillMount () {
+    const { schema } = this.props
+    Refetch.get(`/data/${schema.code}/getmock`).then(res => {
+      this.setState({ mock: JSON.stringify({ data: res.data }, null, 2) })
+    })
   }
 
   graphQLFetcher (graphQLParams) {
@@ -29,8 +37,10 @@ class Graphql extends PureComponent {
 
   render () {
     const { schema } = this.props
-    const { query } = this.state
+    const { query, mock } = this.state
     let queryStr = ''
+    let variables = ''
+
     switch (query) {
       case 'list':
         queryStr = queryList(schema)
@@ -38,19 +48,26 @@ class Graphql extends PureComponent {
       case 'one':
         queryStr = queryOne(schema)
         break
+      case 'delete':
+        queryStr = queryDelete(schema)
+        break
+      case 'save':
+        queryStr = querySave(schema)
+        variables = mock
+        break
     }
 
     return (
       <div>
         <ButtonGroup style={{marginBottom: 20}}>
-          {['list', 'one', 'mutation'].map(s => (
+          {['list', 'one', 'save', 'delete'].map(s => (
           <Button key={s} disabled={s === query} status={s === query ? 'success' : undefined}
             onClick={this.handleQueryChange.bind(this, s)}
           >{s}</Button>
           ))}
         </ButtonGroup>
         <div style={{height: 600}}>
-          <GraphiQL fetcher={this.graphQLFetcher} query={queryStr} />
+          <GraphiQL fetcher={this.graphQLFetcher} query={queryStr} variables={variables} />
         </div>
       </div>
     )

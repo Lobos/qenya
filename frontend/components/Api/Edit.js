@@ -20,7 +20,7 @@ class Edit extends PureComponent {
     if (id !== 'new') {
       fetch = {
         url: '/api/' + id,
-        then: res => res.model
+        then: res => res.data
       }
     }
 
@@ -33,7 +33,7 @@ class Edit extends PureComponent {
           buttons={{
             primary: 'Submit',
             cancel: 'Cancel'
-          }} style={{padding: 20}}>
+          }} style={{ padding: 20 }}>
           <FormControl label="Path" grid={3 / 5} tip="url path without domain, like：/abc/:id/" required name="path" type="text" />
           <FormControl grid={1 / 4} label="Method" defaultValue="get" required name="method" type="select"
             data={['get', 'post', 'put', 'delete']} />

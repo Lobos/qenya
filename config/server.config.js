@@ -3,8 +3,6 @@ const config = {
 
   engine: 'tingodb',
 
-  serverPort: 5001,
-
   i18n: {
     locales: ['zh-cn'],
     defaultLocale: 'zh-cn',

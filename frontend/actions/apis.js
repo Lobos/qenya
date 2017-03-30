@@ -24,8 +24,8 @@ function fetchList (query) {
   }
 }
 
-export function resetApi () {
-  fetch.get('/resetapi').then(res => console.log(res))
+export function resetApi (callback) {
+  fetch.get('/resetapi').then(res => callback())
 }
 
 export function getList () {
@@ -42,17 +42,17 @@ export function getList () {
 export function saveApi (body, onSuccess) {
   return (dispatch, getState) => {
     fetch.post('/api', body, { dataType: 'json' }).then(model => {
-      onSuccess()
+      resetApi(() => {
+        onSuccess()
 
-      resetApi()
+        // remove query
+        delete model.query
 
-      // remove query
-      delete model.query
-
-      let data = getState().apis.data.filter(d => d._id !== model._id)
-      data.unshift(model)
-      dispatch(handleList(1, data))
-      Message.success('Save successed')
+        let data = getState().apis.data.filter(d => d._id !== model._id)
+        data.unshift(model)
+        dispatch(handleList(1, data))
+        Message.success('Save successed')
+      })
     }).catch(err => {
       Message.error(err.message)
     })

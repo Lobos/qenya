@@ -68,4 +68,17 @@ router.post('/data/:code/mockcreate/:count', async function (ctx, next) {
   ctx.Render.success('')
 })
 
+router.get('/data/:code/getmock', async (ctx, next) => {
+  let { code } = ctx.params
+
+  const schema = await getSchema(ctx.db(), { code })
+  if (!schema) {
+    ctx.Render.fail('schema not found.')
+    return
+  }
+
+  let data = await faker(schema.fields, ctx.db(DB), getPageList)
+  ctx.Render.success(data)
+})
+
 export default router

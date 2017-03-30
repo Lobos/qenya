@@ -35,9 +35,5 @@ export default function createApp (options) {
 
   app.use(router.routes())
 
-  if (config.apiPort) {
-    api.start()
-  }
-
   return app
 }

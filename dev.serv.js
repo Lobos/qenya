@@ -1,6 +1,7 @@
 import coRequest from 'co-request'
 import send from 'koa-send'
 import createApp from './server/app'
+import api from './server/api'
 
 const router = require('koa-router')()
 router.get('/static/**/*.js(on)?', async function (ctx, next) {
@@ -26,12 +27,14 @@ router.get('/static/*', async function (ctx, next) {
 // server ====================================
 const app = createApp({
   debug: true,
-  engine: 'tingodb',
-  serverPort: 5001,
-  apiPort: 5002
+  engine: 'tingodb'
 })
 
 app.use(router.routes())
 
-app.listen(5000)
+app.listen(5000, () => {
+  console.log('hydra server start at 5000')
+})
 
+// api server =================================
+api.start({ port: 5002 })
