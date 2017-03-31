@@ -1,4 +1,5 @@
 import {
+  GraphQLID,
   GraphQLObjectType,
   GraphQLList,
   GraphQLString
@@ -52,7 +53,7 @@ function getMultJsonType (db, field, ref) {
 
 function getSingleGraphqlType (db, field, ref) {
   return {
-    type: refType(ref),
+    type: getQueryType(ref),
     resolve: (d, { fmt }) => {
       return getOne(db.collection(ref.code), { _id: objectId(d[field.name]) })
     }
@@ -61,7 +62,7 @@ function getSingleGraphqlType (db, field, ref) {
 
 function getMultGraphqlType (db, field, ref) {
   return {
-    type: new GraphQLList(refType(ref)),
+    type: new GraphQLList(getQueryType(ref)),
     resolve: (d, { fmt, join }) => {
       const ids = toArray(d[field.name], field.sep)
       return getList(db.collection(ref.code), { _id: { $in: ids } })
@@ -76,14 +77,13 @@ const typeFns = {
   'single-graphql': getSingleGraphqlType
 }
 
-export default function (schema, schemas, db) {
+export default function getQueryType (schema, schemas, db) {
   const name = schema.code
   if (typeDict[name]) return typeDict[name]
 
   const fields = {
-    id: {
-      type: GraphQLString,
-      resolve: d => d._id
+    _id: {
+      type: GraphQLID
     }
   }
 

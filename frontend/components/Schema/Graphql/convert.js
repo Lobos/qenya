@@ -1,5 +1,5 @@
 function convertFields (fields, pad) {
-  const rows = ['id']
+  const rows = ['_id']
   fields.forEach(f => {
     if (f.sourceType === 'ref' && f.renderType === 'json') {
       rows.push(`${f.name}(fmt: "${f.optionTpl}"${f.mult ? ('join: "' + f.sep + '"') : ''})`)
@@ -19,6 +19,12 @@ function convertType (field) {
       return 'Float'
     case 'bool':
       return 'Boolean'
+    case 'enum':
+      if (field.sourceType === 'ref' && !field.sep) {
+        return field.mult ? '[ID]' : 'ID'
+      } else {
+        return 'String'
+      }
     default:
       return 'String'
   }
@@ -26,8 +32,8 @@ function convertType (field) {
 
 export function queryList (schema) {
   return (
-`{
-  ${schema.code}List(page: 1, size: 10) {
+`query ($page: Int, $size: Int) {
+  ${schema.code}List(page: $page, size: $size) {
     total
     page
     size
@@ -40,18 +46,23 @@ export function queryList (schema) {
 
 export function queryOne (schema) {
   return (
-`{
-  ${schema.code}(id: 1) {
+`query ($_id: ID) {
+  ${schema.code}(_id: $_id) {
     ${convertFields(schema.fields, '    ')}
   }
 }`)
 }
 
-export function querySave (schema, mock) {
+export function querySave (schema, isEdit) {
   const name = schema.code.replace(/\b\w/g, l => l.toUpperCase())
 
   const args = schema.fields.map(f => `$${f.name}: ${convertType(f)}`)
   const values = schema.fields.map(f => `${f.name}: $${f.name}`)
+
+  if (isEdit) {
+    args.unshift('$_id: ID')
+    values.unshift('_id: $_id')
+  }
 
   return (
 `mutation (
@@ -68,7 +79,7 @@ export function querySave (schema, mock) {
 export function queryDelete (schema) {
   const name = schema.code.replace(/\b\w/g, l => l.toUpperCase())
   return (
-`mutation {
-  delete${name} (id: 1)
+`mutation ($_id: ID) {
+  delete${name} (_id: $_id)
 }`)
 }

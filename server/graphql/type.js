@@ -1,4 +1,6 @@
 import {
+  GraphQLID,
+  GraphQLList,
   GraphQLString,
   GraphQLBoolean,
   GraphQLInt,
@@ -16,6 +18,16 @@ export function convertType (type) {
     default:
       return GraphQLString
   }
+}
+
+export function convertRefType (field) {
+  if (field.sourceType === 'ref' && !field.sep) {
+    if (field.mult) return new GraphQLList(GraphQLID)
+
+    return GraphQLID
+  }
+
+  return GraphQLString
 }
 
 export function toArray (value, sep) {

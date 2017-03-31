@@ -115,6 +115,13 @@ class Fields extends PureComponent {
           <Grid width={2 / 24} />
         </Grid>
 
+        <Grid className={_styles['row-list']}>
+          <Grid width={4 / 24}>id</Grid>
+          <Grid width={4 / 24}>ID</Grid>
+          <Grid width={4 / 24}>id</Grid>
+          <Grid width={12 / 24}>自动维护，不能修改</Grid>
+        </Grid>
+
         <RowList fields={this.state.fields}
           moveRow={this.moveRow}
           onEdit={this.handleEdit}

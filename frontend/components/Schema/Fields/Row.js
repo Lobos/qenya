@@ -67,7 +67,7 @@ class Row extends Component {
         onDragEnd={this.handleDragEnd}
         onDragOver={this.handleDragOver}
         data-index={index}
-        className={_styles['row-list']}>
+        className={`${_styles['row-list']} ${_styles.draggable}`}>
         <Grid width={4 / 24}>
           <a href="javascript:;" onClick={this.handleEdit}>
             {field.name}

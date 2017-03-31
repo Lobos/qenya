@@ -19,7 +19,7 @@ router.post('/exist', body(), async function (ctx, next) {
   if (query._id) query._id = { $ne: objectId(query._id) }
   else delete query._id
   const data = await getOne(ctx.db(), query)
-  data ? ctx.Render.fail('schema existed') : ctx.Render.success('')
+  data ? ctx.Render.fail('schema existed') : ctx.Render.success(true)
 })
 
 router.get('/schema/:id', async function (ctx, next) {

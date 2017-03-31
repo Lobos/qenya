@@ -28,7 +28,7 @@ class Collection extends PureComponent {
     } else {
       Refetch.post('/schema/exist', { _id: formData._id, code: value })
         .then(res => {
-          if (res.success) callback(true)
+          if (res.data) callback(true)
           else callback(new Error('Code already exists.'))
         })
     }

@@ -3,9 +3,9 @@ import objectId from '../utils/objectId'
 
 const API_NAME = 'api'
 
-export function getAll (db) {
+export function getAll (db, query = {}, sort = { _id: -1 }) {
   return new Promise(function () {
-    db.collection(API_NAME).find({}).sort({ _id: -1 }).toArray(callback(...arguments))
+    db.collection(API_NAME).find(query).sort(sort).toArray(callback(...arguments))
   })
 }
 

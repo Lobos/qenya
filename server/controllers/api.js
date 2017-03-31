@@ -28,7 +28,9 @@ router.post('/api', body(), async function (ctx, next) {
   } else {
     let old = await getOne(db, { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
-}
+  }
+
+  data.weight = parseInt(data.weight || 0)
 
   const query = { path: data.path, method: data.method }
   if (data._id) {

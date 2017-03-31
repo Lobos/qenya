@@ -1,15 +1,17 @@
 import React, { PureComponent, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'rctui'
 import GraphiQL from 'graphiql'
 import Refetch from 'refetch'
 import { queryList, queryOne, queryDelete, querySave } from './convert'
+import { getData } from '_/actions/data'
 
 class Graphql extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
       query: 'list',
-      mock: ''
+      mock: {}
     }
 
     this.graphQLFetcher = this.graphQLFetcher.bind(this)
@@ -18,8 +20,15 @@ class Graphql extends PureComponent {
   componentWillMount () {
     const { schema } = this.props
     Refetch.get(`/data/${schema.code}/getmock`).then(res => {
-      this.setState({ mock: JSON.stringify(res.data, null, 2) })
+      this.setState({ mock: res.data })
     })
+  }
+
+  componentDidMount () {
+    this.props.dispatch(getData({
+      schema: this.props.schema.code,
+      page: 1
+    }, true))
   }
 
   graphQLFetcher (graphQLParams) {
@@ -36,7 +45,7 @@ class Graphql extends PureComponent {
   }
 
   render () {
-    const { schema } = this.props
+    const { schema, list, status } = this.props
     const { query, mock } = this.state
     let queryStr = ''
     let variables = ''
@@ -44,26 +53,36 @@ class Graphql extends PureComponent {
     switch (query) {
       case 'list':
         queryStr = queryList(schema)
+        variables = { page: 1, size: 10 }
         break
       case 'one':
         queryStr = queryOne(schema)
+        variables = { _id: list[0]._id }
         break
       case 'delete':
         queryStr = queryDelete(schema)
+        variables = { _id: list[0]._id }
         break
-      case 'save':
+      case 'add':
         queryStr = querySave(schema)
         variables = mock
         break
+      case 'edit':
+        queryStr = querySave(schema, true)
+        variables = list[0]
+        break
     }
+    variables = JSON.stringify(variables, null, 2)
+
+    let tabs = status === 1 && list.length > 0
+      ? ['list', 'one', 'add', 'edit', 'delete'] : ['list', 'add']
 
     return (
       <div>
         <ButtonGroup style={{marginBottom: 20}}>
-          {['list', 'one', 'save', 'delete'].map(s => (
+          {tabs.map(s => (
           <Button key={s} disabled={s === query} status={s === query ? 'success' : undefined}
-            onClick={this.handleQueryChange.bind(this, s)}
-          >{s}</Button>
+            onClick={this.handleQueryChange.bind(this, s)}>{s}</Button>
           ))}
         </ButtonGroup>
         <div style={{height: 600}}>
@@ -75,10 +94,18 @@ class Graphql extends PureComponent {
 }
 
 Graphql.propTypes = {
-  schema: PropTypes.object
+  dispatch: PropTypes.func,
+  list: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.element
+  ]),
+  schema: PropTypes.object,
+  status: PropTypes.number
 }
 
-Graphql.defaultProps = {
+const mapStateToProps = state => {
+  const { data } = state
+  return { list: data.list, status: data.status }
 }
 
-export default Graphql
+export default connect(mapStateToProps)(Graphql)

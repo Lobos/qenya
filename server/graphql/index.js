@@ -9,19 +9,18 @@ import {
 import objectId from '../utils/objectId'
 import { getOne, getPageList, insertOrUpdate, remove } from '../models/data'
 import getQueryType, { clearQueryType } from './queryType'
-import getInputType, { clearInputType } from './inputType'
-import { convertType } from './type'
+import { convertType, convertRefType } from './type'
 
 function getOneQuery (db, schema, graphType) {
   return {
     type: graphType,
     args: {
-      id: {
+      _id: {
         type: GraphQLID
       }
     },
-    resolve: (root, { id }) => {
-      return getOne(db.collection(schema.code), { _id: objectId(id) })
+    resolve: (root, { _id }) => {
+      return getOne(db.collection(schema.code), { _id: objectId(_id) })
     }
   }
 }
@@ -67,11 +66,11 @@ function getQuery (db, schemas) {
 
 function getSaveQuery (db, schema, queryType) {
   const args = {
-    id: { type: GraphQLID }
+    _id: { type: GraphQLID }
   }
 
   schema.fields.forEach(f => {
-    args[f.name] = { type: convertType(f.type) }
+    args[f.name] = { type: (f.type === 'enum' ? convertRefType(f) : convertType(f.type)) }
   })
 
   return {
@@ -88,12 +87,12 @@ function getDeleteQuery (db, schema) {
   return {
     type: GraphQLInt,
     args: {
-      id: {
+      _id: {
         type: GraphQLID
       }
     },
-    resolve: (root, {id}) => {
-      return remove(db.collection(schema.code), { _id: objectId(id) })
+    resolve: (root, {_id}) => {
+      return remove(db.collection(schema.code), { _id: objectId(_id) })
     }
   }
 }
@@ -102,9 +101,9 @@ function getMutation (db, schemas) {
   const fields = {}
   schemas.forEach(schema => {
     const queryType = getQueryType(schema, schemas, db)
-    const inputType = getInputType(schema, schemas, db)
+    // const inputType = getInputType(schema, schemas, db)
     const name = schema.code.replace(/\b\w/g, l => l.toUpperCase())
-    fields['save' + name] = getSaveQuery(db, schema, queryType, inputType)
+    fields['save' + name] = getSaveQuery(db, schema, queryType)
     fields['delete' + name] = getDeleteQuery(db, schema)
   })
 
@@ -123,5 +122,4 @@ export default function getSchema (db, schemas) {
 
 export function clearType () {
   clearQueryType()
-  clearInputType()
 }
