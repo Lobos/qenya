@@ -13,7 +13,7 @@ const router = new Router()
 
 let db = {}
 let running = false
-let extraRoute = () => {}
+let presetRoute = () => {}
 let handleResult
 
 // db engine
@@ -26,6 +26,8 @@ if (config.engine === 'tingodb') {
 }
 
 async function bindRouter () {
+  presetRoute(router)
+
   return new Promise((resolve, reject) => {
     db().collection('api').find({}).sort({ weight: -1 }).toArray((err, routes) => {
       if (err) reject(err)
@@ -36,7 +38,7 @@ async function bindRouter () {
       }
 
       routes.forEach(r => {
-        router[r.method](r.path, body(), async function (ctx, next) {
+        router[r.method](r.route, body(), async function (ctx, next) {
           const args = Object.assign({}, ctx.query, ctx.params)
           try {
             const query = swig.render(r.query, { locals: args })
@@ -64,18 +66,17 @@ async function bindRouter () {
 
       resolve()
     })
-
-    extraRoute(router)
   })
 }
 
 async function start ({port = 5002, route, render}) {
-  if (route) extraRoute = route
+  if (route) presetRoute = route
   handleResult = render
 
   await bindRouter()
 
   apiServer.use(router.routes())
+
   apiServer.listen(port, function () {
     running = true
     console.log(`api server running on http://localhost:${port}.`)

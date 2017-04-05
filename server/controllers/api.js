@@ -32,13 +32,13 @@ router.post('/api', body(), async function (ctx, next) {
 
   data.weight = parseInt(data.weight || 0)
 
-  const query = { path: data.path, method: data.method }
+  const query = { route: data.route, method: data.method }
   if (data._id) {
     query._id = { $ne: objectId(data._id) }
   }
   const other = await getOne(db, query)
   if (other) {
-    ctx.Render.fail(ctx.i18n.__('api.path_exist', data.path, data.method))
+    ctx.Render.fail(ctx.i18n.__('api.route_exist', data.route, data.method))
     return
   }
 

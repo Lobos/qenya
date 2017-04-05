@@ -22,14 +22,14 @@ class Collection extends PureComponent {
   checkCode (value, formData, callback) {
     let reg = /^[a-z0-9_]+$/i
     if (!reg.test(value)) {
-      callback(new Error('Code must only contain alpha characters, underscores, and dashes'))
+      callback(new Error('Code 只能由数字、英文字符和"_"组成'))
     } else if (value.length > 20) {
-      callback(new Error('Code can not exceed 20 characters'))
+      callback(new Error('Code 最大长度20个字符'))
     } else {
       Refetch.post('/schema/exist', { _id: formData._id, code: value })
         .then(res => {
           if (res.data) callback(true)
-          else callback(new Error('Code already exists.'))
+          else callback(new Error(`${value} 已经存在`))
         })
     }
   }
@@ -37,8 +37,8 @@ class Collection extends PureComponent {
   handleEdit (data) {
     this.mid = Modal.open({
       buttons: {
-        'Submit': 'submit',
-        'Cancel': true
+        '保存': 'submit',
+        '取消': true
       },
       padding: '2rem',
       width: '40rem',
@@ -48,10 +48,11 @@ class Collection extends PureComponent {
           <FormControl label="Code" required max={20}
             type="alphanum" name="code"
             trigger="blur"
+            tip="唯一。数字、英文字符和'_', 最大长度 20 个字符"
             validator={{ async: this.checkCode }}
           />
-          <FormControl label="Name" required max={20} type="text" name="name" />
-          <FormControl label="Description" rows={5} max={100} type="textarea" name="desc" />
+          <FormControl label="中文名" required max={20} type="text" name="name" />
+          <FormControl label="描述" rows={5} max={100} type="textarea" name="desc" />
         </Form>
       )
     })
@@ -88,9 +89,9 @@ class Collection extends PureComponent {
               { sort: true, header: 'Code', content: d => (
                 <Link to={`/schema/${d.code}`}>{d.code}</Link>
               ) },
-              { name: 'name', header: 'Name' },
-              { name: 'desc', header: 'Description' },
-              { name: 'updateAt', sort: true, width: '12rem', header: 'UpdateAt', content: d => Datetime.format(d.updateAt, 'yyyy-MM-dd hh:mm:ss') },
+              { name: 'name', header: '中文名' },
+              { name: 'desc', header: '描述' },
+              { name: 'updateAt', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.updateAt, 'yyyy-MM-dd hh:mm:ss') },
               { width: '6rem', content: d => (
                 <span>
                   <Link to={`/schema/${d.code}`}>

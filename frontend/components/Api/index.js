@@ -19,7 +19,7 @@ class Api extends PureComponent {
   }
 
   handleRemove (d) {
-    const mid = Modal.confirm(`Are you sure you want delete this api '${d.path}'?`, () => {
+    const mid = Modal.confirm(`确定删除 '${d.route}' 吗?`, () => {
       this.props.dispatch(removeApi(d._id))
       Modal.close(mid)
     }, 'Confirm')
@@ -33,7 +33,7 @@ class Api extends PureComponent {
 
     data.sort((a, b) => a.weight < b.weight ? 1 : -1)
 
-    return filter ? data.filter(d => d.path.indexOf(filter) >= 0) : data
+    return filter ? data.filter(d => d.route.indexOf(filter) >= 0) : data
   }
 
   setFilter (filter) {
@@ -66,10 +66,10 @@ class Api extends PureComponent {
 
           <Table data={this.getData()}
             columns={[
-              { name: 'path', header: 'Path', sort: true },
-              { name: 'method', header: 'Mothed' },
-              { name: 'weight', header: 'Weight', sort: true },
-              { header: 'Description', content: d => <Text>{d.desc}</Text> },
+              { name: 'route', header: 'Route', sort: true },
+              { name: 'method', header: 'Method' },
+              { name: 'weight', header: '权重', sort: true },
+              { header: '描述', content: d => <Text>{d.desc}</Text> },
               { width: '4rem', content: d => (
                 <span>
                   <Link to={`/api/${d._id}`}>

@@ -1,6 +1,6 @@
 import { PureComponent, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Card, Form, FormControl } from 'rctui'
+import { Breadcrumb, Card, Form, FormControl } from 'rctui'
 import { saveApi } from '_/actions/apis'
 
 class Edit extends PureComponent {
@@ -25,23 +25,32 @@ class Edit extends PureComponent {
     }
 
     return (
-      <Card>
-        <Card.Header>API</Card.Header>
-        <Form fetch={fetch}
-          onSubmit={this.handleSubmit}
-          onCancel={this.props.history.goBack}
-          buttons={{
-            primary: 'Submit',
-            cancel: 'Cancel'
-          }} style={{ padding: 20 }}>
-          <FormControl label="Path" grid={3 / 5} tip="url path without domain, like：/abc/:id/" required name="path" type="text" />
-          <FormControl label="Weight" required grid={1 / 5} name="weight" type="integer" defaultValue="0" />
-          <FormControl grid={1 / 4} label="Method" defaultValue="get" required name="method" type="select"
-            data={['get', 'post', 'put', 'delete']} />
-          <FormControl label="Graphql Query" grid={3 / 5} type="textarea" name="query" required />
-          <FormControl label="Description" grid={3 / 5} name="desc" rows={3} type="textarea" />
-        </Form>
-      </Card>
+      <div>
+        <Breadcrumb style={{ background: '#fff' }} data={[
+          { text: 'API', href: '#/api' },
+          { text: id === 'new' ? '新建' : '编辑' }
+          ]} />
+
+        <Card>
+          <Form fetch={fetch}
+            onSubmit={this.handleSubmit}
+            onCancel={this.props.history.goBack}
+            buttons={{
+              primary: 'Submit',
+              cancel: 'Cancel'
+            }} style={{ padding: 20 }}>
+            <FormControl label="Route" grid={3 / 5} required name="route" type="text"
+              tip="url路径，不包含域名，可以使用通配规则传参数，参考koa-router，例：/abc/:id/" />
+            <FormControl label="权重" required grid={1 / 8} name="weight" type="integer" defaultValue="0"
+              tip="整数，当两条路由冲突时，会匹配权重高的路由" />
+            <FormControl grid={1 / 8} label="Method" defaultValue="get" required name="method" type="select"
+              data={['get', 'post', 'put', 'delete']} />
+            <FormControl label="Graphql Query" grid={3 / 5} type="textarea" name="query" required
+              tip="graphql 查询语句，get请求时从queryString或者路由规则中获取参数，post、put、" />
+            <FormControl label="描述" grid={3 / 5} name="desc" rows={3} type="textarea" />
+          </Form>
+        </Card>
+      </div>
     )
   }
 }
