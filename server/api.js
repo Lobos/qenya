@@ -13,7 +13,7 @@ const router = new Router()
 
 let db = {}
 let running = false
-let presetRoute = () => {}
+let extraRoute = () => {}
 let handleResult
 
 // db engine
@@ -26,8 +26,6 @@ if (config.engine === 'tingodb') {
 }
 
 async function bindRouter () {
-  presetRoute(router)
-
   return new Promise((resolve, reject) => {
     db().collection('api').find({}).sort({ weight: -1 }).toArray((err, routes) => {
       if (err) reject(err)
@@ -66,11 +64,13 @@ async function bindRouter () {
 
       resolve()
     })
+
+    extraRoute(router)
   })
 }
 
 async function start ({port = 5002, route, render}) {
-  if (route) presetRoute = route
+  if (route) extraRoute = route
   handleResult = render
 
   await bindRouter()
