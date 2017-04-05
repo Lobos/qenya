@@ -1,15 +1,35 @@
 var path = require('path')
+var webpack = require('webpack')
 var autoprefixer = require('autoprefixer')
 var precss = require('precss')
 
 module.exports = {
+  entry: {
+    app: [
+      './frontend/index.js'
+    ]
+  },
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, '../static/js'),
     filename: '[name].js',
     publicPath: '/static/js/'
   },
-  externals: {'react': 'React', 'react-dom': 'ReactDOM', 'graphiql': 'GraphiQL'},
-  plugins: [],
+  externals: { 'react': 'React', 'react-dom': 'ReactDOM', 'graphiql': 'GraphiQL' },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true,
+        collapse_vars: true
+      }
+    })
+  ],
   resolve: {
     alias: {
       _: path.resolve(__dirname, '../frontend')
@@ -19,12 +39,25 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader'
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['es2015', { 'modules': false }],
+              'react'
+            ],
+            plugins: [
+              'es6-promise',
+              'transform-object-rest-spread',
+              'transform-object-assign'
+            ]
+          }
+        }
       },
       {
         test: /\.scss$/,
         use: [
-          {loader: 'style-loader'},
+          { loader: 'style-loader' },
           {
             loader: 'css-loader',
             options: {

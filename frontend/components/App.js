@@ -12,7 +12,7 @@ export default function App (props) {
     <Router>
       <div>
         <div className={_styles.header}>
-          <span className={_styles.logo}>Hydra</span>
+          <span className={_styles.logo}>Genbu</span>
 
           <Link className={_styles.link} to="/collections">Collections</Link>
           <Link className={_styles.link} to="/api">API</Link>

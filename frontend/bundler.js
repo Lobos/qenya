@@ -1,18 +1,6 @@
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-let config = require('../config/webpack.config')
-
-config = Object.assign({}, config, {
-  devtool: 'cheap-module-source-map',
-  entry: {
-    app: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:5001',
-      'webpack/hot/only-dev-server',
-      './frontend/index.js'
-    ]
-  }
-})
+let config = require('../config/webpack.dev.config')
 
 config.plugins.unshift(new webpack.HotModuleReplacementPlugin())
 
