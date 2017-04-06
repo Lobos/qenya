@@ -8,8 +8,7 @@ const router = new Router()
 
 router.get('/', async (ctx) => {
   await ctx.render('index.html', {
-    globalData: {
-    }
+    globalData: {}
   })
 })
 

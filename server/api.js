@@ -1,7 +1,7 @@
 import Koa from 'koa'
 import Router from 'koa-router'
 import body from 'koa-bodyparser'
-import config from '../config/server.config'
+import config from './config'
 import tingodb from 'tingodb'
 import { graphql } from 'graphql'
 import getSchema from './graphql'

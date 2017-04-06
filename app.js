@@ -1,11 +1,10 @@
-import app from './server'
+const app = require('./build').default
 
 // api server =================================
 app({
   appPort: 5000,
   apiPort: 5001,
-  staticPort: 5002,
-  render: (res) => {
+  render: function (res) {
     if (res.data) {
       let keys = Object.keys(res.data)
       return {
@@ -20,3 +19,4 @@ app({
     }
   }
 })
+

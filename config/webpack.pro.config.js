@@ -10,9 +10,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, '../static/js'),
-    filename: '[name].js',
-    publicPath: '/static/js/'
+    path: path.join(__dirname, '../build/static/js'),
+    filename: '[name].js'
   },
   externals: { 'react': 'React', 'react-dom': 'ReactDOM', 'graphiql': 'GraphiQL' },
   plugins: [
@@ -42,6 +41,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            babelrc: false,
             presets: [
               ['es2015', { 'modules': false }],
               'react'

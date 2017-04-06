@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:5001',
+      'webpack-dev-server/client?http://localhost:5002',
       'webpack/hot/only-dev-server',
       './frontend/index.js'
     ]
@@ -31,6 +31,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            babelrc: false,
             presets: [
               ['es2015', { 'modules': false }],
               'react'

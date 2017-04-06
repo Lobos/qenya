@@ -1,6 +1,6 @@
 import fs from 'fs'
 import * as Datetime from './datetime'
-import config from '../../config/server.config'
+import config from '../config'
 
 const slice = Array.prototype.slice
 

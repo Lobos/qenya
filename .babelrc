@@ -1,0 +1,7 @@
+{
+  "presets": ["es2015-loose", "stage-1"],
+  "plugins": ["transform-runtime"],
+  "ignore": ["server/static/**/*.js"],
+  "sourceMaps": true,
+  "retainLines": true
+}

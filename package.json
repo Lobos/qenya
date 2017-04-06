@@ -5,7 +5,11 @@
   "description": "a web application base on koa and react",
   "main": "",
   "scripts": {
-    "dev": "node dev.app.js | nodemon --watch server babel.app.js"
+    "dev": "node dev.app.js | nodemon --watch server babel.app.js",
+    "buildStatic": "node node_modules/webpack/bin/webpack.js --config config/webpack.pro.config.js",
+    "buildServer": "babel server/ --out-dir build/ --retain-lines --source-maps",
+    "build": "npm run clean && npm run buildServer && npm run buildStatic && cp -r server/static build/",
+    "clean": "rm -rf build/"
   },
   "keywords": [
     "qenya"
@@ -34,6 +38,7 @@
   },
   "devDependencies": {
     "autoprefixer": "~6.4.0",
+    "babel-cli": "^6.24.0",
     "babel-core": "~6.22.1",
     "babel-eslint": "~7.1.1",
     "babel-loader": "~6.2.10",
@@ -41,6 +46,7 @@
     "babel-plugin-react-require": "^2.1.0",
     "babel-plugin-react-transform": "~2.0.2",
     "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "~6.22.0",
     "babel-preset-es2015-loose": "~7.0.0",

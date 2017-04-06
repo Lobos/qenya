@@ -1,6 +1,6 @@
 const bundler = require('./frontend/bundler')
 
-bundler.listen(5001, 'localhost', function (err, result) {
+bundler.listen(5002, 'localhost', function (err, result) {
   if (err) {
     return console.log(err)
   }

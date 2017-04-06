@@ -1,4 +1,4 @@
-import config from '../../config/server.config'
+import config from '../config'
 import tingodb from 'tingodb'
 import { setObjectID } from '../utils/objectId'
 import { mkDir } from '../utils/dir'
