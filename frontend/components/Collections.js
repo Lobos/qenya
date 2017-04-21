@@ -20,18 +20,20 @@ class Collection extends PureComponent {
   }
 
   checkCode (value, formData, callback) {
+    /*
     let reg = /^[a-z0-9_]+$/i
     if (!reg.test(value)) {
       callback(new Error('Code 只能由数字、英文字符和"_"组成'))
     } else if (value.length > 20) {
       callback(new Error('Code 最大长度20个字符'))
     } else {
+      */
       Refetch.post('/schema/exist', { _id: formData._id, code: value })
         .then(res => {
           if (res.data) callback(true)
           else callback(new Error(`${value} 已经存在`))
         })
-    }
+    // }
   }
 
   handleEdit (data) {
@@ -44,7 +46,7 @@ class Collection extends PureComponent {
       width: '40rem',
       header: 'Collection',
       content: (
-        <Form labelWidth="5rem" data={data} initValidate onSubmit={this.handleSave}>
+        <Form labelWidth="5rem" data={data} onSubmit={this.handleSave}>
           <FormControl label="Code" required max={20}
             type="alphanum" name="code"
             trigger="blur"

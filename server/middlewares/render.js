@@ -17,20 +17,20 @@ export default async function (ctx, next) {
 
     notFound () {
       ctx.body = {
-        error: ctx.i18n.__('http.not_found')
+        error: '请求的资源不存在'
       }
     },
 
     noAuth () {
       ctx.body = {
-        error: ctx.i18n.__('http.no_auth')
+        error: '没有权限'
       }
       ctx.response.status = 401
     },
 
     expired () {
       ctx.body = {
-        error: ctx.i18n.__('login.expired')
+        error: '登录已过期'
       }
       ctx.response.status = 401
     }

@@ -3,7 +3,25 @@ import app from './app'
 import api from './api'
 import { setConfig } from './config'
 
-export default function ({ appPort, apiPort, staticPort, config, render, route }) {
+function staticProxy (port) {
+  return async function (ctx, next) {
+    let options = {
+      uri: `http://localhost:${port}${ctx.url}`,
+      mothed: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-Cache'
+      }
+    }
+    let response = await coRequest(options)
+    for (let key in response.headers) {
+      ctx.set(key, response.headers[key])
+    }
+    ctx.body = response.body
+  }
+}
+
+module.exports = function ({ appPort, apiPort, staticPort, config, render, route }) {
   setConfig(config)
 
   const appConfig = { port: appPort }
@@ -19,21 +37,8 @@ export default function ({ appPort, apiPort, staticPort, config, render, route }
 
   if (staticPort) {
     appConfig.route = (router) => {
-      router.get('/static/js/app.js', async function (ctx, next) {
-        let options = {
-          uri: `http://localhost:${staticPort}${ctx.url}`,
-          mothed: 'GET',
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Cache-Control': 'no-Cache'
-          }
-        }
-        let response = await coRequest(options)
-        for (let key in response.headers) {
-          ctx.set(key, response.headers[key])
-        }
-        ctx.body = response.body
-      })
+      router.get('/static/js/app.js', staticProxy(staticPort))
+      router.get('/static/js/*.hot-update.js(on)?', staticProxy(staticPort))
     }
   }
 

@@ -46,7 +46,7 @@ class Edit extends PureComponent {
             <FormControl grid={1 / 8} label="Method" defaultValue="get" required name="method" type="select"
               data={['get', 'post', 'put', 'delete']} />
             <FormControl label="Graphql Query" grid={3 / 5} type="textarea" name="query" required
-              tip="graphql 查询语句，get请求时从queryString或者路由规则中获取参数，post、put、" />
+              tip="graphql 查询语句，get请求时从queryString或者路由规则中获取参数，post、put、delete请求时从form中获取" />
             <FormControl label="描述" grid={3 / 5} name="desc" rows={3} type="textarea" />
           </Form>
         </Card>

@@ -48,9 +48,8 @@ export function saveApi (body, onSuccess) {
         // remove query
         delete model.query
 
-        let data = getState().apis.data.filter(d => d._id !== model._id)
-        data.unshift(model)
-        dispatch(handleList(1, data))
+        const data = getState().apis.data.filter(d => d._id !== model._id)
+        dispatch(handleList(1, [model, ...data]))
         Message.success('Save successed')
       })
     }).catch(err => {

@@ -3,14 +3,6 @@ const config = {
 
   engine: 'tingodb',
 
-  i18n: {
-    locales: ['zh-cn'],
-    defaultLocale: 'zh-cn',
-    extension: '.json',
-    directory: './server/locales',
-    cookieName: 'lang'
-  },
-
   logPath: './log',
 
   mongo: {

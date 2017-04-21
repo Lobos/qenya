@@ -64,7 +64,9 @@ class Field extends Component {
 
         <DataSource code={code} schemas={schemas} />
 
+        {/*
         <FormControl name="defaultValue" label="默认值" type="textarea" rows={3} />
+        */}
       </Form>
     )
   }

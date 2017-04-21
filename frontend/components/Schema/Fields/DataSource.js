@@ -53,7 +53,7 @@ function DataSource (props, context) {
         <FormControl key="sourceUrl" grid={1} required label="数据地址" type="text" name="sourceUrl" />
       }
 
-      <FormControl readOnly={sourceType === 'ref'} value={sourceType === 'ref' ? '{_id}' : undefined}
+      <FormControl value={sourceType === 'ref' ? '{_id}' : undefined}
         label="ValueTpl" grid={1} type="text" name="valueTpl" />
 
       <FormControl label="OptionTpl" required={sourceType === 'ref'} grid={1} type="text" name="optionTpl" />

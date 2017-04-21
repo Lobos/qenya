@@ -38,7 +38,7 @@ router.post('/api', body(), async function (ctx, next) {
   }
   const other = await getOne(db, query)
   if (other) {
-    ctx.Render.fail(ctx.i18n.__('api.route_exist', data.route, data.method))
+    ctx.Render.fail(`路径 '${data.route}' ${data.method} 方法已经存在`)
     return
   }
 

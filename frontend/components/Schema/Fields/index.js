@@ -116,7 +116,7 @@ class Fields extends PureComponent {
         </Grid>
 
         <Grid className={_styles['row-list']}>
-          <Grid width={4 / 24}>id</Grid>
+          <Grid width={4 / 24}>_id</Grid>
           <Grid width={4 / 24}>ID</Grid>
           <Grid width={4 / 24}>id</Grid>
           <Grid width={12 / 24}>自动维护，不能修改</Grid>

@@ -1,6 +1,5 @@
-const app = require('./build').default
+const app = require('./build')
 
-// api server =================================
 app({
   appPort: 5000,
   apiPort: 5001,

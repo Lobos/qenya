@@ -1,15 +1,16 @@
 {
   "name": "qenya",
   "author": "lobos841@gmail.com",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "a web application base on koa and react",
-  "main": "",
+  "main": "index.js",
   "scripts": {
     "dev": "node dev.app.js | nodemon --watch server babel.app.js",
-    "buildStatic": "node node_modules/webpack/bin/webpack.js --config config/webpack.pro.config.js",
+    "buildStatic": "node_modules/.bin/webpack --config config/webpack.pro.config.js",
     "buildServer": "babel server/ --out-dir build/ --retain-lines --source-maps",
-    "build": "npm run clean && npm run buildServer && npm run buildStatic && cp -r server/static build/",
-    "clean": "rm -rf build/"
+    "build": "npm run clean && npm run buildServer && npm run buildStatic && npm run cp",
+    "clean": "rm -rf build/",
+    "cp": "cp -r server/static build/ && cp README.md build/ && cp package.json build/"
   },
   "keywords": [
     "qenya"
@@ -23,16 +24,17 @@
     "url": "https://github.com/lobos/qenya/issues"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "blueimp-md5": "^2.3.0",
     "co-request": "^1.0.0",
     "co-views": "^2.1.0",
     "curry": "~1.2.0",
     "graphql": "^0.9.1",
-    "i18n-2": "^0.6.3",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.2.0",
     "koa-router": "^7.0.1",
     "koa-views": "^5.0.2",
+    "koa2-cors": "^2.0.3",
     "swig": "^1.4.2",
     "tingodb": "^0.4.2"
   },

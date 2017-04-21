@@ -1,4 +1,5 @@
 import Koa from 'koa'
+import cors from 'koa2-cors'
 import Router from 'koa-router'
 import body from 'koa-bodyparser'
 import config from './config'
@@ -10,6 +11,8 @@ import swig from 'swig'
 
 const apiServer = new Koa()
 const router = new Router()
+
+apiServer.use(cors())
 
 let db = {}
 let running = false
@@ -40,6 +43,7 @@ async function bindRouter () {
       routes.forEach(r => {
         router[r.method](r.route, body(), async function (ctx, next) {
           const args = Object.assign({}, ctx.query, ctx.params)
+
           try {
             const query = swig.render(r.query, { locals: args })
             // const query = r.query
