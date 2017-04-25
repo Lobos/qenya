@@ -4,5 +4,5 @@ require('babel-core/register')({
     'stage-1'
   ]
 })
-require('babel-polyfill')
+// require('babel-polyfill')
 require('./dev.serv')

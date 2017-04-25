@@ -18,7 +18,12 @@ class DataEdit extends Component {
   setText (field, props) {
     const { max = 20 } = field
     props.grid = max > 10 ? 1 : 1 / 2
-    props.type = max > 20 ? 'textarea' : 'text'
+    props.type = max > 100 ? 'textarea' : 'text'
+    if (max > 100 && max < 300) {
+      props.rows = 3
+    } else if (max >= 300) {
+      props.rows = 5
+    }
   }
 
   setEnum (field, props) {
