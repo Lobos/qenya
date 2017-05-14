@@ -1,4 +1,5 @@
-import { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Breadcrumb, Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
@@ -6,7 +7,7 @@ import { getList, removeApi } from '_/actions/apis'
 import Text from '_/components/comm/Text'
 
 class Api extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = { filtre: '' }
@@ -14,18 +15,18 @@ class Api extends PureComponent {
     this.setFilter = this.setFilter.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(getList())
   }
 
-  handleRemove (d) {
+  handleRemove(d) {
     const mid = Modal.confirm(`确定删除 '${d.route}' 吗?`, () => {
       this.props.dispatch(removeApi(d._id))
       Modal.close(mid)
     }, 'Confirm')
   }
 
-  getData () {
+  getData() {
     const { data } = this.props
     const { filter } = this.state
 
@@ -36,57 +37,61 @@ class Api extends PureComponent {
     return filter ? data.filter(d => d.route.indexOf(filter) >= 0) : data
   }
 
-  setFilter (filter) {
+  setFilter(filter) {
     this.setState({ filter })
   }
 
-  render () {
+  render() {
     const { history } = this.props
 
     return (
       <div>
-        <Breadcrumb style={{background: '#fff'}} data={[{text: 'API'}]} />
+        <Breadcrumb style={{ background: '#fff' }} data={[{ text: 'API' }]} />
 
-        <Card style={{padding: 20}}>
+        <Card style={{ padding: 20 }}>
           <div>
-            <div style={{width: 300, marginBottom: 20, display: 'inline-block'}}>
+            <div style={{ width: 300, marginBottom: 20, display: 'inline-block' }}>
               <InputGroup>
                 <Input type="text" onChange={this.setFilter} />
                 <Icon icon="search" />
               </InputGroup>
             </div>
 
-            <Button style={{float: 'right'}}
+            <Button
+              style={{ float: 'right' }}
               status="success"
-              onClick={() => history.push('/api/new')}>
+              onClick={() => history.push('/api/new')}
+            >
               <Icon icon="plus" />
               New API
             </Button>
           </div>
 
-          <Table data={this.getData()}
+          <Table
+            data={this.getData()}
             columns={[
               { name: 'route', header: 'Route', sort: true },
               { name: 'method', header: 'Method' },
               { name: 'weight', header: '权重', sort: true },
               { header: '描述', content: d => <Text>{d.desc}</Text> },
-              { width: '4rem', content: d => (
-                <span>
-                  <Link to={`/api/${d._id}`}>
-                    <Tooltip position="top" tip="Edit">
-                      <Icon icon="edit" />
-                    </Tooltip>
-                  </Link>
-                  {' '}
-                  <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
-                    <Tooltip position="top" tip="Remove">
-                      <Icon icon="trash" />
-                    </Tooltip>
-                  </a>
-                </span>
-              ) }
+              { width: '4rem',
+                content: d => (
+                  <span>
+                    <Link to={`/api/${d._id}`}>
+                      <Tooltip position="top" tip="Edit">
+                        <Icon icon="edit" />
+                      </Tooltip>
+                    </Link>
+                    {' '}
+                    <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
+                      <Tooltip position="top" tip="Remove">
+                        <Icon icon="trash" />
+                      </Tooltip>
+                    </a>
+                  </span>
+              ) },
             ]}
-            pagination={{size: 20}}
+            pagination={{ size: 20 }}
           />
         </Card>
       </div>
@@ -97,15 +102,15 @@ class Api extends PureComponent {
 Api.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.element
+    PropTypes.element,
   ]),
   dispatch: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 }
 
 Api.defaultProps = {}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { apis } = state
   return { ...apis }
 }

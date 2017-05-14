@@ -8,7 +8,7 @@ if (!fs.existsSync(config.logPath)) {
   fs.mkdirSync(config.logPath)
 }
 
-function wirteLog (type, args) {
+function wirteLog(type, args) {
   const filePrint = type === 'warn' || type === 'error'
 
   if (!filePrint && !config.debug) {
@@ -22,7 +22,7 @@ function wirteLog (type, args) {
   const msg = args.join(' ')
 
   if (filePrint) {
-    fs.appendFile(`${config.logPath}/${type}-${Datetime.format(date, 'yyyyMMdd')}.log`, msg + '\n')
+    fs.appendFile(`${config.logPath}/${type}-${Datetime.format(date, 'yyyyMMdd')}.log`, `${msg}\n`)
   }
 
   if (config.debug) {
@@ -30,18 +30,18 @@ function wirteLog (type, args) {
   }
 }
 
-export function info () {
+export function info() {
   wirteLog('info', arguments)
 }
 
-export function debug () {
+export function debug() {
   wirteLog('debug', arguments)
 }
 
-export function warn () {
+export function warn() {
   wirteLog('warn', arguments)
 }
 
-export function error () {
+export function error() {
   wirteLog('error', arguments)
 }

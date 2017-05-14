@@ -1,4 +1,4 @@
-export function callback (resolve, reject) {
+export function callback(resolve, reject) {
   return (err, data) => {
     if (err) {
       reject(err)

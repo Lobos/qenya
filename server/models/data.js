@@ -1,67 +1,80 @@
 import { callback } from '../utils/model'
-import objectId from '../utils/objectId'
+import { nextSequence } from '../utils/objectId'
+import config from '../config'
 
-function getCount (col, query) {
-  return new Promise(function () {
-    col.find(query).count(callback(...arguments))
+function getCount(col, query) {
+  return new Promise((...args) => {
+    col.find(query).count(callback(...args))
   })
 }
 
-export function getPageList (col, query = {}, page, size, sort = {_id: -1}) {
-  return new Promise(async function (resolve, reject) {
+export function getPageList(col, query = {}, page, size, sort = { _id: -1 }) {
+  return new Promise(async (resolve, reject) => {
     const total = await getCount(col, query)
-    col.find(query).sort(sort).skip((page - 1) * size).limit(size).toArray((err, list) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve({ total, page, size, list })
-      }
-    })
+    col.find(query).sort(sort).skip((page - 1) * size).limit(size)
+      .toArray((err, list) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve({ total, page, size, list })
+        }
+      })
   })
 }
 
-export function insert (col, entity) {
-  entity._id = objectId()
-  return new Promise(function () {
-    col.insert(entity, callback(...arguments))
-  })
-}
-
-export function update (col, entity) {
-  let id = objectId(entity._id)
-  return new Promise(function (resolve, reject) {
-    col.update({ _id: id }, { $set: entity }, function (err) {
+export function insert(col, model) {
+  return new Promise((resolve, reject) => {
+    col.insert(model, (err, result) => {
       if (err) reject(err)
-      else resolve([entity])
+
+      if (config.engine === 'tingodb') resolve(result)
+      resolve(result.ops)
     })
   })
 }
 
-export async function insertOrUpdate (col, data) {
-  let method = data._id ? update : insert
+export function update(col, model) {
+  return new Promise((resolve, reject) => {
+    col.update({ _id: model._id }, { $set: model }, (err) => {
+      if (err) reject(err)
+      else resolve([model])
+    })
+  })
+}
 
-  if (data._id) {
-    let old = await getOne(col, { _id: objectId(data._id) })
-    data = Object.assign({}, old, data)
+export function getList(col, query) {
+  return new Promise((...args) => {
+    col.find(query).toArray(callback(...args))
+  })
+}
+
+export function getOne(col, query) {
+  return new Promise((...args) => {
+    col.findOne(query, callback(...args))
+  })
+}
+
+export async function insertOrUpdate(db, schema, data) {
+  const { _id, ...params } = data
+  const method = _id ? update : insert
+
+  if (_id) {
+    const old = await getOne(db.collection(schema), { _id: parseInt(_id, 10) })
+    data = Object.assign({}, old, params)
+  } else {
+    data._id = await nextSequence(schema)
   }
 
-  return method(col, data)
+  return method(db.collection(schema), data)
 }
 
-export function getList (col, query) {
-  return new Promise(function () {
-    col.find(query).toArray(callback(...arguments))
-  })
-}
-
-export function getOne (col, query) {
-  return new Promise(function () {
-    col.findOne(query, callback(...arguments))
-  })
-}
-
-export function remove (col, query) {
-  return new Promise(function () {
-    col.remove(query, callback(...arguments))
+export function remove(col, query) {
+  if (typeof query === 'string') query = { _id: query }
+  return new Promise((resolve, reject) => {
+    col.remove(query, (err, result) => {
+      if (err) reject(err)
+      if (config === 'tingodb') resolve(result)
+      else resolve(result.result.ok)
+    })
   })
 }

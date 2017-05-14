@@ -1,22 +1,22 @@
-import config from '../config'
 import tingodb from 'tingodb'
+import config from '../config'
 import { setObjectID } from '../utils/objectId'
 import { mkDir } from '../utils/dir'
 
 export default function () {
-  let engine = tingodb({})
+  const engine = tingodb({})
 
   const dbs = {
-    hydra: new engine.Db(config.tingo.hydra, {}),
-    data: new engine.Db(config.tingo.data, {})
+    qenya: new engine.Db(config.tingo.qenya, {}),
+    data: new engine.Db(config.tingo.data, {}),
   }
 
   setObjectID(engine.ObjectID)
 
-  mkDir([config.tingo.hydra, config.tingo.data])
+  mkDir([config.tingo.qenya, config.tingo.data])
 
   return async function (ctx, next) {
-    ctx.db = (path = 'hydra') => dbs[path]
+    ctx.db = (path = 'qenya') => dbs[path]
     await next()
   }
 }

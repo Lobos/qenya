@@ -6,23 +6,18 @@ const config = {
   logPath: './log',
 
   mongo: {
-    'host': '127.0.0.1',
-    'port': 27017,
-    'db': 'data',
-    'opts': {
-      'auto_reconnect': true,
-      'safe': true
-    }
+    qenya: 'mongodb://localhost:27017/qenya',
+    data: 'mongodb://localhost:27017/data',
   },
 
   tingo: {
-    'hydra': './data',
-    'data': './data/data'
-  }
+    qenya: './data',
+    data: './data/data',
+  },
 }
 
 export default config
 
-export function setConfig (conf) {
+export function setConfig(conf) {
   Object.assign(config, conf)
 }

@@ -1,13 +1,13 @@
 import { one, random } from './pick'
 import { substitute } from '../strings'
 
-async function pickRef (field, db, getList) {
+async function pickRef(field, db, getList) {
   return new Promise(async (resolve, reject) => {
     let times = random(3)
     let values = []
     while (times--) {
-      let list = await getList(db.collection(field.sourceRef), {}, 1, 20)
-      let value = substitute(field.valueTpl || '{_id}', one(list.list))
+      const list = await getList(db.collection(field.sourceRef), {}, 1, 20)
+      const value = substitute(field.valueTpl || '{_id}', one(list.list))
       values.push(value)
     }
     values = Array.from(new Set(values))
@@ -16,18 +16,16 @@ async function pickRef (field, db, getList) {
   })
 }
 
-async function pickJson (field) {
+async function pickJson(field) {
   return new Promise((resolve, reject) => {
     let data = JSON.parse(field.sourceJson)
     if (!Array.isArray(data)) {
-      data = Object.keys(data).map(k => {
-        return {
-          _id: k,
-          text: data[k]
-        }
-      })
+      data = Object.keys(data).map(k => ({
+        _id: k,
+        text: data[k],
+      }))
     } else {
-      data = data.map(d => {
+      data = data.map((d) => {
         if (typeof d === 'object') return d
         return { _id: d }
       })
@@ -36,7 +34,7 @@ async function pickJson (field) {
     let times = random(3)
     let values = []
     while (times--) {
-      let value = substitute(field.valueTpl || '{_id}', one(data))
+      const value = substitute(field.valueTpl || '{_id}', one(data))
       values.push(value)
     }
     values = Array.from(new Set(values))
@@ -45,7 +43,7 @@ async function pickJson (field) {
   })
 }
 
-export async function pickEnum (field, db, getList) {
+export async function pickEnum(field, db, getList) {
   const { sourceType } = field
   switch (sourceType) {
     case 'json':

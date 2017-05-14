@@ -3,18 +3,18 @@ import app from './app'
 import api from './api'
 import { setConfig } from './config'
 
-function staticProxy (port) {
-  return async function (ctx, next) {
-    let options = {
+function staticProxy(port) {
+  return async function (ctx) {
+    const options = {
       uri: `http://localhost:${port}${ctx.url}`,
       mothed: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'no-Cache'
-      }
+        'Cache-Control': 'no-Cache',
+      },
     }
-    let response = await coRequest(options)
-    for (let key in response.headers) {
+    const response = await coRequest(options)
+    for (const key in response.headers) {
       ctx.set(key, response.headers[key])
     }
     ctx.body = response.body
@@ -29,8 +29,9 @@ module.exports = function ({ appPort, apiPort, staticPort, config, render, route
   if (apiPort) {
     api.start({
       port: apiPort,
+      apiConfig: config,
       render,
-      route
+      route,
     })
     appConfig.api = api
   }

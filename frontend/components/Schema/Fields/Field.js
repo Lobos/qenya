@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Form, FormControl, Checkbox, Select } from 'rctui'
 import lengthLimit from './lengthLimit'
 import DataSource from './DataSource'
@@ -10,40 +11,40 @@ const dataType = [
   'enum',
   'integer',
   'number',
-  'text'
+  'text',
 ]
 
 class Field extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      type: props.field.type
+      type: props.field.type,
     }
 
     this.handleTypeChange = this.handleTypeChange.bind(this)
   }
 
-  handleTypeChange (type) {
+  handleTypeChange(type) {
     this.setState({ type })
   }
 
-  render () {
+  render() {
     const { code, index, exist, field, onSubmit, schemas } = this.props
     const { type } = this.state
 
     return (
       <Form labelWidth="7rem" data={field} onSubmit={onSubmit}>
-        <FormControl name="name" required type="alphanum" max={20} label="字段名"
+        <FormControl
+          name="name" required type="alphanum" max={20} label="字段名"
           validator={
             (value) => {
-              let reg = /^[a-z0-9_]+$/i
+              const reg = /^[a-z0-9_]+$/i
               if (!reg.test(value)) {
                 return new Error('name 只能由英文字符、数字、下划线组成')
               } else if (value.length > 20) {
                 return new Error('name 不能超过20个字符')
-              } else {
-                return exist(index, value) ? new Error(`${value} 已经存在`) : true
               }
+              return exist(index, value) ? new Error(`${value} 已经存在`) : true
             }
           }
         />
@@ -78,11 +79,11 @@ Field.propTypes = {
   field: PropTypes.object,
   index: PropTypes.number,
   onSubmit: PropTypes.func,
-  schemas: PropTypes.array
+  schemas: PropTypes.array,
 }
 
 Field.defaultProps = {
-  field: {}
+  field: {},
 }
 
 export default Field

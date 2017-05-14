@@ -1,11 +1,12 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { findDOMNode } from 'react-dom'
 import { Grid, Tooltip, Icon } from 'rctui'
 
 import _styles from '_/styles/app.scss'
 
 class Row extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
     }
@@ -17,27 +18,27 @@ class Row extends Component {
     this.handleDragOver = this.handleDragOver.bind(this)
   }
 
-  handleRemove () {
+  handleRemove() {
     this.props.onRemove(this.props.index)
   }
 
-  handleEdit () {
+  handleEdit() {
     this.props.onEdit(this.props.index, this.props.field)
   }
 
-  handleDragStart (e) {
-    let el = e.target
+  handleDragStart(e) {
+    const el = e.target
     this.props.onDragStart(this.props.index)
     setTimeout(() => {
       el.classList.add(_styles.hide)
     })
   }
 
-  handleDragEnd (e) {
+  handleDragEnd(e) {
     e.target.classList.remove(_styles.hide)
   }
 
-  handleDragOver (e) {
+  handleDragOver(e) {
     const { dragIndex, index } = this.props
 
     if (dragIndex === index) return
@@ -59,15 +60,17 @@ class Row extends Component {
     this.props.moveRow(dragIndex, index)
   }
 
-  render () {
+  render() {
     const { field, index } = this.props
     return (
-      <Grid draggable key={field.name}
+      <Grid
+        draggable key={field.name}
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
         onDragOver={this.handleDragOver}
         data-index={index}
-        className={`${_styles['row-list']} ${_styles.draggable}`}>
+        className={`${_styles['row-list']} ${_styles.draggable}`}
+      >
         <Grid width={4 / 24}>
           <a href="javascript:;" onClick={this.handleEdit}>
             {field.name}
@@ -75,8 +78,8 @@ class Row extends Component {
         </Grid>
         <Grid width={4 / 24}>{field.label}</Grid>
         <Grid width={4 / 24}>{field.type}</Grid>
-        <Grid style={{textAlign: 'center'}} width={1 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
-        <Grid style={{textAlign: 'center'}} width={1 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={1 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={1 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
         <Grid width={2 / 24}>{field.length}</Grid>
         <Grid>{field.defaultValue}</Grid>
         <Grid width={2 / 24}>
@@ -106,7 +109,7 @@ Row.propTypes = {
   moveRow: PropTypes.func,
   onDragStart: PropTypes.func,
   onEdit: PropTypes.func,
-  onRemove: PropTypes.func
+  onRemove: PropTypes.func,
 }
 
 Row.defaultProps = {}

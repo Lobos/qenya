@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'rctui'
 import GraphiQL from 'graphiql'
@@ -7,44 +8,44 @@ import { queryList, queryOne, queryDelete, querySave } from './convert'
 import { getData } from '_/actions/data'
 
 class Graphql extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       query: 'list',
-      mock: {}
+      mock: {},
     }
 
     this.graphQLFetcher = this.graphQLFetcher.bind(this)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const { schema } = this.props
-    Refetch.get(`/data/${schema.code}/getmock`).then(res => {
+    Refetch.get(`/data/${schema.code}/getmock`).then((res) => {
       this.setState({ mock: res.data })
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(getData({
       schema: this.props.schema.code,
-      page: 1
+      page: 1,
     }, true))
   }
 
-  graphQLFetcher (graphQLParams) {
+  graphQLFetcher(graphQLParams) {
     return new Promise((resolve, reject) => {
-      Refetch.post('/graphql', graphQLParams, {dataType: 'json'})
-      .then(res => {
+      Refetch.post('/graphql', graphQLParams, { dataType: 'json' })
+      .then((res) => {
         resolve(res)
       })
     })
   }
 
-  handleQueryChange (query) {
+  handleQueryChange(query) {
     this.setState({ query })
   }
 
-  render () {
+  render() {
     const { schema, list, status } = this.props
     const { query, mock } = this.state
     let queryStr = ''
@@ -74,18 +75,20 @@ class Graphql extends PureComponent {
     }
     variables = JSON.stringify(variables, null, 2)
 
-    let tabs = status === 1 && list.length > 0
+    const tabs = status === 1 && list.length > 0
       ? ['list', 'one', 'add', 'edit', 'delete'] : ['list', 'add']
 
     return (
       <div>
-        <ButtonGroup style={{marginBottom: 20}}>
+        <ButtonGroup style={{ marginBottom: 20 }}>
           {tabs.map(s => (
-          <Button key={s} disabled={s === query} status={s === query ? 'success' : undefined}
-            onClick={this.handleQueryChange.bind(this, s)}>{s}</Button>
+            <Button
+              key={s} disabled={s === query} status={s === query ? 'success' : undefined}
+              onClick={this.handleQueryChange.bind(this, s)}
+            >{s}</Button>
           ))}
         </ButtonGroup>
-        <div style={{height: 600}}>
+        <div style={{ height: 600 }}>
           <GraphiQL key={query} fetcher={this.graphQLFetcher} query={queryStr} variables={variables} />
         </div>
       </div>
@@ -97,13 +100,13 @@ Graphql.propTypes = {
   dispatch: PropTypes.func,
   list: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.element
+    PropTypes.element,
   ]),
   schema: PropTypes.object,
-  status: PropTypes.number
+  status: PropTypes.number,
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { data } = state
   return { list: data.list, status: data.status }
 }

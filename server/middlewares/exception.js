@@ -5,8 +5,7 @@ export default async function (ctx, next) {
     await next()
   } catch (e) {
     ctx.body = {
-      success: false,
-      msg: e.message
+      error: e.message,
     }
 
     const str = `${ctx.method} ${ctx.url} - ${e.message}`

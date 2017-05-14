@@ -4,9 +4,9 @@ import { pickEnum } from './enum'
 
 export default async function (fields, db, getList) {
   return new Promise(async (resolve) => {
-    let data = {}
+    const data = {}
     for (let i = 0; i < fields.length; i++) {
-      let f = fields[i]
+      const f = fields[i]
       let res = ''
       switch (f.type) {
         case 'username':
@@ -24,12 +24,15 @@ export default async function (fields, db, getList) {
         case 'enum':
           res = await pickEnum(f, db, getList)
           break
+        case 'json':
+          res = {}
+          break
         case 'date':
         case 'datetime':
           res = pickDate(f)
           break
         default:
-          res = pickText(LOREM, f.max || 20, 1)
+          res = pickText(LOREM, f.max || 20, f.min || 1)
       }
       data[f.name] = res
     }

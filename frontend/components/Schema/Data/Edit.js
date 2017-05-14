@@ -1,21 +1,22 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Form, FormControl } from 'rctui'
 
 class DataEdit extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
     }
   }
 
-  setBool (field, props) {
+  setBool(field, props) {
     props.type = 'checkbox'
     props.text = field.label
     delete props.defaultValue
     delete props.label
   }
 
-  setText (field, props) {
+  setText(field, props) {
     const { max = 20 } = field
     props.grid = max > 10 ? 1 : 1 / 2
     props.type = max > 100 ? 'textarea' : 'text'
@@ -26,7 +27,7 @@ class DataEdit extends Component {
     }
   }
 
-  setEnum (field, props) {
+  setEnum(field, props) {
     props.type = 'select'
     props.grid = 1 / 2
     props.mult = field.mult
@@ -40,7 +41,7 @@ class DataEdit extends Component {
       case 'ref':
         props.fetch = {
           url: `/data/${field.sourceRef}/1/999`,
-          then: (res) => res.data.list
+          then: res => res.data.list,
         }
         break
       case 'url':
@@ -49,7 +50,7 @@ class DataEdit extends Component {
     }
   }
 
-  renderField (field) {
+  renderField(field) {
     const props = {
       key: field.name,
       name: field.name,
@@ -57,7 +58,7 @@ class DataEdit extends Component {
       min: field.min,
       max: field.max,
       type: field.type,
-      defaultValue: field.defaultValue
+      defaultValue: field.defaultValue,
     }
 
     switch (field.type) {
@@ -75,7 +76,7 @@ class DataEdit extends Component {
     return <FormControl {...props} />
   }
 
-  render () {
+  render() {
     const { data, fields, onSubmit } = this.props
     return (
       <Form onSubmit={onSubmit} data={data}>
@@ -88,7 +89,7 @@ class DataEdit extends Component {
 DataEdit.propTypes = {
   data: PropTypes.object,
   fields: PropTypes.array,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 }
 
 DataEdit.defaultProps = {}

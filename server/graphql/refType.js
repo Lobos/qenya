@@ -2,22 +2,22 @@ import { GraphQLScalarType } from 'graphql'
 
 const types = {}
 
-export default function refType (field) {
-  const name = field.name + 'RefType'
+export default function refType(field) {
+  const name = `${field.name}RefType`
   if (types[name]) return types[name]
 
-  const rt = types[name] = new GraphQLScalarType({
+  types[name] = new GraphQLScalarType({
     name,
-    serialize (value) {
+    serialize(value) {
       return value
     },
-    parseValue (value) {
+    parseValue(value) {
       return value
     },
-    parseLiteral (value) {
+    parseLiteral(value) {
       return value
-    }
+    },
   })
 
-  return rt
+  return types[name]
 }

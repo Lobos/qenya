@@ -1,12 +1,13 @@
-import { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { FormControl, Checkbox, Input, RadioGroup } from 'rctui'
 
-function DataSource (props, context) {
+function DataSource(props, context) {
   const { type, sourceType, mult } = context.formData
   const { code } = props
 
-  let cols = {}
-  props.schemas.forEach(s => {
+  const cols = {}
+  props.schemas.forEach((s) => {
     if (s.code !== code) cols[s.code] = s.name
   })
 
@@ -18,22 +19,26 @@ function DataSource (props, context) {
         <Checkbox name="mult">多选</Checkbox>
         {
           mult &&
-          <label style={{margin: 0}}>
-            <span style={{verticalAlign: 'middle'}}>分割符</span>&nbsp;<Input style={{width: 60}} type="text" name="sep" />
+          <label style={{ margin: 0 }}>
+            <span style={{ verticalAlign: 'middle' }}>分割符</span>&nbsp;<Input style={{ width: 60 }} type="text" name="sep" />
           </label>
         }
       </FormControl>
 
-      <FormControl required label="数据源" type="radio-group" name="sourceType" data={[
+      <FormControl
+        required label="数据源" type="radio-group" name="sourceType" data={[
         { id: 'json', text: '静态数据' },
-        { id: 'ref', text: '关联表' }
+        { id: 'ref', text: '关联表' },
         // { id: 'url', text: '远程' }
-      ]} />
+        ]}
+      />
 
       {
         sourceType === 'json' &&
-        <FormControl key="sourceJson" label="数据选项" required type="json" name="sourceJson" rows={5}
-          tip={<span>json格式，<a target="_blank" href="http://lobos.github.io/react-ui/0.7/#/select">数据结构见这里</a></span>} />
+        <FormControl
+          key="sourceJson" label="数据选项" required type="json" name="sourceJson" rows={5}
+          tip={<span>json格式，<a target="_blank" href="http://lobos.github.io/react-ui/0.7/#/select">数据结构见这里</a></span>}
+        />
       }
 
       {
@@ -53,8 +58,10 @@ function DataSource (props, context) {
         <FormControl key="sourceUrl" grid={1} required label="数据地址" type="text" name="sourceUrl" />
       }
 
-      <FormControl value={sourceType === 'ref' ? '{_id}' : undefined}
-        label="ValueTpl" grid={1} type="text" name="valueTpl" />
+      <FormControl
+        value={sourceType === 'ref' ? '{_id}' : undefined}
+        label="ValueTpl" grid={1} type="text" name="valueTpl"
+      />
 
       <FormControl label="OptionTpl" required={sourceType === 'ref'} grid={1} type="text" name="optionTpl" />
     </div>
@@ -63,11 +70,11 @@ function DataSource (props, context) {
 
 DataSource.propTypes = {
   code: PropTypes.string,
-  schemas: PropTypes.array
+  schemas: PropTypes.array,
 }
 
 DataSource.contextTypes = {
-  formData: PropTypes.object
+  formData: PropTypes.object,
 }
 
 export default DataSource

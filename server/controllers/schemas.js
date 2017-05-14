@@ -9,45 +9,54 @@ const router = new Router()
 
 router.use(exception)
 
-router.get('/schemas', async function (ctx, next) {
+router.get('/schemas', async (ctx) => {
   const data = await getAll(ctx.db())
   ctx.Render.success(data)
 })
 
-router.post('/exist', body(), async function (ctx, next) {
+router.post('/exist', body(), async (ctx) => {
   const query = ctx.request.body
   if (query._id) query._id = { $ne: objectId(query._id) }
   else delete query._id
   const data = await getOne(ctx.db(), query)
-  data ? ctx.Render.fail('schema existed') : ctx.Render.success(true)
+
+  if (data) {
+    ctx.Render.fail('schema existed')
+  } else {
+    ctx.Render.success(true)
+  }
 })
 
-router.get('/schema/:id', async function (ctx, next) {
+router.get('/schema/:id', async (ctx) => {
   const data = await getOne(ctx.db(), { _id: objectId(ctx.params.id) })
-  data ? ctx.Render.success(data) : ctx.Render.notFound()
+  if (data) {
+    ctx.Render.success(data)
+  } else {
+    ctx.Render.notFound()
+  }
 })
 
-router.post('/schema/fields', body(), async function (ctx, next) {
-  let { _id, fields } = ctx.request.body
-  let schema = await getOne(ctx.db(), { _id: objectId(_id) })
+router.post('/schema/fields', body(), async (ctx) => {
+  const { _id, fields } = ctx.request.body
+  const schema = await getOne(ctx.db(), { _id: objectId(_id) })
   schema.fields = fields
   schema.updateAt = Date.now()
-  let data = await updateSchema(ctx.db(), schema)
+  const data = await updateSchema(ctx.db(), schema)
 
   clearType()
 
   ctx.Render.success(data[0])
 })
 
-router.post('/schema', body(), async function (ctx, next) {
+router.post('/schema', body(), async (ctx) => {
   let data = ctx.request.body
-  let method = data._id ? updateSchema : insertSchema
+  const method = data._id ? updateSchema : insertSchema
 
   if (!data._id) {
     data.createAt = Date.now()
     data.fields = []
   } else {
-    let old = await getOne(ctx.db(), { _id: objectId(data._id) })
+    const old = await getOne(ctx.db(), { _id: objectId(data._id) })
     data = Object.assign({}, old, data)
   }
   data.updateAt = Date.now()
@@ -58,9 +67,9 @@ router.post('/schema', body(), async function (ctx, next) {
   ctx.Render.success(data[0])
 })
 
-router.del('/schema', body(), async function (ctx, next) {
-  let data = ctx.request.body
-  let count = await removeSchema(ctx.db(), data._id)
+router.del('/schema', body(), async (ctx) => {
+  const data = ctx.request.body
+  const count = await removeSchema(ctx.db(), data._id)
   ctx.Render.success(count)
 })
 

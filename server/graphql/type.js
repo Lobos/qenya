@@ -4,10 +4,10 @@ import {
   GraphQLString,
   GraphQLBoolean,
   GraphQLInt,
-  GraphQLFloat
+  GraphQLFloat,
 } from 'graphql'
 
-export function convertType (type) {
+export function convertType(type) {
   switch (type) {
     case 'bool':
       return GraphQLBoolean
@@ -20,7 +20,7 @@ export function convertType (type) {
   }
 }
 
-export function convertRefType (field) {
+export function convertRefType(field) {
   if (field.sourceType === 'ref' && !field.sep) {
     if (field.mult) return new GraphQLList(GraphQLID)
 
@@ -30,7 +30,7 @@ export function convertRefType (field) {
   return GraphQLString
 }
 
-export function toArray (value, sep) {
+export function toArray(value, sep) {
   if (typeof value === 'string' && sep) {
     value = value.split(sep)
   }

@@ -1,18 +1,18 @@
 import Router from 'koa-router'
-import body from 'koa-bodyparser'
+import bodyParse from 'koa-bodyparser'
 import { graphql } from 'graphql'
 import getSchema from '../graphql'
 import { getAll } from '../models/schemas'
 
 const router = new Router()
 
-router.get('/graphql/:query', async function (ctx, next) {
+router.get('/graphql/:query', async (ctx) => {
   const { query } = ctx.params
   const schemas = await getAll(ctx.db())
   ctx.body = await graphql(getSchema(ctx.db('data'), schemas), query)
 })
 
-router.post('/graphql', body(), async function (ctx, next) {
+router.post('/graphql', bodyParse(), async (ctx) => {
   const body = ctx.request.body
   const schemas = await getAll(ctx.db())
   ctx.body = await graphql(
@@ -20,7 +20,7 @@ router.post('/graphql', body(), async function (ctx, next) {
     body.query,
     null,
     null,
-    body.variables
+    body.variables,
   )
 })
 

@@ -1,17 +1,18 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Table, Tooltip, Icon } from 'rctui'
 import Text from '_/components/comm/Text'
 
 class DataTable extends Component {
-  handleEdit (d) {
+  handleEdit(d) {
     this.props.onEdit(d)
   }
 
-  handleRemove (d) {
+  handleRemove(d) {
     this.props.onRemove(d)
   }
 
-  renderColumns () {
+  renderColumns() {
     const { schema } = this.props
     const length = schema.fields.length
     const columns = schema.fields.map((f, i) => {
@@ -21,7 +22,7 @@ class DataTable extends Component {
 
       return {
         header: f.label || f.name,
-        content: d => {
+        content: (d) => {
           switch (f.type) {
             case 'bool':
               return d[f.name] ? 'true' : 'false'
@@ -30,13 +31,13 @@ class DataTable extends Component {
             default:
               return d[f.name]
           }
-        }
+        },
       }
     })
 
     columns.unshift({
       header: 'ID',
-      name: '_id'
+      name: '_id',
     })
 
     columns.push({
@@ -55,13 +56,13 @@ class DataTable extends Component {
             </Tooltip>
           </a>
         </span>
-      )
+      ),
     })
 
     return columns
   }
 
-  render () {
+  render() {
     const { data } = this.props
     return (
       <Table data={data} columns={this.renderColumns()} />
@@ -72,11 +73,11 @@ class DataTable extends Component {
 DataTable.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.element
+    PropTypes.element,
   ]),
   onEdit: PropTypes.func,
   onRemove: PropTypes.func,
-  schema: PropTypes.object
+  schema: PropTypes.object,
 }
 
 DataTable.defaultProps = {}

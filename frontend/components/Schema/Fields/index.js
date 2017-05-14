@@ -1,4 +1,5 @@
-import { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Icon, Modal, Grid } from 'rctui'
 import { shallowEqual } from 'rctui/utils/objects'
@@ -9,11 +10,11 @@ import RowList from './RowList'
 import _styles from '_/styles/app.scss'
 
 class Fields extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
-      fields: props.schema.fields
+      fields: props.schema.fields,
     }
 
     this.handleReset = this.handleReset.bind(this)
@@ -24,63 +25,65 @@ class Fields extends PureComponent {
     this.exist = this.exist.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.schema.fields !== nextProps.schema.fields) {
       this.setState({ fields: nextProps.schema.fields })
     }
   }
 
-  moveRow (dragIndex, targetIndex) {
+  moveRow(dragIndex, targetIndex) {
     const fields = [...this.state.fields]
     fields.splice(targetIndex, 0, fields.splice(dragIndex, 1)[0])
     this.setState({ fields })
   }
 
-  handleSave () {
+  handleSave() {
     const { dispatch, schema } = this.props
     dispatch(saveFields(schema._id, this.state.fields))
   }
 
-  exist (index, name) {
-    let item = this.state.fields.find((f, i) => i !== index && f.name === name)
+  exist(index, name) {
+    const item = this.state.fields.find((f, i) => i !== index && f.name === name)
     return !!item
   }
 
-  handleEdit (index, field) {
+  handleEdit(index, field) {
     const mid = Modal.open({
       buttons: {
-        '确定': 'submit',
-        '取消': true
+        确定: 'submit',
+        取消: true,
       },
       padding: '2rem',
       width: '50rem',
       header: `${index < 0 ? '添加' : '编辑'}字段`,
       content: (
-        <Field field={field}
+        <Field
+          field={field}
           exist={this.exist}
           index={index}
           code={this.props.schema.code}
           schemas={this.props.schemas}
-          onSubmit={data => {
-            let fields = [...this.state.fields]
+          onSubmit={(data) => {
+            const fields = [...this.state.fields]
             index < 0 ? fields.push(data) : fields[index] = data
             this.setState({ fields })
             Modal.close(mid)
-          }} />
-      )
+          }}
+        />
+      ),
     })
   }
 
-  handleRemove (index) {
-    let fields = this.state.fields.filter((f, i) => i !== index)
+  handleRemove(index) {
+    const fields = this.state.fields.filter((f, i) => i !== index)
     this.setState({ fields })
   }
 
-  handleReset () {
+  handleReset() {
     this.setState({ fields: this.props.schema.fields })
   }
 
-  render () {
+  render() {
     const notChange = shallowEqual(this.state.fields, this.props.schema.fields)
 
     return (
@@ -98,8 +101,8 @@ class Fields extends PureComponent {
 
           <Button disabled={notChange} onClick={this.handleReset}>重置</Button>
 
-          <span style={{marginLeft: 12}}>
-            <Icon style={{fontSize: '1.2rem', color: '#0275d8'}} icon="help" />
+          <span style={{ marginLeft: 12 }}>
+            <Icon style={{ fontSize: '1.2rem', color: '#0275d8' }} icon="help" />
             增加/修改字段后需要点击保存修改，点击重置按钮会将字段恢复到最后一次保存状态
           </span>
         </div>
@@ -108,8 +111,8 @@ class Fields extends PureComponent {
           <Grid width={4 / 24}>字段名</Grid>
           <Grid width={4 / 24}>别名</Grid>
           <Grid width={4 / 24}>类型</Grid>
-          <Grid style={{padding: '0.75rem 0', textAlign: 'center'}} width={1 / 24}>必填</Grid>
-          <Grid style={{padding: '0.75rem 0', textAlign: 'center'}} width={1 / 24}>唯一</Grid>
+          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={1 / 24}>必填</Grid>
+          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={1 / 24}>唯一</Grid>
           <Grid width={2 / 24}>长度</Grid>
           <Grid>默认值</Grid>
           <Grid width={2 / 24} />
@@ -122,10 +125,12 @@ class Fields extends PureComponent {
           <Grid width={12 / 24}>自动维护，不能修改</Grid>
         </Grid>
 
-        <RowList fields={this.state.fields}
+        <RowList
+          fields={this.state.fields}
           moveRow={this.moveRow}
           onEdit={this.handleEdit}
-          onRemove={this.handleRemove} />
+          onRemove={this.handleRemove}
+        />
       </div>
     )
   }
@@ -134,10 +139,10 @@ class Fields extends PureComponent {
 Fields.propTypes = {
   dispatch: PropTypes.func,
   schema: PropTypes.object.isRequired,
-  schemas: PropTypes.array
+  schemas: PropTypes.array,
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { schemas } = state
   return { schemas: schemas.data }
 }

@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Dropdown, Icon, Modal, Pagination } from 'rctui'
 import { getData, saveData, removeData, createMockData, removeAll } from '_/actions/data'
@@ -8,10 +9,10 @@ import Edit from './Edit'
 import _styles from '_/styles/app.scss'
 
 class Data extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      page: 1
+      page: 1,
     }
 
     this.handleEdit = this.handleEdit.bind(this)
@@ -20,59 +21,60 @@ class Data extends Component {
     this.handleClear = this.handleClear.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(getData({
       schema: this.props.schema.code,
-      page: 1
+      page: 1,
     }, true))
   }
 
-  handlePageChange (page) {
+  handlePageChange(page) {
     const { query } = this.props
-    this.props.dispatch(getData(Object.assign({}, query, {page})))
+    this.props.dispatch(getData(Object.assign({}, query, { page })))
   }
 
-  handleMockCreate (number) {
+  handleMockCreate(number) {
     const { dispatch, schema } = this.props
     dispatch(createMockData(schema.code, number))
   }
 
-  handleClear () {
+  handleClear() {
     const { dispatch, schema } = this.props
     dispatch(removeAll(schema.code))
   }
 
-  handleEdit (data) {
+  handleEdit(data) {
     const { dispatch, schema } = this.props
     const mid = Modal.open({
       buttons: {
-        '提交': 'submit',
-        '取消': true
+        提交: 'submit',
+        取消: true,
       },
       padding: '2rem',
       width: '50rem',
       header: `${data ? '编辑' : '添加'}数据`,
       content: (
-        <Edit data={data}
+        <Edit
+          data={data}
           fields={this.props.schema.fields}
-          onSubmit={d => {
+          onSubmit={(d) => {
             dispatch(saveData(schema.code, d, () => {
               Modal.close(mid)
             }))
           }}
         />
-      )
+      ),
     })
   }
 
-  handleRemove (data) {
+  handleRemove(data) {
     // Modal.confirm('确定删除这条数据？', () => {
-      const { dispatch, schema } = this.props
-      dispatch(removeData(schema.code, data._id))
+    const { dispatch, schema } = this.props
+    dispatch(removeData(schema.code, data._id))
     // }, '删除')
   }
 
-  render () {
+  render() {
     const { list, query, schema, total } = this.props
 
     return (
@@ -83,7 +85,7 @@ class Data extends Component {
             增加数据
           </Button>
 
-          <Dropdown style={{margin: '0 0.75rem'}} text="生成模拟数据">
+          <Dropdown style={{ margin: '0 0.75rem' }} text="生成模拟数据">
             {[10, 50, 100].map(i => (
               <a key={i} href="javascript:;" onClick={this.handleMockCreate.bind(this, i)}>
                 {i}条数据
@@ -97,12 +99,13 @@ class Data extends Component {
         </div>
 
         <div>
-          <Table data={list}
+          <Table
+            data={list}
             schema={schema}
             onEdit={this.handleEdit}
             onRemove={this.handleRemove}
           />
-          <div style={{textAlign: 'center'}}>
+          <div style={{ textAlign: 'center' }}>
             <Pagination total={total} page={query.page} onChange={this.handlePageChange} />
           </div>
         </div>
@@ -115,16 +118,16 @@ Data.propTypes = {
   dispatch: PropTypes.func,
   list: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.element
+    PropTypes.element,
   ]),
   query: PropTypes.object,
   schema: PropTypes.object,
-  total: PropTypes.number
+  total: PropTypes.number,
 }
 
 Data.defaultProps = {}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { data } = state
   return { ...data }
 }

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { HashRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import Collections from './Collections'
 import Api from './Api'
@@ -7,7 +8,7 @@ import Schema from './Schema'
 
 import _styles from '_/styles/app.scss'
 
-export default function App (props) {
+export default function App() {
   return (
     <Router>
       <div>
@@ -30,6 +31,6 @@ export default function App (props) {
 }
 
 App.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 }
 
