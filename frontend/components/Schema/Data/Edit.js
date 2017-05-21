@@ -1,97 +1,51 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, FormControl } from 'rctui'
+import { Nav } from 'rctui'
+import FormEdit from './FormEdit'
+import JsonEdit from './JsonEdit'
 
-class DataEdit extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      tab: 'form',
     }
+
+    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
-  setBool(field, props) {
-    props.type = 'checkbox'
-    props.text = field.label
-    delete props.defaultValue
-    delete props.label
-  }
-
-  setText(field, props) {
-    const { max = 20 } = field
-    props.grid = max > 10 ? 1 : 1 / 2
-    props.type = max > 100 ? 'textarea' : 'text'
-    if (max > 100 && max < 300) {
-      props.rows = 3
-    } else if (max >= 300) {
-      props.rows = 5
-    }
-  }
-
-  setEnum(field, props) {
-    props.type = 'select'
-    props.grid = 1 / 2
-    props.mult = field.mult
-    props.sep = field.sep
-    props.valueTpl = field.valueTpl
-    props.optionTpl = field.optionTpl
-    switch (field.sourceType) {
-      case 'json':
-        props.data = JSON.parse(field.sourceJson)
-        break
-      case 'ref':
-        props.fetch = {
-          url: `/data/${field.sourceRef}/1/999`,
-          then: res => res.data.list,
-        }
-        break
-      case 'url':
-        props.fetch = field.sourceUrl
-        break
-    }
-  }
-
-  renderField(field) {
-    const props = {
-      key: field.name,
-      name: field.name,
-      label: field.label,
-      min: field.min,
-      max: field.max,
-      type: field.type,
-      defaultValue: field.defaultValue,
-    }
-
-    switch (field.type) {
-      case 'bool':
-        this.setBool(field, props)
-        break
-      case 'text':
-        this.setText(field, props)
-        break
-      case 'enum':
-        this.setEnum(field, props)
-        break
-    }
-
-    return <FormControl {...props} />
+  handleTabChange(tab) {
+    this.setState({ tab })
   }
 
   render() {
+    const { tab } = this.state
     const { data, fields, onSubmit } = this.props
+
     return (
-      <Form onSubmit={onSubmit} data={data}>
-        {fields.map(f => this.renderField(f))}
-      </Form>
+      <div>
+        <Nav active={tab} stateLess onSelect={this.handleTabChange} inline>
+          <Nav.Item id="form">Form</Nav.Item>
+          <Nav.Item id="json">Json</Nav.Item>
+        </Nav>
+
+        <div style={{ padding: '2rem' }}>
+          { tab === 'form' && <FormEdit data={data} fields={fields} onSubmit={onSubmit} /> }
+          { tab === 'json' && <JsonEdit data={data} onSubmit={onSubmit} /> }
+        </div>
+      </div>
     )
   }
 }
 
-DataEdit.propTypes = {
+Edit.propTypes = {
   data: PropTypes.object,
-  fields: PropTypes.array,
-  onSubmit: PropTypes.func,
+  fields: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 }
 
-DataEdit.defaultProps = {}
+Edit.defaultProps = {
+  data: {},
+}
 
-export default DataEdit
+export default Edit

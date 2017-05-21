@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { Prompt } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Button, Icon, Modal, Grid } from 'rctui'
 import { shallowEqual } from 'rctui/utils/objects'
 import { saveFields } from '_/actions/schemas'
 import Field from './Field'
 import RowList from './RowList'
+import JsonImport from './JsonImport'
 
 import _styles from '_/styles/app.scss'
 
@@ -23,6 +25,7 @@ class Fields extends PureComponent {
     this.handleRemove = this.handleRemove.bind(this)
     this.moveRow = this.moveRow.bind(this)
     this.exist = this.exist.bind(this)
+    this.importJson = this.importJson.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,16 +86,40 @@ class Fields extends PureComponent {
     this.setState({ fields: this.props.schema.fields })
   }
 
+  importJson() {
+    const mid = Modal.open({
+      buttons: {
+        确定: 'submit',
+        取消: true,
+      },
+      padding: '2rem',
+      width: '50rem',
+      header: 'JSON',
+      content: (
+        <JsonImport
+          onSuccess={(fields) => {
+            this.setState({ fields })
+            Modal.close(mid)
+          }}
+        />
+      ),
+    })
+  }
+
   render() {
     const notChange = shallowEqual(this.state.fields, this.props.schema.fields)
 
     return (
       <div>
+        <Prompt when={!notChange} message={'修改了部分字段但是没有保存，确定要离开吗？'} />
+
         <div className={_styles['tab-buttons']}>
           <Button status="success" onClick={this.handleEdit.bind(this, -1, undefined)}>
             <Icon icon="plus" />
             增加字段
           </Button>
+
+          <Button onClick={this.importJson}>根据Json生成</Button>
 
           <Button disabled={notChange} onClick={this.handleSave} status="danger">
             <Icon icon="save" />
@@ -111,9 +138,8 @@ class Fields extends PureComponent {
           <Grid width={4 / 24}>字段名</Grid>
           <Grid width={4 / 24}>别名</Grid>
           <Grid width={4 / 24}>类型</Grid>
-          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={1 / 24}>必填</Grid>
-          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={1 / 24}>唯一</Grid>
-          <Grid width={2 / 24}>长度</Grid>
+          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={2 / 24}>必填</Grid>
+          <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={2 / 24}>唯一</Grid>
           <Grid>默认值</Grid>
           <Grid width={2 / 24} />
         </Grid>

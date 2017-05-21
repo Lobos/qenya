@@ -4,8 +4,17 @@ import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'rctui'
 import GraphiQL from 'graphiql'
 import Refetch from 'refetch'
-import { queryList, queryOne, queryDelete, querySave } from './convert'
 import { getData } from '_/actions/data'
+import { queryList, queryOne, queryDelete, querySave } from './convert'
+
+function graphQLFetcher(graphQLParams) {
+  return new Promise((resolve) => {
+    Refetch.post('/graphql', graphQLParams, { dataType: 'json' })
+      .then((res) => {
+        resolve(res)
+      })
+  })
+}
 
 class Graphql extends PureComponent {
   constructor(props) {
@@ -14,8 +23,6 @@ class Graphql extends PureComponent {
       query: 'list',
       mock: {},
     }
-
-    this.graphQLFetcher = this.graphQLFetcher.bind(this)
   }
 
   componentWillMount() {
@@ -30,15 +37,6 @@ class Graphql extends PureComponent {
       schema: this.props.schema.code,
       page: 1,
     }, true))
-  }
-
-  graphQLFetcher(graphQLParams) {
-    return new Promise((resolve, reject) => {
-      Refetch.post('/graphql', graphQLParams, { dataType: 'json' })
-      .then((res) => {
-        resolve(res)
-      })
-    })
   }
 
   handleQueryChange(query) {
@@ -83,13 +81,15 @@ class Graphql extends PureComponent {
         <ButtonGroup style={{ marginBottom: 20 }}>
           {tabs.map(s => (
             <Button
-              key={s} disabled={s === query} status={s === query ? 'success' : undefined}
+              disabled={s === query}
+              key={s}
+              status={s === query ? 'success' : undefined}
               onClick={this.handleQueryChange.bind(this, s)}
             >{s}</Button>
           ))}
         </ButtonGroup>
         <div style={{ height: 600 }}>
-          <GraphiQL key={query} fetcher={this.graphQLFetcher} query={queryStr} variables={variables} />
+          <GraphiQL key={query} fetcher={graphQLFetcher} query={queryStr} variables={variables} />
         </div>
       </div>
     )
@@ -97,13 +97,17 @@ class Graphql extends PureComponent {
 }
 
 Graphql.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
   list: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.element,
   ]),
-  schema: PropTypes.object,
-  status: PropTypes.number,
+  schema: PropTypes.object.isRequired,
+  status: PropTypes.number.isRequired,
+}
+
+Graphql.defaultProps = {
+  list: [],
 }
 
 const mapStateToProps = (state) => {

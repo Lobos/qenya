@@ -18,7 +18,7 @@ async function pickRef(field, db, getList) {
 
 async function pickJson(field) {
   return new Promise((resolve, reject) => {
-    let data = JSON.parse(field.sourceJson)
+    let data = field.sourceJson
     if (!Array.isArray(data)) {
       data = Object.keys(data).map(k => ({
         _id: k,

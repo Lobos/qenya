@@ -12,6 +12,7 @@ const dataType = [
   'integer',
   'number',
   'text',
+  'json',
 ]
 
 class Field extends Component {
@@ -35,7 +36,11 @@ class Field extends Component {
     return (
       <Form labelWidth="7rem" data={field} onSubmit={onSubmit}>
         <FormControl
-          name="name" required type="alphanum" max={20} label="字段名"
+          name="name"
+          required
+          type="alphanum"
+          max={20}
+          label="字段名"
           validator={
             (value) => {
               const reg = /^[a-z0-9_]+$/i
@@ -65,21 +70,22 @@ class Field extends Component {
 
         <DataSource code={code} schemas={schemas} />
 
-        {/*
-        <FormControl name="defaultValue" label="默认值" type="textarea" rows={3} />
-        */}
+        {
+          type === 'json' &&
+          <FormControl name="defaultValue" label="默认值" valueType="object" type="json" rows={4} />
+        }
       </Form>
     )
   }
 }
 
 Field.propTypes = {
-  code: PropTypes.string,
-  exist: PropTypes.func,
-  field: PropTypes.object,
-  index: PropTypes.number,
-  onSubmit: PropTypes.func,
-  schemas: PropTypes.array,
+  code: PropTypes.string.isRequired,
+  exist: PropTypes.func.isRequired,
+  field: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  schemas: PropTypes.array.isRequired,
 }
 
 Field.defaultProps = {

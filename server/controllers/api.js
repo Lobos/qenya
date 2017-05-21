@@ -53,6 +53,17 @@ router.post('/api', body(), async (ctx) => {
   ctx.Render.success(data[0])
 })
 
+router.post('/api/toggle', body(), async (ctx) => {
+  const { _id, status } = ctx.request.body
+  const db = ctx.db()
+  const model = await getOne(db, { _id: objectId(_id) })
+  if (!model) ctx.Render.notFound()
+
+  model.status = status
+  await updateApi(db, model)
+  ctx.Render.success(1)
+})
+
 router.del('/api', body(), async (ctx) => {
   const data = ctx.request.body
   const count = await removeApi(ctx.db(), data._id)

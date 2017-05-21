@@ -1,4 +1,5 @@
-import { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 import { Breadcrumb, Nav } from 'rctui'
@@ -10,26 +11,26 @@ import Graphql from './Graphql'
 import _styles from '../../styles/app.scss'
 
 class Container extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.handleTabChange = this.handleTabChange.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(getList())
   }
 
-  handleTabChange (tab) {
+  handleTabChange(tab) {
     const { history, match } = this.props
     history.push(`${match.url}/${tab}`)
   }
 
-  render () {
+  render() {
     const { data, match, status, location } = this.props
 
     const { url } = match
-    const tab = location.pathname.replace(url + '/', '')
+    const tab = location.pathname.replace(`${url}/`, '')
 
     if (status !== 1) {
       return <span>{data}</span>
@@ -42,12 +43,15 @@ class Container extends PureComponent {
 
     return (
       <div>
-        <Breadcrumb style={{background: '#fff'}} data={[
-          { text: 'Collections', href: '#/collections' },
-          { text: schema.name, active: true }
-        ]} />
+        <Breadcrumb
+          style={{ background: '#fff' }}
+          data={[
+            { text: 'Collections', href: '#/collections' },
+            { text: schema.name, active: true },
+          ]}
+        />
 
-        <Nav active={tab} onSelect={this.handleTabChange} type="tab">
+        <Nav active={tab} stateLess onSelect={this.handleTabChange} type="tab">
           <Nav.Item id="fields">Fields</Nav.Item>
           <Nav.Item id="data">Data</Nav.Item>
           <Nav.Item id="graphql">Graphql</Nav.Item>
@@ -68,18 +72,20 @@ Container.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.element,
-    PropTypes.string
+    PropTypes.string,
   ]),
-  dispatch: PropTypes.func,
-  history: PropTypes.object,
-  location: PropTypes.object,
-  match: PropTypes.object,
-  status: PropTypes.number
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  status: PropTypes.number.isRequired,
 }
 
-Container.defaultProps = {}
+Container.defaultProps = {
+  data: null,
+}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { schemas } = state
   return { ...schemas }
 }

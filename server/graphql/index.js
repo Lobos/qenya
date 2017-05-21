@@ -6,7 +6,6 @@ import {
   GraphQLInt,
   GraphQLID,
 } from 'graphql'
-import objectId from '../utils/objectId'
 import { getOne, getPageList, insertOrUpdate, remove } from '../models/data'
 import getQueryType, { clearQueryType } from './queryType'
 import { convertType, convertRefType } from './type'
@@ -19,7 +18,7 @@ function getOneQuery(db, schema, graphType) {
         type: GraphQLID,
       },
     },
-    resolve: (root, { _id }) => getOne(db.collection(schema.code), { _id: objectId(_id) }),
+    resolve: (root, { _id }) => getOne(db.collection(schema.code), { _id: parseInt(_id, 10) }),
   }
 }
 

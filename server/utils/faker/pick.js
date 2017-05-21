@@ -1,7 +1,8 @@
 import * as Datetime from '../datetime'
 
-export function pickNumber(max = 65555, min = 0) {
-  return (Math.random() * (max - min + 1)) + min
+export function pickNumber(max = 65555, min = 0, fixed = 2) {
+  const num = (Math.random() * (max - min)) + min
+  return parseFloat(num.toFixed(fixed), 0)
 }
 
 export function pickInteger(...args) {

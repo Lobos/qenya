@@ -19,6 +19,8 @@ function convertType(field) {
       return 'Float'
     case 'bool':
       return 'Boolean'
+    case 'json':
+      return 'Json'
     case 'enum':
       if (field.sourceType === 'ref' && !field.sep) {
         return field.mult ? '[ID]' : 'ID'

@@ -28,6 +28,8 @@ class DataTable extends Component {
               return d[f.name] ? 'true' : 'false'
             case 'text':
               return <Text position={position}>{d[f.name]}</Text>
+            case 'json':
+              return <Text max={20} position={position}>{JSON.stringify(d[f.name])}</Text>
             default:
               return d[f.name]
           }
@@ -36,11 +38,6 @@ class DataTable extends Component {
     })
 
     columns.unshift({
-      header: 'ID',
-      name: '_id',
-    })
-
-    columns.push({
       width: '4rem',
       content: d => (
         <span>
@@ -59,13 +56,18 @@ class DataTable extends Component {
       ),
     })
 
+    columns.unshift({
+      header: 'ID',
+      name: '_id',
+    })
+
     return columns
   }
 
   render() {
     const { data } = this.props
     return (
-      <Table data={data} columns={this.renderColumns()} />
+      <Table style={{ overflow: 'auto' }} data={data} columns={this.renderColumns()} />
     )
   }
 }

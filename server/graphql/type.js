@@ -6,6 +6,7 @@ import {
   GraphQLInt,
   GraphQLFloat,
 } from 'graphql'
+import JsonType from './jsonType'
 
 export function convertType(type) {
   switch (type) {
@@ -15,6 +16,8 @@ export function convertType(type) {
       return GraphQLInt
     case 'number':
       return GraphQLFloat
+    case 'json':
+      return JsonType
     default:
       return GraphQLString
   }

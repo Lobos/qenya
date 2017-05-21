@@ -64,7 +64,8 @@ class Row extends Component {
     const { field, index } = this.props
     return (
       <Grid
-        draggable key={field.name}
+        draggable
+        key={field.name}
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
         onDragOver={this.handleDragOver}
@@ -78,9 +79,8 @@ class Row extends Component {
         </Grid>
         <Grid width={4 / 24}>{field.label}</Grid>
         <Grid width={4 / 24}>{field.type}</Grid>
-        <Grid style={{ textAlign: 'center' }} width={1 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
-        <Grid style={{ textAlign: 'center' }} width={1 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
-        <Grid width={2 / 24}>{field.length}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
         <Grid>{field.defaultValue}</Grid>
         <Grid width={2 / 24}>
           <span>

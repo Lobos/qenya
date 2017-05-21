@@ -56,3 +56,9 @@
 .icon-search:before {
   content: "\6c";
 }
+.icon-play:before {
+  content: "\6d";
+}
+.icon-pause:before {
+  content: "\6e";
+}

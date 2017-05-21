@@ -36,7 +36,7 @@ function DataSource(props, context) {
       {
         sourceType === 'json' &&
         <FormControl
-          key="sourceJson" label="数据选项" required type="json" name="sourceJson" rows={5}
+          key="sourceJson" label="数据选项" required type="json" valueType="object" name="sourceJson" rows={8}
           tip={<span>json格式，<a target="_blank" href="http://lobos.github.io/react-ui/0.7/#/select">数据结构见这里</a></span>}
         />
       }

@@ -27,7 +27,7 @@ async function bindRouter() {
 
   return new Promise(async (resolve, reject) => {
     const db = await getDb()
-    db.collection('api').find({}).sort({ weight: -1 })
+    db.collection('api').find({ status: 1 }).sort({ weight: -1 })
       .toArray((err, routes) => {
         if (err) reject(err)
 

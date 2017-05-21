@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Breadcrumb, Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
-import { getList, removeApi } from '_/actions/apis'
+import { getList, removeApi, saveApi } from '_/actions/apis'
 import Text from '_/components/comm/Text'
 
 class Api extends PureComponent {
@@ -19,11 +19,8 @@ class Api extends PureComponent {
     this.props.dispatch(getList())
   }
 
-  handleRemove(d) {
-    const mid = Modal.confirm(`确定删除 '${d.route}' 吗?`, () => {
-      this.props.dispatch(removeApi(d._id))
-      Modal.close(mid)
-    }, 'Confirm')
+  setFilter(filter) {
+    this.setState({ filter })
   }
 
   getData() {
@@ -37,8 +34,15 @@ class Api extends PureComponent {
     return filter ? data.filter(d => d.route.indexOf(filter) >= 0) : data
   }
 
-  setFilter(filter) {
-    this.setState({ filter })
+  handleRemove(d) {
+    const mid = Modal.confirm(`确定删除 '${d.route}' 吗?`, () => {
+      this.props.dispatch(removeApi(d._id))
+      Modal.close(mid)
+    }, 'Confirm')
+  }
+
+  toggleStatus(d) {
+    this.props.dispatch(saveApi({ _id: d._id, status: d.status === 1 ? 0 : 1 }))
   }
 
   render() {
@@ -48,7 +52,7 @@ class Api extends PureComponent {
       <div>
         <Breadcrumb style={{ background: '#fff' }} data={[{ text: 'API' }]} />
 
-        <Card style={{ padding: 20 }}>
+        <Card style={{ padding: '2rem' }}>
           <div>
             <div style={{ width: 300, marginBottom: 20, display: 'inline-block' }}>
               <InputGroup>
@@ -73,17 +77,24 @@ class Api extends PureComponent {
               { name: 'route', header: 'Route', sort: true },
               { name: 'method', header: 'Method' },
               { name: 'weight', header: '权重', sort: true },
+              { header: '状态', content: d => (d.status === 1 ? <Icon icon="check" /> : '') },
               { header: '描述', content: d => <Text>{d.desc}</Text> },
-              { width: '4rem',
+              { width: '6rem',
                 content: d => (
                   <span>
+                    <a href="javascript:;" onClick={() => this.toggleStatus(d)}>
+                      <Tooltip position="top" tip={d.status ? '暂停' : '启用'}>
+                        {d.status ? <Icon icon="pause" /> : <Icon icon="play" />}
+                      </Tooltip>
+                    </a>
+                    {' '}
                     <Link to={`/api/${d._id}`}>
                       <Tooltip position="top" tip="Edit">
                         <Icon icon="edit" />
                       </Tooltip>
                     </Link>
                     {' '}
-                    <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
+                    <a href="javascript:;" onClick={() => this.handleRemove(d)}>
                       <Tooltip position="top" tip="Remove">
                         <Icon icon="trash" />
                       </Tooltip>

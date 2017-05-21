@@ -50,7 +50,7 @@ class Data extends Component {
         提交: 'submit',
         取消: true,
       },
-      padding: '2rem',
+      padding: '1rem',
       width: '50rem',
       header: `${data ? '编辑' : '添加'}数据`,
       content: (

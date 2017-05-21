@@ -19,13 +19,13 @@ export default async function (fields, db, getList) {
           res = pickInteger(f.max, f.min)
           break
         case 'number':
-          res = pickNumber(f.max, f.min)
+          res = pickNumber(f.max, f.min, f.fixed)
           break
         case 'enum':
           res = await pickEnum(f, db, getList)
           break
         case 'json':
-          res = {}
+          res = f.defaultValue || {}
           break
         case 'date':
         case 'datetime':
