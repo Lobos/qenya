@@ -63,7 +63,7 @@ function DataSource(props, context) {
         label="ValueTpl" grid={1} type="text" name="valueTpl"
       />
 
-      <FormControl label="OptionTpl" required={sourceType === 'ref'} grid={1} type="text" name="optionTpl" />
+      <FormControl label="TextTpl" required={sourceType === 'ref'} grid={1} type="text" name="optionTpl" />
     </div>
   )
 }

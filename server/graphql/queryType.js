@@ -4,7 +4,6 @@ import {
   GraphQLList,
   GraphQLString,
 } from 'graphql'
-import objectId from '../utils/objectId'
 import { getOne, getList } from '../models/data'
 import refType from './refType'
 import { substitute } from '../utils/strings'
@@ -21,7 +20,7 @@ function getSingleJsonType(db, field, ref) {
         description: 'Format string, like "{name}"',
       },
     },
-    resolve: (d, { fmt }) => getOne(db.collection(ref.code), { _id: objectId(d[field.name]) })
+    resolve: (d, { fmt }) => getOne(db.collection(ref.code), { _id: d[field.name] })
         .then((value) => {
           if (!fmt) return value
           return substitute(fmt, value)
@@ -37,7 +36,7 @@ function getMultJsonType(db, field, ref) {
       join: { type: GraphQLString },
     },
     resolve: (d, { fmt, join }) => {
-      const ids = toArray(d[field.name], field.sep)
+      const ids = toArray(d[field.name], field.sep).map(id => parseInt(id, 10))
       return getList(db.collection(ref.code), { _id: { $in: ids } })
         .then((value) => {
           if (!fmt) return value
@@ -83,7 +82,7 @@ export default function getQueryType(schema, schemas, db) {
 function getSingleGraphqlType(db, field, ref) {
   return {
     type: getQueryType(ref),
-    resolve: (d, { fmt }) => getOne(db.collection(ref.code), { _id: objectId(d[field.name]) }),
+    resolve: (d, { fmt }) => getOne(db.collection(ref.code), { _id: parseInt(d[field.name], 10) }),
   }
 }
 

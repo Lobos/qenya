@@ -2,7 +2,7 @@ function convertFields(fields, pad) {
   const rows = ['_id']
   fields.forEach((f) => {
     if (f.sourceType === 'ref' && f.renderType === 'json') {
-      rows.push(`${f.name}(fmt: "${f.optionTpl}"${f.mult ? (`join: "${f.sep}"`) : ''})`)
+      rows.push(`${f.name}(fmt: "${f.optionTpl}"${f.mult ? (` join: "${f.sep}"`) : ''})`)
     } else {
       rows.push(f.name)
     }
@@ -32,16 +32,25 @@ function convertType(field) {
   }
 }
 
-export function queryList(schema) {
+export function queryListWithPage(schema) {
   return (
 `query ($page: Int, $size: Int) {
-  ${schema.code}List(page: $page, size: $size) {
+  ${schema.code}ListWithPage(page: $page, size: $size) {
     total
     page
     size
     list {
       ${convertFields(schema.fields, '      ')}
     }
+  }
+}`)
+}
+
+export function queryList(schema) {
+  return (
+`query ($page: Int, $size: Int) {
+  ${schema.code}List(page: $page, size: $size) {
+    ${convertFields(schema.fields, '    ')}
   }
 }`)
 }

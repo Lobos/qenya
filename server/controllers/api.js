@@ -35,6 +35,7 @@ router.post('/api', body(), async (ctx) => {
     data = Object.assign({}, old, data)
     query._id = { $ne: objectId(_id) }
   } else {
+    data.status = 1
     data.createAt = Date.now()
   }
 

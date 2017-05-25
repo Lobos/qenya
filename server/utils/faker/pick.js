@@ -1,6 +1,9 @@
 import * as Datetime from '../datetime'
 
 export function pickNumber(max = 65555, min = 0, fixed = 2) {
+  if (typeof max === 'string') max = parseInt(max, 10)
+  if (typeof min === 'string') min = parseInt(min, 10)
+
   const num = (Math.random() * (max - min)) + min
   return parseFloat(num.toFixed(fixed), 0)
 }
@@ -25,7 +28,7 @@ export function one(items) {
 export function pickText(items, max = 1, min) {
   let length = max
   if (min) {
-    length = pickInteger(max, parseInt(min, 10))
+    length = pickInteger(max, min)
   }
 
   const buffer = []

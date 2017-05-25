@@ -135,20 +135,21 @@ class Fields extends PureComponent {
         </div>
 
         <Grid className={`${_styles['row-list']} ${_styles['row-header']}`}>
+          <Grid width={2 / 24} />
           <Grid width={4 / 24}>字段名</Grid>
           <Grid width={4 / 24}>别名</Grid>
           <Grid width={4 / 24}>类型</Grid>
           <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={2 / 24}>必填</Grid>
           <Grid style={{ padding: '0.75rem 0', textAlign: 'center' }} width={2 / 24}>唯一</Grid>
           <Grid>默认值</Grid>
-          <Grid width={2 / 24} />
         </Grid>
 
         <Grid className={_styles['row-list']}>
+          <Grid width={2 / 24} />
           <Grid width={4 / 24}>_id</Grid>
           <Grid width={4 / 24}>ID</Grid>
           <Grid width={4 / 24}>id</Grid>
-          <Grid width={12 / 24}>自动维护，不能修改</Grid>
+          <Grid width={10 / 24}>自动维护，不能修改</Grid>
         </Grid>
 
         <RowList

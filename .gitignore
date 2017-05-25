@@ -3,6 +3,7 @@ dist
 lib-cov
 coverage.html
 .DS_Store
+.vscode
 node_modules
 publish
 *.sock

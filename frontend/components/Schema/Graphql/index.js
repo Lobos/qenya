@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from 'rctui'
 import GraphiQL from 'graphiql'
 import Refetch from 'refetch'
 import { getData } from '_/actions/data'
-import { queryList, queryOne, queryDelete, querySave } from './convert'
+import { queryList, queryListWithPage, queryOne, queryDelete, querySave } from './convert'
 
 function graphQLFetcher(graphQLParams) {
   return new Promise((resolve) => {
@@ -54,6 +54,10 @@ class Graphql extends PureComponent {
         queryStr = queryList(schema)
         variables = { page: 1, size: 10 }
         break
+      case 'listWithPage':
+        queryStr = queryListWithPage(schema)
+        variables = { page: 1, size: 10 }
+        break
       case 'one':
         queryStr = queryOne(schema)
         variables = { _id: list[0]._id }
@@ -74,7 +78,7 @@ class Graphql extends PureComponent {
     variables = JSON.stringify(variables, null, 2)
 
     const tabs = status === 1 && list.length > 0
-      ? ['list', 'one', 'add', 'edit', 'delete'] : ['list', 'add']
+      ? ['list', 'listWithPage', 'one', 'add', 'edit', 'delete'] : ['list', 'add']
 
     return (
       <div>

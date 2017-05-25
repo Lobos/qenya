@@ -56,11 +56,13 @@ class Field extends Component {
 
         <FormControl name="label" type="text" max={20} label="别名/标签" />
 
+        {/*
         <FormControl>
           <Checkbox name="required">必填</Checkbox>
           {' '}
           <Checkbox name="unique">唯一</Checkbox>
         </FormControl>
+        */}
 
         <FormControl label="类型">
           <Select name="type" required onChange={this.handleTypeChange} grid={1 / 2} data={[...dataType]} />

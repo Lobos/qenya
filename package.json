@@ -1,7 +1,7 @@
 {
   "name": "qenya",
   "author": "lobos841@gmail.com",
-  "version": "0.2.3",
+  "version": "0.3.4",
   "description": "a web application base on koa and react",
   "main": "index.js",
   "scripts": {

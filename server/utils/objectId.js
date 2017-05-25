@@ -12,13 +12,16 @@ export default function (id) {
 
 export async function nextSequence(name) {
   return new Promise(async (resolve) => {
-    if (!db) resolve(new ObjectID())
+    if (!db) {
+      resolve(new ObjectID())
+      return
+    }
 
     const coll = db.collection('counters')
 
     let result = await coll.findOne({ _id: name })
     if (result === null) {
-      coll.insert({ _id: name, seq: 1 })
+      await coll.insert({ _id: name, seq: 1 })
       resolve(1)
     } else {
       result = await coll.findAndModify({ _id: name }, null, { $inc: { seq: 1 } }, { new: true })

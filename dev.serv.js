@@ -6,7 +6,7 @@ app({
   apiPort: 5001,
   staticPort: 5002,
   config: {
-    engine: 'mongodb',
+    engine: 'mangodb',
   },
   render: (res) => {
     if (res.data) {

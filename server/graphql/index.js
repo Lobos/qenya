@@ -6,7 +6,7 @@ import {
   GraphQLInt,
   GraphQLID,
 } from 'graphql'
-import { getOne, getPageList, insertOrUpdate, remove } from '../models/data'
+import { getOne, getPageList, getList, insertOrUpdate, remove } from '../models/data'
 import getQueryType, { clearQueryType } from './queryType'
 import { convertType, convertRefType } from './type'
 
@@ -24,8 +24,25 @@ function getOneQuery(db, schema, graphType) {
 
 function getListQuery(db, schema, graphType) {
   return {
+    type: new GraphQLList(graphType),
+    args: {
+      page: { type: GraphQLInt },
+      size: { type: GraphQLInt },
+      query: { type: GraphQLString, desciprtion: 'mongodb query' },
+      sort: { type: GraphQLString, desciprtion: 'mongodb sort' },
+    },
+    resolve: (root, { page = 1, size = 20, query = '{}', sort = '{ "_id": -1 }' }) => {
+      query = JSON.parse(query)
+      sort = JSON.parse(sort)
+      return getList(db.collection(schema.code), query, page, size, sort)
+    },
+  }
+}
+
+function getListWithPageQuery(db, schema, graphType) {
+  return {
     type: new GraphQLObjectType({
-      name: `${schema.code}List`,
+      name: `${schema.code}ListWithPage`,
       fields: {
         total: { type: GraphQLInt },
         page: { type: GraphQLInt },
@@ -47,11 +64,13 @@ function getListQuery(db, schema, graphType) {
   }
 }
 
+
 function getQuery(db, schemas) {
   const fields = {}
   schemas.forEach((schema) => {
     const graphType = getQueryType(schema, schemas, db)
     fields[`${schema.code}List`] = getListQuery(db, schema, graphType)
+    fields[`${schema.code}ListWithPage`] = getListWithPageQuery(db, schema, graphType)
     fields[schema.code] = getOneQuery(db, schema, graphType)
   })
 
@@ -74,7 +93,6 @@ function getSaveQuery(db, schema, queryType) {
     type: queryType,
     args,
     resolve: async (root, data) => {
-      console.log(data, schema.code)
       const res = await insertOrUpdate(db, schema.code, data)
       return res[0]
     },

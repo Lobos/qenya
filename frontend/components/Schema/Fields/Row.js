@@ -72,16 +72,6 @@ class Row extends Component {
         data-index={index}
         className={`${_styles['row-list']} ${_styles.draggable}`}
       >
-        <Grid width={4 / 24}>
-          <a href="javascript:;" onClick={this.handleEdit}>
-            {field.name}
-          </a>
-        </Grid>
-        <Grid width={4 / 24}>{field.label}</Grid>
-        <Grid width={4 / 24}>{field.type}</Grid>
-        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
-        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
-        <Grid>{field.defaultValue}</Grid>
         <Grid width={2 / 24}>
           <span>
             <a href="javascript:;" onClick={this.handleEdit}>
@@ -97,6 +87,16 @@ class Row extends Component {
             </a>
           </span>
         </Grid>
+        <Grid width={4 / 24}>
+          <a href="javascript:;" onClick={this.handleEdit}>
+            {field.name}
+          </a>
+        </Grid>
+        <Grid width={4 / 24}>{field.label}</Grid>
+        <Grid width={4 / 24}>{field.type}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.required ? <Icon icon="check" /> : ''}</Grid>
+        <Grid style={{ textAlign: 'center' }} width={2 / 24}>{field.unique ? <Icon icon="check" /> : ''}</Grid>
+        <Grid>{field.defaultValue}</Grid>
       </Grid>
     )
   }

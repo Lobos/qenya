@@ -23,8 +23,6 @@ let presetRoute = () => {}
 let handleResult
 
 async function bindRouter() {
-  presetRoute(router)
-
   return new Promise(async (resolve, reject) => {
     const db = await getDb()
     db.collection('api').find({ status: 1 }).sort({ weight: -1 })
@@ -41,16 +39,18 @@ async function bindRouter() {
             const args = Object.assign({}, ctx.query, ctx.params)
 
             try {
-              const query = swig.render(r.query, { locals: args })
-            // const query = r.query
-              const variables = ctx.request.method === 'GET' ? args : ctx.request.body
+              if (r.apiType === 'static') {
+                ctx.body = r.data
+              } else {
+                const query = swig.render(r.query, { locals: args })
+                const variables = ctx.request.method === 'GET' ? args : ctx.request.body
+                const schemas = await getAll(ctx.db())
+                let data = await graphql(getSchema(ctx.db('data'), schemas), query, null, null, variables)
 
-              const schemas = await getAll(ctx.db())
-              let data = await graphql(getSchema(ctx.db('data'), schemas), query, null, null, variables)
+                if (handleResult) data = handleResult(data)
 
-              if (handleResult) data = handleResult(data)
-
-              ctx.body = data
+                ctx.body = data
+              }
             } catch (e) {
               let errors = {
                 errors: {
@@ -65,6 +65,7 @@ async function bindRouter() {
         })
 
         resolve()
+        presetRoute(router)
       })
   })
 }

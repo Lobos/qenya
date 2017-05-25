@@ -93,14 +93,6 @@ class Collection extends PureComponent {
           <Table
             data={this.props.data}
             columns={[
-              { sort: true,
-                header: 'Code',
-                content: d => (
-                  <Link to={`/schema/${d.code}`}>{d.code}</Link>
-              ) },
-              { name: 'name', header: '中文名' },
-              { name: 'desc', header: '描述' },
-              { name: 'updateAt', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.updateAt, 'yyyy-MM-dd hh:mm:ss') },
               { width: '6rem',
                 content: d => (
                   <span>
@@ -110,19 +102,27 @@ class Collection extends PureComponent {
                       </Tooltip>
                     </Link>
                     {' '}
-                    <a href="javascript:;" onClick={this.handleEdit.bind(this, d)}>
+                    <a href="javascript:;" onClick={() => this.handleEdit(d)}>
                       <Tooltip position="top" tip="edit">
                         <Icon icon="edit" />
                       </Tooltip>
                     </a>
                     {' '}
-                    <a href="javascript:;" onClick={this.handleRemove.bind(this, d)}>
+                    <a href="javascript:;" onClick={() => this.handleRemove(d)}>
                       <Tooltip position="top" tip="remove">
                         <Icon icon="trash" />
                       </Tooltip>
                     </a>
                   </span>
               ) },
+              { sort: true,
+                header: 'Code',
+                content: d => (
+                  <Link to={`/schema/${d.code}`}>{d.code}</Link>
+              ) },
+              { name: 'name', header: '中文名' },
+              { name: 'desc', header: '描述' },
+              { name: 'updateAt', sort: true, width: '12rem', header: '更新时间', content: d => Datetime.format(d.updateAt, 'yyyy-MM-dd hh:mm:ss') },
             ]}
             pagination={{ size: 20 }}
           />

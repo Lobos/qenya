@@ -38,6 +38,11 @@ class DataTable extends Component {
     })
 
     columns.unshift({
+      header: 'ID',
+      name: '_id',
+    })
+
+    columns.unshift({
       width: '4rem',
       content: d => (
         <span>
@@ -54,11 +59,6 @@ class DataTable extends Component {
           </a>
         </span>
       ),
-    })
-
-    columns.unshift({
-      header: 'ID',
-      name: '_id',
     })
 
     return columns

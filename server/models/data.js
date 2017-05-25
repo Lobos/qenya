@@ -22,13 +22,26 @@ export function getPageList(col, query = {}, page, size, sort = { _id: -1 }) {
   })
 }
 
+export function getList(col, query = {}, page = 1, size = 10, sort = { _id: -1 }) {
+  return new Promise(async (resolve, reject) => {
+    col.find(query).sort(sort).skip((page - 1) * size).limit(size)
+      .toArray((err, list) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(list)
+        }
+      })
+  })
+}
+
 export function insert(col, model) {
   return new Promise((resolve, reject) => {
     col.insert(model, (err, result) => {
       if (err) reject(err)
 
       if (config.engine === 'tingodb') resolve(result)
-      resolve(result.ops)
+      else resolve(result.ops)
     })
   })
 }
@@ -39,12 +52,6 @@ export function update(col, model) {
       if (err) reject(err)
       else resolve([model])
     })
-  })
-}
-
-export function getList(col, query) {
-  return new Promise((...args) => {
-    col.find(query).toArray(callback(...args))
   })
 }
 
@@ -73,7 +80,7 @@ export function remove(col, query) {
   return new Promise((resolve, reject) => {
     col.remove(query, (err, result) => {
       if (err) reject(err)
-      if (config === 'tingodb') resolve(result)
+      if (config.engine === 'tingodb') resolve(result)
       else resolve(result.result.ok)
     })
   })

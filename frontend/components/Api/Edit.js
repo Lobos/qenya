@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Breadcrumb, Card, Form, FormControl, Grid } from 'rctui'
+import { Breadcrumb, Card, Form, FormControl, Grid, If } from 'rctui'
 import { saveApi } from '_/actions/apis'
 
 class Edit extends PureComponent {
@@ -28,9 +28,10 @@ class Edit extends PureComponent {
     return (
       <div>
         <Breadcrumb
-          style={{ background: '#fff' }} data={[
-          { text: 'API', href: '#/api' },
-          { text: id === 'new' ? '新建' : '编辑' },
+          style={{ background: '#fff' }}
+          data={[
+            { text: 'API', href: '#/api' },
+            { text: id === 'new' ? '新建' : '编辑' },
           ]}
         />
 
@@ -65,9 +66,27 @@ class Edit extends PureComponent {
             </Grid>
 
             <FormControl
-              label="Graphql Query" grid={1} type="textarea" name="query" required
-              tip="graphql 查询语句，get请求时从queryString或者路由规则中获取参数，post、put、delete请求时从form中获取"
+              required
+              label="接口类型"
+              name="apiType"
+              type="radio-group"
+              data={{
+                static: '静态数据',
+                graphql: 'Graphql Query',
+              }}
             />
+
+            <If predicate={formData => formData.apiType === 'static'}>
+              <FormControl label="静态数据" name="data" type="json" required />
+            </If>
+
+            <If predicate={formData => formData.apiType === 'graphql'}>
+              <FormControl
+                label="Graphql Query" grid={1} type="textarea" name="query" required
+                tip="graphql 查询语句，get请求时从queryString或者路由规则中获取参数，post、put、delete请求时从form中获取"
+              />
+            </If>
+
             <FormControl label="描述" grid={1} name="desc" rows={3} type="textarea" />
           </Form>
         </Card>
