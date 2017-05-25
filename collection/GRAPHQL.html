@@ -1,0 +1,379 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Graphql · Qenya Document</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="lobos841@gmail.com">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../API.html" />
+    
+    
+    <link rel="prev" href="DATA.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../INSTALL.html">
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../USAGE.html">
+            
+                <a href="../USAGE.html">
+            
+                    
+                    使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Collection
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="CREATE.html">
+            
+                <a href="CREATE.html">
+            
+                    
+                    创建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="FIELD.html">
+            
+                <a href="FIELD.html">
+            
+                    
+                    字段
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="DATA.html">
+            
+                <a href="DATA.html">
+            
+                    
+                    Mock数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.4" data-path="GRAPHQL.html">
+            
+                <a href="GRAPHQL.html">
+            
+                    
+                    Graphql
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../API.html">
+            
+                <a href="../API.html">
+            
+                    
+                    API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Graphql</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="graphql">Graphql</h1>
+<p>Qenya &#x4F7F;&#x7528;&#x4E86; Grapql &#x6765;&#x505A;&#x6570;&#x636E;&#x7684;&#x62FC;&#x63A5;&#x548C;&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x679C;&#x61C2;&#x4E00;&#x4E9B; Graphql &#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x7406;&#x89E3;&#x6BD4;&#x8F83;&#x5BB9;&#x6613;&#x4E00;&#x4E9B;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x61C2;&#x7684;&#x8BDD;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;&#x5173;&#x7CFB;&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x9875;&#x9762;&#x7684;&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x662F;&#x751F;&#x6210;qeury&#x8BED;&#x53E5;&#xFF0C;&#x4F9B;api&#x8C03;&#x7528;&#xFF0C;&#x5305;&#x542B;&#x4E86;&#x67E5;&#x8BE2;&#x5217;&#x8868;&#xFF0C;&#x67E5;&#x8BE2;&#x5355;&#x6761;&#xFF0C;&#x4FDD;&#x5B58;&#x5355;&#x6761;&#xFF0C;&#x5220;&#x9664;&#x5355;&#x6761;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x5148;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x4E66;&#x7C4D;&#x7684; Collection</p>
+<p><img src="../images/16.png" alt=""></p>
+<p>categories &#x5B57;&#x6BB5;&#x914D;&#x7F6E;&#x5982;&#x56FE;&#xFF0C;&#x6CE8;&#x610F;&#x4E00;&#x4E0B;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x9009;&#x62E9;&#x4E86; json</p>
+<p><img src="../images/17.png" alt=""></p>
+<p>&#x7136;&#x540E;&#x5207;&#x6362;&#x5230; Graphql &#x6807;&#x7B7E;&#xFF0C;&#x4F1A;&#x770B;&#x5230;&#x4E00;&#x4E2A;&#x5DF2;&#x7ECF;&#x751F;&#x6210;&#x597D;&#x7684; Query &#x67E5;&#x8BE2;</p>
+<p><img src="../images/18.png" alt=""></p>
+<p>&#x70B9;&#x51FB;&#x6267;&#x884C;</p>
+<p><img src="../images/19.png" alt=""></p>
+<p>&#x8FD9;&#x91CC;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#xFF0C;&#x6570;&#x636E;&#x7C7B;&#x578B; json &#x548C; graphql &#x7684;&#x533A;&#x522B;&#x3002;</p>
+<h4 id="json">json</h4>
+<p>&#x5F53;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E3A; json &#x65F6;&#xFF0C;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; fmt &#x548C; join &#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#xFF0C;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;(fmt: &quot;{name}&quot; join: &quot;,&quot;)</p>
+<p>&#x53BB;&#x9664; join &#x53C2;&#x6570;&#xFF0C;&#x770B;&#x4E0B;&#x6548;&#x679C;</p>
+<p><img src="../images/20.png" alt=""></p>
+<p>&#x518D;&#x4FEE;&#x6539;&#x4E00;&#x4E0B; fmt</p>
+<p><img src="../images/21.png" alt=""></p>
+<p>&#x79FB;&#x9664;&#x53C2;&#x6570;</p>
+<p><img src="../images/22.png" alt=""></p>
+<h4 id="graphql">graphql</h4>
+<p>&#x5F53;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E3A; graphql &#x65F6;&#xFF0C;&#x6570;&#x636E;&#x4E0D;&#x80FD;&#x5408;&#x5E76;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x5355;&#x4E2A;&#x5B57;&#x6BB5;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x53BB;&#x9664; author &#x7684; desc &#x5C5E;&#x6027;&#xFF0C;&#x4FEE;&#x6539; _id &#x4E3A; id</p>
+<p><img src="../images/23.png" alt=""></p>
+<h3 id="&#x53C2;&#x6570;&#x4FEE;&#x6539;">&#x53C2;&#x6570;&#x4FEE;&#x6539;</h3>
+<p>&#x5982;&#x679C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x65E7;&#x53C2;&#x6570;&#x540D;&#x524D;&#x52A0;&#x4E0A;&#x65B0;&#x53C2;&#x6570;&#x540D;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A; &quot;:&quot; &#x53F7;</p>
+<p><img src="../images/24.png" alt=""></p>
+<p>&#x5982;&#x679C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x8F93;&#x5165;&#x53C2;&#x6570;&#xFF0C;&#x4F8B;&#x5982;&#x5C06; _id &#x6539;&#x4E3A; id</p>
+<p><img src="../images/25.png" alt=""></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="DATA.html" class="navigation navigation-prev " aria-label="Previous page: Mock数据">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../API.html" class="navigation navigation-next " aria-label="Next page: API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Graphql","level":"1.4.4","depth":2,"next":{"title":"API","level":"1.5","depth":1,"path":"API.md","ref":"API.md","articles":[]},"previous":{"title":"Mock数据","level":"1.4.3","depth":2,"path":"collection/DATA.md","ref":"collection/DATA.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/lobos/"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-comscore":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"lobos841@gmail.com","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Qenya Document","language":"zh-hans","gitbook":"*","description":"Mock Server Qenya 文档"},"file":{"path":"collection/GRAPHQL.md","mtime":"2017-05-23T12:19:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-25T11:02:56.221Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

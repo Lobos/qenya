@@ -1,0 +1,400 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>字段 · Qenya Document</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="lobos841@gmail.com">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="DATA.html" />
+    
+    
+    <link rel="prev" href="CREATE.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../INSTALL.html">
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../USAGE.html">
+            
+                <a href="../USAGE.html">
+            
+                    
+                    使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Collection
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="CREATE.html">
+            
+                <a href="CREATE.html">
+            
+                    
+                    创建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.2" data-path="FIELD.html">
+            
+                <a href="FIELD.html">
+            
+                    
+                    字段
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="DATA.html">
+            
+                <a href="DATA.html">
+            
+                    
+                    Mock数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="GRAPHQL.html">
+            
+                <a href="GRAPHQL.html">
+            
+                    
+                    Graphql
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../API.html">
+            
+                <a href="../API.html">
+            
+                    
+                    API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >字段</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5B57;&#x6BB5;">&#x5B57;&#x6BB5;</h1>
+<p>&#x5728; Collection &#x70B9;&#x51FB;code&#x6216;&#x8005;&#x8BE6;&#x7EC6;&#x56FE;&#x6807;&#x53EF;&#x4EE5;&#x8FDB;&#x5165;&#x5217;&#x8868;&#x9875;&#x9762;&#xFF0C;&#x8FD9;&#x4E2A;&#x9875;&#x9762;&#x6709;&#x4E09;&#x4E2A;&#x6807;&#x7B7E;&#xFF0C;Fields&#xFF0C;Data&#xFF0C;Graphql&#xFF0C;&#x8FD9;&#x91CC;&#x5148;&#x8BF4;Fields&#x3002;</p>
+<p><img src="../images/4.png" alt=""></p>
+<p>Qenya &#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x8868;&#x7ED3;&#x6784;&#x5B57;&#x6BB5;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x4EE5;&#x8868;&#x5355;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5355;&#x4E2A;&#x5B57;&#x6BB5;&#x7F16;&#x8F91;&#xFF0C;&#x53E6;&#x4E00;&#x79CD;&#x662F;&#x6839;&#x636E;&#x4E00;&#x4E2A;&#x5DF2;&#x6709;&#x7684;json&#x6570;&#x636E;&#x751F;&#x6210;&#x591A;&#x4E2A;&#x5B57;&#x6BB5;&#x3002;</p>
+<h5 id="&#x5355;&#x4E2A;&#x5B57;&#x6BB5;&#x7F16;&#x8F91;&#xFF0C;&#x7C7B;&#x578B;&#x548C;&#x957F;&#x5EA6;&#x7B49;&#x662F;&#x4E3A;&#x4E86;mock&#x6570;&#x636E;&#x914D;&#x7F6E;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;">&#x5355;&#x4E2A;&#x5B57;&#x6BB5;&#x7F16;&#x8F91;&#xFF0C;&#x7C7B;&#x578B;&#x548C;&#x957F;&#x5EA6;&#x7B49;&#x662F;&#x4E3A;&#x4E86;mock&#x6570;&#x636E;&#x914D;&#x7F6E;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;</h5>
+<p><img src="../images/5.png" alt=""></p>
+<h5 id="&#x6839;&#x636E;json&#x6570;&#x636E;&#x751F;&#x6210;&#xFF0C;&#x53EF;&#x4EE5;&#x4E00;&#x6B21;&#x751F;&#x6210;&#x5168;&#x90E8;&#x5B57;&#x6BB5;&#xFF0C;&#x4F46;&#x662F;&#x6BD4;&#x8F83;&#x6A21;&#x7CCA;&#xFF0C;&#x9700;&#x8981;&#x505A;&#x4E00;&#x4E9B;&#x8C03;&#x6574;&#x6765;&#x505A;mock&#x6570;&#x636E;&#x7684;&#x914D;&#x7F6E;&#x3002;">&#x6839;&#x636E;json&#x6570;&#x636E;&#x751F;&#x6210;&#xFF0C;&#x53EF;&#x4EE5;&#x4E00;&#x6B21;&#x751F;&#x6210;&#x5168;&#x90E8;&#x5B57;&#x6BB5;&#xFF0C;&#x4F46;&#x662F;&#x6BD4;&#x8F83;&#x6A21;&#x7CCA;&#xFF0C;&#x9700;&#x8981;&#x505A;&#x4E00;&#x4E9B;&#x8C03;&#x6574;&#x6765;&#x505A;mock&#x6570;&#x636E;&#x7684;&#x914D;&#x7F6E;&#x3002;</h5>
+<p><img src="../images/6.png" alt=""></p>
+<p><img src="../images/7.png" alt=""></p>
+<h3 id="&#x5B57;&#x6BB5;&#x7C7B;&#x578B;">&#x5B57;&#x6BB5;&#x7C7B;&#x578B;</h3>
+<p>&#x76EE;&#x524D; Qenya &#x6709; 8 &#x79CD;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF08;&#x4F46;&#x662F;&#x4ECD;&#x7136;&#x4E0D;&#x591F;&#x7EC6;&#xFF0C;&#x540E;&#x7EED;&#x4F1A;&#x589E;&#x52A0;&#xFF09;&#xFF0C;&#x5206;&#x522B;&#x662F; &apos;text&apos;, &apos;bool&apos;, &apos;date&apos;, &apos;datetime&apos;, &apos;integer&apos;, &apos;number&apos;, &apos;json&apos;, &apos;enum&apos;</p>
+<h4 id="text">text</h4>
+<p>text &#x662F;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x6587;&#x672C;&#x7C7B;&#x578B;&#xFF0C;&#x4F1A;&#x6709;&#x4E24;&#x4E2A;&#x9009;&#x9879;&#xFF0C;&#x6700;&#x5C0F;&#x957F;&#x5EA6;&#x548C;&#x6700;&#x5927;&#x957F;&#x5EA6;&#xFF0C;mock&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x751F;&#x6210;&#x8FD9;&#x4E24;&#x4E2A;&#x957F;&#x5EA6;&#x4E4B;&#x95F4;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;&#x6700;&#x5927;&#x957F;&#x5EA6;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; 20</p>
+<h4 id="bool">bool</h4>
+<p>true &#x548C; false</p>
+<h4 id="date">date</h4>
+<p>&#x4F1A;&#x751F;&#x6210; &apos;yyyy-MM-dd&apos; &#x683C;&#x5F0F;&#x7684;&#x65E5;&#x671F;</p>
+<h4 id="datetime">datetime</h4>
+<p>&#x4F1A;&#x751F;&#x6210; &apos;yyyy-MM-dd hh:mm:ss&apos; &#x683C;&#x5F0F;&#x7684;&#x65E5;&#x671F;</p>
+<h4 id="integer">integer</h4>
+<p>&#x4F1A;&#x751F;&#x6210;&#x6574;&#x6570;</p>
+<h4 id="number">number</h4>
+<p>&#x6D6E;&#x70B9;&#x6570;&#xFF0C;&#x4F1A;&#x6BD4;&#x6574;&#x6570;&#x591A;&#x4E00;&#x4E2A;&#x5C0F;&#x6570;&#x4F4D;&#x6570;&#x7684;&#x9009;&#x9879;&#xFF0C;&#x53EF;&#x4EE5;&#x51B3;&#x5B9A;&#x751F;&#x6210;&#x7684;&#x6570;&#x636E;&#x7CBE;&#x786E;&#x5230;&#x5C0F;&#x6570;&#x70B9;&#x540E;&#x51E0;&#x4F4D;</p>
+<h4 id="json">json</h4>
+<p>json &#x7C7B;&#x578B;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x590D;&#x6742;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x6BD4;&#x5982;&#x4E00;&#x4E2A; object &#x6216; array&#x3002;&#x4F1A;&#x591A;&#x4E00;&#x4E2A; &#x9ED8;&#x8BA4;&#x503C; &#x7684;&#x9009;&#x9879;&#xFF0C;&#x751F;&#x6210;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x9ED8;&#x8BA4;&#x503C;&#x6765;&#x751F;&#x6210;&#xFF0C;&#x4E0D;&#x586B;&#x7684;&#x8BDD;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; {}</p>
+<p><img src="../images/8.png" alt=""></p>
+<h4 id="enum">enum</h4>
+<p>enum &#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x7528;&#x6765;&#x5904;&#x7406;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x548C;&#x6570;&#x636E;&#x5173;&#x8054;&#xFF0C;&#x914D;&#x7F6E;&#x9879;&#x6BD4;&#x8F83;&#x591A;</p>
+<h5 id="&#x591A;&#x9009;">&#x591A;&#x9009;</h5>
+<p>&#x9ED8;&#x8BA4;&#x6570;&#x636E;&#x662F;&#x5355;&#x9009;&#x7684;&#xFF0C;&#x9009;&#x4E2D;&#x591A;&#x9009;&#x4EE5;&#x540E;&#xFF0C;&#x4F1A;&#x591A;&#x51FA;&#x4E00;&#x4E2A; &#x201C;&#x5206;&#x9694;&#x7B26;&#x201D; &#x7684;&#x8F93;&#x5165;&#x6846;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x91CC;&#x4E0D;&#x586B;&#xFF0C;&#x90A3;&#x4E48;&#x670D;&#x52A1;&#x7AEF;&#x63A5;&#x53E3;&#x4F1A;&#x671F;&#x5F85;&#x4E00;&#x4E2A; [&apos;a&apos;, &apos;b&apos;] &#x8FD9;&#x6837;&#x7684;array&#x7ED3;&#x6784;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x586B;&#x5199;&#x4E86;&#xFF0C;&#x4F1A;&#x671F;&#x5F85;&#x4EE5;&#x8FD9;&#x4E2A;&#x5206;&#x9694;&#x7B26;&#x5206;&#x9694;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4F8B;&#x5982;&#x586B;&#x5199;&#x4E86; &apos;,&apos; &#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x4F1A;&#x63A5;&#x53D7; &apos;a,b&apos; &#x8FD9;&#x6837;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p><img src="../images/10.png" alt=""></p>
+<h5 id="&#x9759;&#x6001;&#x6570;&#x636E;">&#x9759;&#x6001;&#x6570;&#x636E;</h5>
+<p>&#x5982;&#x679C;&#x6570;&#x636E;&#x6E90;&#x9009;&#x62E9;&#x4E86;&#x9759;&#x6001;&#x6570;&#x636E;&#xFF0C;&#x4F1A;&#x591A;&#x51FA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x9009;&#x9879;&#x7684;&#x8F93;&#x5165;&#x6846;&#xFF0C;mock&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x4ECE;&#x8FD9;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x6570;&#x636E;&#x91CC;&#x9009;&#x62E9;&#x3002;&#x652F;&#x6301;&#x4E09;&#x79CD;&#x683C;&#x5F0F;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x7B2C;&#x4E00;&#x79CD;&#xFF0C;&#x7B80;&#x5355;&#x6570;&#x7EC4;</p>
+<pre><code>[&quot;&#x7537;&quot;, &quot;&#x5973;&quot;]
+</code></pre><p><img src="../images/9.png" alt=""></p>
+<p>&#x7B2C;&#x4E8C;&#x79CD;&#xFF0C;object</p>
+<pre><code>{ &quot;male&quot;: &quot;&#x7537;&quot;, &quot;famale&quot;: &quot;&#x5973;&quot; }
+</code></pre><p>&#x7B2C;&#x4E09;&#x79CD;&#xFF0C;&#x590D;&#x6742;&#x6570;&#x7EC4;&#xFF0C;&#x524D;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#x4E0D;&#x9700;&#x8981;&#x586B;&#x5199; ValueTpl &#x548C; TextTpl&#xFF0C;&#x590D;&#x6742;&#x6570;&#x7EC4;&#x9700;&#x8981;&#x586B;&#x5199;&#x8FD9;&#x4E24;&#x4E2A;&#x9009;&#x9879;</p>
+<pre><code>[
+  { &quot;code&quot;: &quot;male&quot;, &quot;text&quot;: &quot;&#x7537;&quot; },
+  { &quot;code&quot;: &quot;famale&quot;, &quot;text&quot;: &quot;&#x5973;&quot; }
+]
+</code></pre><p><img src="../images/11.png" alt=""></p>
+<p>tpl &#x662F;&#x4E00;&#x4E2A;&#x683C;&#x5F0F;&#x5316;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x6A21;&#x7248;&#xFF0C;&#x4F1A;&#x7528; object &#x7684; key &#x503C;&#x66FF;&#x6362;&#x5BF9;&#x5E94;&#x7684; &apos;{}&apos; &#x5185;&#x7684;&#x503C;&#xFF0C;&#x5982;&#xFF1A;&apos;{code}-{text}&apos; =&gt; &apos;male-&#x7537;&apos;</p>
+<h5 id="&#x5173;&#x8054;&#x8868;">&#x5173;&#x8054;&#x8868;</h5>
+<p>enum &#x652F;&#x6301;&#x5173;&#x8054;&#x8868;&#x64CD;&#x4F5C;&#xFF0C;&#x4F8B;&#x5982;&#x5728;&#x53E6;&#x4E00;&#x4E2A; Collection &#x91CC;&#x6709;&#x4E00;&#x4E2A;&#x5B57;&#x6BB5; authorId&#xFF0C;&#x5173;&#x8054;&#x5230; &#x4F5C;&#x8005; &#x8FD9;&#x4E2A; Collection</p>
+<p><img src="../images/12.png" alt=""></p>
+<p>&#x6570;&#x636E;&#x7C7B;&#x578B;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF0C;&#x8FD9;&#x91CC;&#x5148;&#x5FFD;&#x7565;&#xFF0C;&#x540E;&#x9762;&#x5199; Graphql &#x7684;&#x65F6;&#x5019;&#x518D;&#x8BF4;&#x660E;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="CREATE.html" class="navigation navigation-prev " aria-label="Previous page: 创建">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="DATA.html" class="navigation navigation-next " aria-label="Next page: Mock数据">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"字段","level":"1.4.2","depth":2,"next":{"title":"Mock数据","level":"1.4.3","depth":2,"path":"collection/DATA.md","ref":"collection/DATA.md","articles":[]},"previous":{"title":"创建","level":"1.4.1","depth":2,"path":"collection/CREATE.md","ref":"collection/CREATE.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/lobos/"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-comscore":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"lobos841@gmail.com","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Qenya Document","language":"zh-hans","gitbook":"*","description":"Mock Server Qenya 文档"},"file":{"path":"collection/FIELD.md","mtime":"2017-05-23T09:23:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-25T11:02:56.221Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+
