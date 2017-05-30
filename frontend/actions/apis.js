@@ -57,6 +57,27 @@ export function saveApi(body, onSuccess) {
   }
 }
 
+export function toggleStatus(_id, status) {
+  return (dispatch, getState) => {
+    fetch.post('/api/toggle', { _id, status }, { dataType: 'json' }).then((model) => {
+      resetApi(() => {
+        // remove query
+        const data = getState().apis.data.map((d) => {
+          if (d._id === _id) {
+            return Object.assign({}, d, { status })
+          }
+          return d
+        })
+
+        dispatch(handleList(1, data))
+        Message.success('Save successed')
+      })
+    }).catch((err) => {
+      Message.error(err.message)
+    })
+  }
+}
+
 export function removeApi(id) {
   return (dispatch, getState) => {
     fetch.delete('/api', { _id: id }).then((model) => {

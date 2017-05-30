@@ -22,6 +22,7 @@ export function insertApi(db, model) {
 
 export function updateApi(db, model) {
   const id = objectId(model._id)
+
   return new Promise((resolve, reject) => {
     db.collection(API_NAME).update({ _id: id }, { $set: model }, (err) => {
       if (err) reject(err)

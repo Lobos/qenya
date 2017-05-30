@@ -33,7 +33,7 @@ router.post('/api', body(), async (ctx) => {
     _id = objectId(_id)
     const old = await getOne(db, { _id })
     data = Object.assign({}, old, data)
-    query._id = { $ne: objectId(_id) }
+    query._id = { $ne: _id }
   } else {
     data.status = 1
     data.createAt = Date.now()

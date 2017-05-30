@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Breadcrumb, Button, Card, Table, Icon, Input, InputGroup, Modal, Tooltip } from 'rctui'
-import { getList, removeApi, saveApi } from '_/actions/apis'
+import { getList, removeApi, saveApi, toggleStatus } from '_/actions/apis'
 import Text from '_/components/comm/Text'
 
 class Api extends PureComponent {
@@ -42,7 +42,7 @@ class Api extends PureComponent {
   }
 
   toggleStatus(d) {
-    this.props.dispatch(saveApi({ _id: d._id, status: d.status === 1 ? 0 : 1 }))
+    this.props.dispatch(toggleStatus(d._id, d.status === 1 ? 0 : 1))
   }
 
   render() {

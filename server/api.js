@@ -40,7 +40,7 @@ async function bindRouter() {
 
             try {
               if (r.apiType === 'static') {
-                ctx.body = r.data
+                ctx.body = typeof r.data === 'string' ? JSON.parse(r.data) : r.data
               } else {
                 const query = swig.render(r.query, { locals: args })
                 const variables = ctx.request.method === 'GET' ? args : ctx.request.body

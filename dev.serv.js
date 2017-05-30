@@ -6,7 +6,7 @@ app({
   apiPort: 5001,
   staticPort: 5002,
   config: {
-    engine: 'mangodb',
+    engine: 'tingodb',
   },
   render: (res) => {
     if (res.data) {
